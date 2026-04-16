@@ -8,6 +8,7 @@ public class ReportingAnalyticsServiceApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(ReportingAnalyticsServiceApplication.class, args);
+	
 	}
 
 }

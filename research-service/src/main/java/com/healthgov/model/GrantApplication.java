@@ -25,22 +25,22 @@ import lombok.Setter;
 @AllArgsConstructor
 public class GrantApplication {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long applicationId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long applicationId;
 
-	@ManyToOne(optional = false)
-	@JoinColumn(name = "researcher_id", nullable = false)
-	private Users researcher;
+    // ✅ Reference by ID only
+    @Column(nullable = false)
+    private Long researcherId;
 
-	@ManyToOne(optional = false)
-	@JoinColumn(name = "project_id", nullable = false)
-	private ResearchProject project;
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "project_id", nullable = false)
+    private ResearchProject project;
 
-	@Enumerated(EnumType.STRING)
-	@Column(nullable = false)
-	private GrantStatus status;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private GrantStatus status;
 
-	@Column(name = "submitted_date", nullable = false)
-	private LocalDate submittedDate;
+    @Column(name = "submitted_date", nullable = false)
+    private LocalDate submittedDate;
 }

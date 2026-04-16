@@ -10,17 +10,20 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.healthgov.config.JwtTokenUtil;
+import com.healthgov.dto.ForgetPasswordDto;
 import com.healthgov.dto.JwtResponse;
 import com.healthgov.dto.LoginDTO;
 import com.healthgov.dto.UserDTO;
 import com.healthgov.dto.UserReqDTO;
 import com.healthgov.enums.Role;
 import com.healthgov.exception.AuthenticationFailedException;
+import com.healthgov.service.ForgetPasswordService;
 import com.healthgov.service.LoginServiceImpl;
 import com.healthgov.service.RegistrationService;
 import com.healthgov.service.UserService;
@@ -32,6 +35,9 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class UserAPI {
 
+	@Autowired
+	private ForgetPasswordService forgetPasswordService;
+	
 	@Autowired
 	private AuthenticationManager authenticationManager;
 	
@@ -95,5 +101,10 @@ public class UserAPI {
 	public UserReqDTO getUserById(@PathVariable Long userId) {
 		UserReqDTO userDto = service.getUserDetailsById(userId);
 		return userDto;
+	}
+	
+	@PutMapping("/forgotPassword")
+	public ResponseEntity<String> forgotPassword(@RequestBody ForgetPasswordDto dto) {
+		return new ResponseEntity<>(forgetPasswordService.resetPassword(dto), HttpStatus.CREATED);
 	}
 }

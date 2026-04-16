@@ -8,6 +8,7 @@ public class NotificationsAlertsServiceApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(NotificationsAlertsServiceApplication.class, args);
+		
 	}
 
 }

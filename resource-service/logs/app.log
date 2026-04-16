@@ -493,3 +493,18 @@ com.healthgov.exceptions.ResourceNotFoundException: Resource not found: 1
 2026-04-16T15:52:36.144+05:30  INFO 17352 --- [resource-service] [http-nio-9095-exec-4] c.h.controller.ResourceController        : Fetching resources for programId=1
 2026-04-16T15:52:36.149+05:30  INFO 17352 --- [resource-service] [http-nio-9095-exec-4] c.healthgov.service.ResourceServiceImpl  : Fetching resources for programId=1
 2026-04-16T15:55:41.595+05:30  INFO 17352 --- [resource-service] [AsyncResolver-bootstrap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-04-16T16:00:41.605+05:30  INFO 17352 --- [resource-service] [AsyncResolver-bootstrap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-04-16T16:03:55.773+05:30  INFO 17352 --- [resource-service] [RMI TCP Connection(33)-127.0.0.1] inMXBeanRegistrar$SpringApplicationAdmin : Application shutdown requested.
+2026-04-16T16:03:55.775+05:30  INFO 17352 --- [resource-service] [RMI TCP Connection(33)-127.0.0.1] o.s.c.n.e.s.EurekaServiceRegistry        : Unregistering application RESOURCE-SERVICE with eureka with status DOWN
+2026-04-16T16:03:55.777+05:30  INFO 17352 --- [resource-service] [RMI TCP Connection(33)-127.0.0.1] com.netflix.discovery.DiscoveryClient    : Saw local status change event StatusChangeEvent [timestamp=1776335635777, current=DOWN, previous=UP]
+2026-04-16T16:03:55.777+05:30  INFO 17352 --- [resource-service] [DiscoveryClient-InstanceInfoReplicator-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_RESOURCE-SERVICE/LTIN718509.cts.com:resource-service:9095: registering service...
+2026-04-16T16:03:55.785+05:30  INFO 17352 --- [resource-service] [RMI TCP Connection(33)-127.0.0.1] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
+2026-04-16T16:03:55.791+05:30  INFO 17352 --- [resource-service] [DiscoveryClient-InstanceInfoReplicator-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_RESOURCE-SERVICE/LTIN718509.cts.com:resource-service:9095 - registration status: 204
+2026-04-16T16:03:55.811+05:30  INFO 17352 --- [resource-service] [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete
+2026-04-16T16:03:55.825+05:30  INFO 17352 --- [resource-service] [RMI TCP Connection(33)-127.0.0.1] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-04-16T16:03:55.830+05:30  INFO 17352 --- [resource-service] [RMI TCP Connection(33)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2026-04-16T16:03:55.837+05:30  INFO 17352 --- [resource-service] [RMI TCP Connection(33)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2026-04-16T16:03:55.840+05:30  INFO 17352 --- [resource-service] [RMI TCP Connection(33)-127.0.0.1] com.netflix.discovery.DiscoveryClient    : Shutting down DiscoveryClient ...
+2026-04-16T16:03:58.842+05:30  INFO 17352 --- [resource-service] [RMI TCP Connection(33)-127.0.0.1] com.netflix.discovery.DiscoveryClient    : Unregistering ...
+2026-04-16T16:03:59.054+05:30  INFO 17352 --- [resource-service] [RMI TCP Connection(33)-127.0.0.1] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_RESOURCE-SERVICE/LTIN718509.cts.com:resource-service:9095 - deregister  status: 200
+2026-04-16T16:03:59.055+05:30  INFO 17352 --- [resource-service] [RMI TCP Connection(33)-127.0.0.1] com.netflix.discovery.DiscoveryClient    : Completed shut down of DiscoveryClient

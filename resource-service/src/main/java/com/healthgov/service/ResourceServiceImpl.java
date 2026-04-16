@@ -11,6 +11,7 @@ import com.healthgov.dto.ResourceUpdateRequest;
 import com.healthgov.enums.ResourceStatus;
 import com.healthgov.enums.ResourceType;
 import com.healthgov.exceptions.ResourceNotFoundException;
+import com.healthgov.external.ProgramFeignClient;
 import com.healthgov.model.Resource;
 import com.healthgov.repository.ResourceRepository;
 
@@ -23,9 +24,10 @@ public class ResourceServiceImpl implements ResourceService {
 
 	// Handles DB operations related to Resource entity
 	private final ResourceRepository resourceRepo;
-
-	public ResourceServiceImpl(ResourceRepository resourceRepo) {
+	private final ProgramFeignClient programFeignClient;
+	public ResourceServiceImpl(ResourceRepository resourceRepo,ProgramFeignClient programFeignClient) {
 		this.resourceRepo = resourceRepo;
+		this.programFeignClient = programFeignClient;
 	}
 
 	@Override
@@ -33,6 +35,7 @@ public class ResourceServiceImpl implements ResourceService {
 
 		log.info("Creating resource for programId={}", request.getProgramId());
 
+		programFeignClient.validateProgramExists(request.getProgramId());
 		// Build and save entity
 		Resource entity = new Resource();
 		entity.setProgramId(request.getProgramId());

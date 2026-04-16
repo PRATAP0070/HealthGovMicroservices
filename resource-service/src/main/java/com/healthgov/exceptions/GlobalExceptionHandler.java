@@ -24,6 +24,16 @@ public class GlobalExceptionHandler {
 		return new ResponseEntity<>(ex, HttpStatus.NOT_FOUND);
 	}
 
+	@ExceptionHandler(ProgramNotFoundException.class)
+	public ResponseEntity<ExceptionResponse> handleProgramNotFound(ProgramNotFoundException e) {
+
+		log.error("Program not found exception occurred: {}", e.getMessage(), e);
+
+		ExceptionResponse ex = new ExceptionResponse(e.getMessage(), LocalDate.now(), 400);
+
+		return new ResponseEntity<>(ex, HttpStatus.BAD_REQUEST);
+	}
+
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	public ResponseEntity<String> handleValidationException(MethodArgumentNotValidException ex) {
 

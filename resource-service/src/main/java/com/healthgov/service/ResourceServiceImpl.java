@@ -36,30 +36,52 @@ public class ResourceServiceImpl implements ResourceService {
 	@Override
 	public ResourceResponse createResource(ResourceCreateRequest request) {
 
-		log.info("Validating program before resource allocation. programId={}", request.getProgramId());
+		log.info("Creating resource for programId={}", request.getProgramId());
 
+		// Validate program
 		ProgramStatusResponse program = programFeignClient.getProgramStatus(request.getProgramId());
 
 		if (program.getStatus() != ProgramStatus.ACTIVE) {
-			throw new IllegalStateException("Cannot allocate resource to program with status: " + program.getStatus());
+			throw new IllegalStateException("Cannot create resource for program with status: " + program.getStatus());
 		}
 
+		// Validate quantity input
 		if (request.getQuantity() < 0) {
 			throw new IllegalArgumentException("Resource quantity cannot be negative");
 		}
+		if (request.getType() != ResourceType.FUNDS && request.getStatus() == ResourceStatus.PENDING) {
+			throw new IllegalStateException("PENDING is only allowed for FUNDS");
+		}
 
-		// Build and save entity
+		// Build entity with proposed values (NOT persisted yet)
 		Resource entity = new Resource();
 		entity.setProgramId(request.getProgramId());
 		entity.setType(request.getType());
 		entity.setQuantity(request.getQuantity());
-		entity.setStatus(request.getStatus());
-		// Persist resource to database
+
+		// TYPE-BASED BUSINESS RULES
+
+		if (request.getType() == ResourceType.FUNDS) {
+
+			double allocated = getTotalAllocatedFunds(request.getProgramId());
+			double budget = program.getBudget();
+			double requested = request.getQuantity();
+
+			if (requested <= (budget - allocated)) {
+				entity.setStatus(ResourceStatus.ALLOCATED);
+			} else {
+				entity.setStatus(ResourceStatus.PENDING);
+			}
+
+		} else {
+			entity.setStatus(request.getStatus());
+		}
+
+		//  Persist only after all validations
 		entity = resourceRepo.save(entity);
 
 		log.info("Resource created successfully with resourceId={}", entity.getResourceId());
 
-		// Map to response
 		return toResponse(entity);
 	}
 
@@ -67,25 +89,64 @@ public class ResourceServiceImpl implements ResourceService {
 	public ResourceResponse updateResource(Long resourceId, ResourceUpdateRequest request) {
 
 		log.info("Updating resource with resourceId={}", resourceId);
-		// Load existing resource or fail if not found
+
+		// Load existing resource
 		Resource entity = getResourceOrThrow(resourceId);
 
+		// Validate program
+		ProgramStatusResponse program = programFeignClient.getProgramStatus(entity.getProgramId());
+
+		if (program.getStatus() != ProgramStatus.ACTIVE) {
+			throw new IllegalStateException("Cannot update resource for program with status: " + program.getStatus());
+		}
+
+		// Completed resources are immutable
+		if (entity.getStatus() == ResourceStatus.COMPLETED) {
+			throw new IllegalStateException("Completed resource cannot be modified");
+		}
+
+		// Validate quantity
 		if (request.getQuantity() < 0) {
 			throw new IllegalArgumentException("Resource quantity cannot be negative");
 		}
 
-		if (entity.getStatus() == ResourceStatus.COMPLETED) { // Completed resources are immutable.
-			throw new IllegalStateException("Completed resource cannot be modified");
+		if (request.getType() != ResourceType.FUNDS && request.getStatus() == ResourceStatus.PENDING) {
+			throw new IllegalStateException("PENDING is only allowed for FUNDS");
 		}
 
+		ResourceType newType = request.getType();
+
+		/* ---------- FUNDS BUDGET VALIDATION ---------- */
+		if (newType == ResourceType.FUNDS) {
+
+			double budget = program.getBudget();
+			double allocated = getTotalAllocatedFunds(entity.getProgramId());
+
+			// Remove old allocation only if existing type was FUNDS
+			double oldQuantity = entity.getType() == ResourceType.FUNDS ? entity.getQuantity() : 0;
+
+			double newQuantity = request.getQuantity();
+
+			double effectiveAllocated = allocated - oldQuantity + newQuantity;
+
+			if (effectiveAllocated > budget) {
+				throw new IllegalStateException(
+						"Insufficient budget. Remaining: " + (budget - (allocated - oldQuantity)));
+			}
+		}
+
+		// Apply update after all validations
 		entity.setType(request.getType());
 		entity.setQuantity(request.getQuantity());
 		entity.setStatus(request.getStatus());
 
 		resourceRepo.save(entity);
+
 		log.info("Resource updated successfully with resourceId={}", resourceId);
+
 		return toResponse(entity);
 	}
+
 
 	@Override
 	public void deleteResourceById(Long resourceId) {
@@ -98,7 +159,8 @@ public class ResourceServiceImpl implements ResourceService {
 			throw new IllegalStateException("Cannot delete active or completed resource");
 		}
 		// ACTIVE resources are in use; deleting them would cause data loss.
-		// COMPLETED resources are historical records; deleting them breaks auditability.
+		// COMPLETED resources are historical records; deleting them breaks
+		// auditability.
 		resourceRepo.delete(entity);
 
 		log.info("Resource deleted successfully with resourceId={}", resourceId);
@@ -160,4 +222,10 @@ public class ResourceServiceImpl implements ResourceService {
 		dto.setStatus(e.getStatus());
 		return dto;
 	}
+
+	private double getTotalAllocatedFunds(Long programId) {
+		return resourceRepo.findByProgramIdAndTypeAndStatus(programId, ResourceType.FUNDS, ResourceStatus.ALLOCATED)
+				.stream().mapToDouble(Resource::getQuantity).sum();
+	}
+
 }

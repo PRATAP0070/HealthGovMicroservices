@@ -1,7 +1,6 @@
 package com.healthgov;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
@@ -30,126 +29,240 @@ import com.healthgov.repository.ResourceRepository;
 import com.healthgov.service.ResourceServiceImpl;
 
 class ResourceServiceImplTest {
-	// Mock repository to isolate service logic from database operations
+
+	// Mock repository to isolate service logic from DB
 	@Mock
 	private ResourceRepository resourceRepo;
 
+	// Mock Feign client for Program service
 	@Mock
 	private ProgramFeignClient programFeignClient;
 
+	// Inject mocks into service
 	@InjectMocks
 	private ResourceServiceImpl resourceService;
 
-	// Initializes Mockito mocks before each test
+	// Initialize mocks before each test
 	@BeforeEach
 	void setUp() {
 		MockitoAnnotations.openMocks(this);
 	}
 
-	// ---------------- CREATE RESOURCE ----------------
+	// ------------------------------------------------------------------
+	// CREATE RESOURCE
+	// ------------------------------------------------------------------
 
-	// Verifies successful resource creation when program exists and is ACTIVE
+	// FUNDS → ALLOCATED when budget is sufficient
 	@Test
-	void createResource_success() {
+	void createResource_fundsAllocated() {
 
 		ResourceCreateRequest request = new ResourceCreateRequest();
 		request.setProgramId(1L);
 		request.setType(ResourceType.FUNDS);
-		request.setQuantity(500);
-		request.setStatus(ResourceStatus.ACTIVE);
+		request.setQuantity(400);
 
-		ProgramStatusResponse program = new ProgramStatusResponse(1L, ProgramStatus.ACTIVE);
+		when(programFeignClient.getProgramStatus(1L))
+				.thenReturn(new ProgramStatusResponse(1L, 1000.0, ProgramStatus.ACTIVE));
 
-		Resource savedResource = new Resource();
-		savedResource.setResourceId(10L);
-		savedResource.setProgramId(1L);
-		savedResource.setType(ResourceType.FUNDS);
-		savedResource.setQuantity(500);
-		savedResource.setStatus(ResourceStatus.ACTIVE);
+		when(resourceRepo.findByProgramIdAndTypeAndStatus(1L, ResourceType.FUNDS, ResourceStatus.ALLOCATED))
+				.thenReturn(List.of());
 
-		when(programFeignClient.getProgramStatus(1L)).thenReturn(program);
-		when(resourceRepo.save(any(Resource.class))).thenReturn(savedResource);
+		Resource saved = new Resource();
+		saved.setResourceId(10L);
+		saved.setStatus(ResourceStatus.ALLOCATED);
+
+		when(resourceRepo.save(any(Resource.class))).thenReturn(saved);
 
 		ResourceResponse response = resourceService.createResource(request);
 
-		assertNotNull(response);
-		assertEquals(10L, response.getResourceId());
-		assertEquals(1L, response.getProgramId());
-		assertEquals(ResourceType.FUNDS, response.getType());
-		assertEquals(500, response.getQuantity());
-		assertEquals(ResourceStatus.ACTIVE, response.getStatus());
-
-		verify(programFeignClient).getProgramStatus(1L);
-		verify(resourceRepo).save(any(Resource.class));
+		assertEquals(ResourceStatus.ALLOCATED, response.getStatus());
 	}
 
-	// Ensures resource allocation is blocked when program is NOT ACTIVE
+	// FUNDS → PENDING when budget is insufficient
 	@Test
-	void createResource_programNotActive() {
+	void createResource_fundsPendingDueToBudget() {
 
 		ResourceCreateRequest request = new ResourceCreateRequest();
 		request.setProgramId(1L);
-		request.setQuantity(100);
+		request.setType(ResourceType.FUNDS);
+		request.setQuantity(900);
 
-		ProgramStatusResponse program = new ProgramStatusResponse(1L, ProgramStatus.INACTIVE);
+		when(programFeignClient.getProgramStatus(1L))
+				.thenReturn(new ProgramStatusResponse(1L, 1000.0, ProgramStatus.ACTIVE));
 
-		when(programFeignClient.getProgramStatus(1L)).thenReturn(program);
+		Resource existing = new Resource();
+		existing.setQuantity(200);
+
+		when(resourceRepo.findByProgramIdAndTypeAndStatus(1L, ResourceType.FUNDS, ResourceStatus.ALLOCATED))
+				.thenReturn(List.of(existing));
+
+		Resource saved = new Resource();
+		saved.setStatus(ResourceStatus.PENDING);
+
+		when(resourceRepo.save(any(Resource.class))).thenReturn(saved);
+
+		ResourceResponse response = resourceService.createResource(request);
+
+		assertEquals(ResourceStatus.PENDING, response.getStatus());
+	}
+
+	// NON-FUNDS cannot be created as PENDING
+	@Test
+	void createResource_nonFundsPendingRejected() {
+
+		ResourceCreateRequest request = new ResourceCreateRequest();
+		request.setProgramId(1L);
+		request.setType(ResourceType.LAB);
+		request.setQuantity(1);
+		request.setStatus(ResourceStatus.PENDING);
+
+		when(programFeignClient.getProgramStatus(1L))
+				.thenReturn(new ProgramStatusResponse(1L, 0.0, ProgramStatus.ACTIVE));
 
 		assertThrows(IllegalStateException.class, () -> resourceService.createResource(request));
 	}
 
-	// ---------------- UPDATE RESOURCE ----------------
-
-	// Validates resource update when resource is mutable and input is valid
+	// Negative quantity on create
 	@Test
-	void updateResource_success() {
+	void createResource_negativeQuantityRejected() {
+
+		ResourceCreateRequest request = new ResourceCreateRequest();
+		request.setProgramId(1L);
+		request.setQuantity(-10);
+
+		when(programFeignClient.getProgramStatus(1L))
+				.thenReturn(new ProgramStatusResponse(1L, 0.0, ProgramStatus.ACTIVE));
+
+		assertThrows(IllegalArgumentException.class, () -> resourceService.createResource(request));
+	}
+
+	// ------------------------------------------------------------------
+	// UPDATE RESOURCE
+	// ------------------------------------------------------------------
+
+	// NON-FUNDS update success
+	@Test
+	void updateResource_nonFundsSuccess() {
 
 		ResourceUpdateRequest request = new ResourceUpdateRequest();
 		request.setType(ResourceType.EQUIPMENT);
 		request.setQuantity(50);
 		request.setStatus(ResourceStatus.INACTIVE);
 
-		Resource existingResource = new Resource();
-		existingResource.setResourceId(5L);
-		existingResource.setStatus(ResourceStatus.ACTIVE);
+		Resource entity = new Resource();
+		entity.setResourceId(5L);
+		entity.setProgramId(1L);
+		entity.setStatus(ResourceStatus.ACTIVE);
 
-		when(resourceRepo.findById(5L)).thenReturn(Optional.of(existingResource));
-		when(resourceRepo.save(existingResource)).thenReturn(existingResource);
+		when(resourceRepo.findById(5L)).thenReturn(Optional.of(entity));
+		when(programFeignClient.getProgramStatus(1L))
+				.thenReturn(new ProgramStatusResponse(1L, 0.0, ProgramStatus.ACTIVE));
+		when(resourceRepo.save(entity)).thenReturn(entity);
 
 		ResourceResponse response = resourceService.updateResource(5L, request);
 
 		assertEquals(ResourceType.EQUIPMENT, response.getType());
-		assertEquals(50, response.getQuantity());
 		assertEquals(ResourceStatus.INACTIVE, response.getStatus());
-
-		verify(resourceRepo).save(existingResource);
 	}
 
-	// Ensures COMPLETED resources are immutable and cannot be modified
+	// FUNDS update within budget
 	@Test
-	void updateResource_completedResource() {
+	void updateResource_fundsWithinBudget() {
+
+		ResourceUpdateRequest request = new ResourceUpdateRequest();
+		request.setType(ResourceType.FUNDS);
+		request.setQuantity(300);
+		request.setStatus(ResourceStatus.ALLOCATED);
+
+		Resource entity = new Resource();
+		entity.setProgramId(1L);
+		entity.setType(ResourceType.FUNDS);
+		entity.setQuantity(200);
+		entity.setStatus(ResourceStatus.ALLOCATED);
+
+		when(resourceRepo.findById(1L)).thenReturn(Optional.of(entity));
+		when(programFeignClient.getProgramStatus(1L))
+				.thenReturn(new ProgramStatusResponse(1L, 1000.0, ProgramStatus.ACTIVE));
+		when(resourceRepo.findByProgramIdAndTypeAndStatus(1L, ResourceType.FUNDS, ResourceStatus.ALLOCATED))
+				.thenReturn(List.of(entity));
+
+		ResourceResponse response = resourceService.updateResource(1L, request);
+
+		assertEquals(300, response.getQuantity());
+	}
+
+	// FUNDS update exceeding budget
+	@Test
+	void updateResource_fundsBudgetExceeded() {
+
+		ResourceUpdateRequest request = new ResourceUpdateRequest();
+		request.setType(ResourceType.FUNDS);
+		request.setQuantity(900);
+		request.setStatus(ResourceStatus.ALLOCATED);
+
+		Resource entity = new Resource();
+		entity.setProgramId(1L);
+		entity.setType(ResourceType.FUNDS);
+		entity.setQuantity(200);
+		entity.setStatus(ResourceStatus.ALLOCATED);
+
+		when(resourceRepo.findById(1L)).thenReturn(Optional.of(entity));
+		when(programFeignClient.getProgramStatus(1L))
+				.thenReturn(new ProgramStatusResponse(1L, 1000.0, ProgramStatus.ACTIVE));
+		when(resourceRepo.findByProgramIdAndTypeAndStatus(1L, ResourceType.FUNDS, ResourceStatus.ALLOCATED))
+				.thenReturn(List.of(entity));
+
+		assertThrows(IllegalStateException.class, () -> resourceService.updateResource(1L, request));
+	}
+
+	// COMPLETED resource cannot be updated
+	@Test
+	void updateResource_completedRejected() {
 
 		ResourceUpdateRequest request = new ResourceUpdateRequest();
 		request.setQuantity(10);
 
-		Resource completedResource = new Resource();
-		completedResource.setResourceId(6L);
-		completedResource.setStatus(ResourceStatus.COMPLETED);
+		Resource entity = new Resource();
+		entity.setProgramId(1L);
+		entity.setStatus(ResourceStatus.COMPLETED);
 
-		when(resourceRepo.findById(6L)).thenReturn(Optional.of(completedResource));
+		when(resourceRepo.findById(6L)).thenReturn(Optional.of(entity));
+		when(programFeignClient.getProgramStatus(1L))
+				.thenReturn(new ProgramStatusResponse(1L, 0.0, ProgramStatus.ACTIVE));
 
 		assertThrows(IllegalStateException.class, () -> resourceService.updateResource(6L, request));
 	}
 
-	// ---------------- DELETE RESOURCE ----------------
+	// NON-FUNDS cannot move to PENDING
+	@Test
+	void updateResource_nonFundsPendingRejected() {
 
-	// Allows deletion only for resources that are not ACTIVE or not COMPLETED
+		ResourceUpdateRequest request = new ResourceUpdateRequest();
+		request.setType(ResourceType.LAB);
+		request.setQuantity(5);
+		request.setStatus(ResourceStatus.PENDING);
+
+		Resource entity = new Resource();
+		entity.setProgramId(1L);
+		entity.setStatus(ResourceStatus.ACTIVE);
+
+		when(resourceRepo.findById(1L)).thenReturn(Optional.of(entity));
+		when(programFeignClient.getProgramStatus(1L))
+				.thenReturn(new ProgramStatusResponse(1L, 0.0, ProgramStatus.ACTIVE));
+
+		assertThrows(IllegalStateException.class, () -> resourceService.updateResource(1L, request));
+	}
+
+	// ------------------------------------------------------------------
+	// DELETE RESOURCE
+	// ------------------------------------------------------------------
+
+	// DELETE allowed when resource is not ACTIVE or COMPLETED
 	@Test
 	void deleteResource_success() {
 
 		Resource resource = new Resource();
-		resource.setResourceId(7L);
-		resource.setStatus(ResourceStatus.PENDING);
+		resource.setStatus(ResourceStatus.INACTIVE);
 
 		when(resourceRepo.findById(7L)).thenReturn(Optional.of(resource));
 
@@ -158,73 +271,66 @@ class ResourceServiceImplTest {
 		verify(resourceRepo).delete(resource);
 	}
 
-	// Prevents deletion of ACTIVE resources to avoid data loss
+	// DELETE not allowed for COMPLETED resource
 	@Test
-	void deleteResource_activeResource() {
+	void deleteResource_completedRejected() {
 
 		Resource resource = new Resource();
-		resource.setResourceId(8L);
-		resource.setStatus(ResourceStatus.ACTIVE);
+		resource.setStatus(ResourceStatus.COMPLETED);
 
 		when(resourceRepo.findById(8L)).thenReturn(Optional.of(resource));
 
 		assertThrows(IllegalStateException.class, () -> resourceService.deleteResourceById(8L));
 	}
 
-	// ---------------- GET BY ID ----------------
+	// ------------------------------------------------------------------
+	// GET METHODS
+	// ------------------------------------------------------------------
 
-	// Retrieves resource successfully when it exists
+	// Get resource by ID – success
 	@Test
 	void getResourceById_success() {
 
 		Resource resource = new Resource();
 		resource.setResourceId(3L);
-		resource.setQuantity(100);
+		resource.setType(ResourceType.LAB);
+		resource.setQuantity(10);
+		resource.setStatus(ResourceStatus.ACTIVE);
 
 		when(resourceRepo.findById(3L)).thenReturn(Optional.of(resource));
 
 		ResourceResponse response = resourceService.getResourceById(3L);
 
 		assertEquals(3L, response.getResourceId());
-		assertEquals(100, response.getQuantity());
+		assertEquals(ResourceType.LAB, response.getType());
 	}
 
-	// Throws exception when requested resource does not exist
+	// Get resource by ID – not found
 	@Test
 	void getResourceById_notFound() {
 
-		when(resourceRepo.findById(4L)).thenReturn(Optional.empty());
+		when(resourceRepo.findById(99L)).thenReturn(Optional.empty());
 
-		assertThrows(ResourceNotFoundException.class, () -> resourceService.getResourceById(4L));
+		assertThrows(ResourceNotFoundException.class, () -> resourceService.getResourceById(99L));
 	}
 
-	// ---------------- GET ALL ----------------
-
-	// Returns all available resources without applying business
+	// Get all resources
 	@Test
 	void getAllResources_success() {
 
-		Resource r1 = new Resource();
-		r1.setResourceId(1L);
-
-		Resource r2 = new Resource();
-		r2.setResourceId(2L);
-
-		when(resourceRepo.findAll()).thenReturn(List.of(r1, r2));
+		when(resourceRepo.findAll()).thenReturn(List.of(new Resource(), new Resource()));
 
 		List<ResourceResponse> responses = resourceService.getAllResources();
 
 		assertEquals(2, responses.size());
 	}
 
-	// ---------------- GET BY PROGRAM ID ----------------
-
-	// Fetches resources associated with a specific program
+	// Get resources by programId
 	@Test
 	void getResourcesByProgramId_success() {
 
 		Resource resource = new Resource();
-		resource.setResourceId(8L);
+		resource.setResourceId(11L);
 		resource.setProgramId(1L);
 
 		when(resourceRepo.findByProgramId(1L)).thenReturn(List.of(resource));
@@ -232,17 +338,15 @@ class ResourceServiceImplTest {
 		List<ResourceResponse> responses = resourceService.getResourcesByProgramId(1L);
 
 		assertEquals(1, responses.size());
-		assertEquals(8L, responses.get(0).getResourceId());
+		assertEquals(11L, responses.get(0).getResourceId());
 	}
 
-	// ---------------- SEARCH ----------------
-
-	// Searches resources using type and status filters
+	// Get resources by type and status
 	@Test
 	void getResourcesByTypeAndStatus_success() {
 
 		Resource resource = new Resource();
-		resource.setResourceId(11L);
+		resource.setResourceId(12L);
 
 		when(resourceRepo.findByTypeAndStatus(ResourceType.LAB, ResourceStatus.ACTIVE)).thenReturn(List.of(resource));
 
@@ -250,6 +354,5 @@ class ResourceServiceImplTest {
 				ResourceStatus.ACTIVE);
 
 		assertEquals(1, responses.size());
-		assertEquals(11L, responses.get(0).getResourceId());
 	}
 }

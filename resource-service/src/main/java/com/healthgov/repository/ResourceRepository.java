@@ -13,4 +13,6 @@ public interface ResourceRepository extends JpaRepository<Resource, Long> {
 	List<Resource> findByProgramId(Long programId);
 
 	List<Resource> findByTypeAndStatus(ResourceType type, ResourceStatus status);
+
+	List<Resource> findByProgramIdAndTypeAndStatus(Long programId, ResourceType type, ResourceStatus status);
 }

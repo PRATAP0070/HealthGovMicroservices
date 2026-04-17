@@ -9,5 +9,6 @@ import lombok.Data;
 @AllArgsConstructor
 public class ProgramStatusResponse {
 	long programId;
+	double budget;
 	ProgramStatus status;
 }

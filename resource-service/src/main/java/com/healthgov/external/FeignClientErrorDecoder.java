@@ -17,6 +17,6 @@ public class FeignClientErrorDecoder implements ErrorDecoder {
 			return new ProgramNotFoundException("Program not found");
 		}
 
-		return new RuntimeException("Program Service error. HTTP status: " + response.status());
+		return new RuntimeException("Program service error. HTTP status: " + response.status());
 	}
 }

@@ -8,10 +8,12 @@ import org.springframework.transaction.annotation.Transactional;
 import com.healthgov.dto.ResourceCreateRequest;
 import com.healthgov.dto.ResourceResponse;
 import com.healthgov.dto.ResourceUpdateRequest;
+import com.healthgov.enums.ProgramStatus;
 import com.healthgov.enums.ResourceStatus;
 import com.healthgov.enums.ResourceType;
 import com.healthgov.exceptions.ResourceNotFoundException;
 import com.healthgov.external.ProgramFeignClient;
+import com.healthgov.external.dto.ProgramStatusResponse;
 import com.healthgov.model.Resource;
 import com.healthgov.repository.ResourceRepository;
 
@@ -25,7 +27,8 @@ public class ResourceServiceImpl implements ResourceService {
 	// Handles DB operations related to Resource entity
 	private final ResourceRepository resourceRepo;
 	private final ProgramFeignClient programFeignClient;
-	public ResourceServiceImpl(ResourceRepository resourceRepo,ProgramFeignClient programFeignClient) {
+
+	public ResourceServiceImpl(ResourceRepository resourceRepo, ProgramFeignClient programFeignClient) {
 		this.resourceRepo = resourceRepo;
 		this.programFeignClient = programFeignClient;
 	}
@@ -33,9 +36,18 @@ public class ResourceServiceImpl implements ResourceService {
 	@Override
 	public ResourceResponse createResource(ResourceCreateRequest request) {
 
-		log.info("Creating resource for programId={}", request.getProgramId());
+		log.info("Validating program before resource allocation. programId={}", request.getProgramId());
 
-		programFeignClient.validateProgramExists(request.getProgramId());
+		ProgramStatusResponse program = programFeignClient.getProgramStatus(request.getProgramId());
+
+		if (program.getStatus() != ProgramStatus.ACTIVE) {
+			throw new IllegalStateException("Cannot allocate resource to program with status: " + program.getStatus());
+		}
+
+		if (request.getQuantity() < 0) {
+			throw new IllegalArgumentException("Resource quantity cannot be negative");
+		}
+
 		// Build and save entity
 		Resource entity = new Resource();
 		entity.setProgramId(request.getProgramId());
@@ -58,6 +70,14 @@ public class ResourceServiceImpl implements ResourceService {
 		// Load existing resource or fail if not found
 		Resource entity = getResourceOrThrow(resourceId);
 
+		if (request.getQuantity() < 0) {
+			throw new IllegalArgumentException("Resource quantity cannot be negative");
+		}
+
+		if (entity.getStatus() == ResourceStatus.COMPLETED) { // Completed resources are immutable.
+			throw new IllegalStateException("Completed resource cannot be modified");
+		}
+
 		entity.setType(request.getType());
 		entity.setQuantity(request.getQuantity());
 		entity.setStatus(request.getStatus());
@@ -73,6 +93,12 @@ public class ResourceServiceImpl implements ResourceService {
 		log.info("Deleting resource with resourceId={}", resourceId);
 		// Confirm resource exists before deleting
 		Resource entity = getResourceOrThrow(resourceId);
+
+		if (entity.getStatus() == ResourceStatus.ACTIVE || entity.getStatus() == ResourceStatus.COMPLETED) {
+			throw new IllegalStateException("Cannot delete active or completed resource");
+		}
+		// ACTIVE resources are in use; deleting them would cause data loss.
+		// COMPLETED resources are historical records; deleting them breaks auditability.
 		resourceRepo.delete(entity);
 
 		log.info("Resource deleted successfully with resourceId={}", resourceId);

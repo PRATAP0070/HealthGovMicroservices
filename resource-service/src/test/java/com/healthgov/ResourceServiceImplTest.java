@@ -19,21 +19,28 @@ import org.mockito.MockitoAnnotations;
 import com.healthgov.dto.ResourceCreateRequest;
 import com.healthgov.dto.ResourceResponse;
 import com.healthgov.dto.ResourceUpdateRequest;
+import com.healthgov.enums.ProgramStatus;
 import com.healthgov.enums.ResourceStatus;
 import com.healthgov.enums.ResourceType;
 import com.healthgov.exceptions.ResourceNotFoundException;
+import com.healthgov.external.ProgramFeignClient;
+import com.healthgov.external.dto.ProgramStatusResponse;
 import com.healthgov.model.Resource;
 import com.healthgov.repository.ResourceRepository;
 import com.healthgov.service.ResourceServiceImpl;
 
 class ResourceServiceImplTest {
-
+	// Mock repository to isolate service logic from database operations
 	@Mock
 	private ResourceRepository resourceRepo;
+
+	@Mock
+	private ProgramFeignClient programFeignClient;
 
 	@InjectMocks
 	private ResourceServiceImpl resourceService;
 
+	// Initializes Mockito mocks before each test
 	@BeforeEach
 	void setUp() {
 		MockitoAnnotations.openMocks(this);
@@ -41,6 +48,7 @@ class ResourceServiceImplTest {
 
 	// ---------------- CREATE RESOURCE ----------------
 
+	// Verifies successful resource creation when program exists and is ACTIVE
 	@Test
 	void createResource_success() {
 
@@ -50,6 +58,8 @@ class ResourceServiceImplTest {
 		request.setQuantity(500);
 		request.setStatus(ResourceStatus.ACTIVE);
 
+		ProgramStatusResponse program = new ProgramStatusResponse(1L, ProgramStatus.ACTIVE);
+
 		Resource savedResource = new Resource();
 		savedResource.setResourceId(10L);
 		savedResource.setProgramId(1L);
@@ -57,6 +67,7 @@ class ResourceServiceImplTest {
 		savedResource.setQuantity(500);
 		savedResource.setStatus(ResourceStatus.ACTIVE);
 
+		when(programFeignClient.getProgramStatus(1L)).thenReturn(program);
 		when(resourceRepo.save(any(Resource.class))).thenReturn(savedResource);
 
 		ResourceResponse response = resourceService.createResource(request);
@@ -68,11 +79,28 @@ class ResourceServiceImplTest {
 		assertEquals(500, response.getQuantity());
 		assertEquals(ResourceStatus.ACTIVE, response.getStatus());
 
+		verify(programFeignClient).getProgramStatus(1L);
 		verify(resourceRepo).save(any(Resource.class));
+	}
+
+	// Ensures resource allocation is blocked when program is NOT ACTIVE
+	@Test
+	void createResource_programNotActive() {
+
+		ResourceCreateRequest request = new ResourceCreateRequest();
+		request.setProgramId(1L);
+		request.setQuantity(100);
+
+		ProgramStatusResponse program = new ProgramStatusResponse(1L, ProgramStatus.INACTIVE);
+
+		when(programFeignClient.getProgramStatus(1L)).thenReturn(program);
+
+		assertThrows(IllegalStateException.class, () -> resourceService.createResource(request));
 	}
 
 	// ---------------- UPDATE RESOURCE ----------------
 
+	// Validates resource update when resource is mutable and input is valid
 	@Test
 	void updateResource_success() {
 
@@ -83,6 +111,7 @@ class ResourceServiceImplTest {
 
 		Resource existingResource = new Resource();
 		existingResource.setResourceId(5L);
+		existingResource.setStatus(ResourceStatus.ACTIVE);
 
 		when(resourceRepo.findById(5L)).thenReturn(Optional.of(existingResource));
 		when(resourceRepo.save(existingResource)).thenReturn(existingResource);
@@ -96,22 +125,31 @@ class ResourceServiceImplTest {
 		verify(resourceRepo).save(existingResource);
 	}
 
+	// Ensures COMPLETED resources are immutable and cannot be modified
 	@Test
-	void updateResource_notFound() {
+	void updateResource_completedResource() {
 
-		when(resourceRepo.findById(20L)).thenReturn(Optional.empty());
+		ResourceUpdateRequest request = new ResourceUpdateRequest();
+		request.setQuantity(10);
 
-		assertThrows(ResourceNotFoundException.class,
-				() -> resourceService.updateResource(20L, new ResourceUpdateRequest()));
+		Resource completedResource = new Resource();
+		completedResource.setResourceId(6L);
+		completedResource.setStatus(ResourceStatus.COMPLETED);
+
+		when(resourceRepo.findById(6L)).thenReturn(Optional.of(completedResource));
+
+		assertThrows(IllegalStateException.class, () -> resourceService.updateResource(6L, request));
 	}
 
 	// ---------------- DELETE RESOURCE ----------------
 
+	// Allows deletion only for resources that are not ACTIVE or not COMPLETED
 	@Test
 	void deleteResource_success() {
 
 		Resource resource = new Resource();
 		resource.setResourceId(7L);
+		resource.setStatus(ResourceStatus.PENDING);
 
 		when(resourceRepo.findById(7L)).thenReturn(Optional.of(resource));
 
@@ -120,16 +158,22 @@ class ResourceServiceImplTest {
 		verify(resourceRepo).delete(resource);
 	}
 
+	// Prevents deletion of ACTIVE resources to avoid data loss
 	@Test
-	void deleteResource_notFound() {
+	void deleteResource_activeResource() {
 
-		when(resourceRepo.findById(9L)).thenReturn(Optional.empty());
+		Resource resource = new Resource();
+		resource.setResourceId(8L);
+		resource.setStatus(ResourceStatus.ACTIVE);
 
-		assertThrows(ResourceNotFoundException.class, () -> resourceService.deleteResourceById(9L));
+		when(resourceRepo.findById(8L)).thenReturn(Optional.of(resource));
+
+		assertThrows(IllegalStateException.class, () -> resourceService.deleteResourceById(8L));
 	}
 
 	// ---------------- GET BY ID ----------------
 
+	// Retrieves resource successfully when it exists
 	@Test
 	void getResourceById_success() {
 
@@ -145,6 +189,7 @@ class ResourceServiceImplTest {
 		assertEquals(100, response.getQuantity());
 	}
 
+	// Throws exception when requested resource does not exist
 	@Test
 	void getResourceById_notFound() {
 
@@ -155,6 +200,7 @@ class ResourceServiceImplTest {
 
 	// ---------------- GET ALL ----------------
 
+	// Returns all available resources without applying business
 	@Test
 	void getAllResources_success() {
 
@@ -173,6 +219,7 @@ class ResourceServiceImplTest {
 
 	// ---------------- GET BY PROGRAM ID ----------------
 
+	// Fetches resources associated with a specific program
 	@Test
 	void getResourcesByProgramId_success() {
 
@@ -190,6 +237,7 @@ class ResourceServiceImplTest {
 
 	// ---------------- SEARCH ----------------
 
+	// Searches resources using type and status filters
 	@Test
 	void getResourcesByTypeAndStatus_success() {
 

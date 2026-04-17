@@ -74,10 +74,6 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-<<<<<<< HEAD
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-config</artifactId>
-=======
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
@@ -85,7 +81,6 @@
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-test</artifactId>
 			<scope>test</scope>
->>>>>>> branch 'main' of https://github.com/PRATAP0070/HealthGovMicroservices.git
 		</dependency>
 	</dependencies>
 	<dependencyManagement>

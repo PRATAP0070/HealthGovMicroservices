@@ -27,17 +27,18 @@ import lombok.extern.slf4j.Slf4j;
 public class DocumentServiceImpl implements DocumentService {
 
     private final DocumentRepository documentRepo;
-    private final CitizenRepository citizenRepo;
+    private final CitizenRepository citizenRepo; 
 
     @Override
     public String uploadDocument(Long citizenId, DocumentRequestDTO request) {
         log.info("Request to upload {} for Citizen ID: {}", request.getDocumentType(), citizenId);
         
+        // Fetch the actual Citizen object from the database
         Citizen citizen = citizenRepo.findById(citizenId)
-                .orElseThrow(() -> new CitizenNotFoundException("Citizen ID " + citizenId + " not found"));
+                .orElseThrow(() -> new CitizenNotFoundException(citizenId));
 
         CitizenDocument doc = new CitizenDocument();
-        doc.setCitizen(citizen);
+        doc.setCitizen(citizen); // Set the object, not just the ID
         doc.setDocumentName(request.getDocumentName());
         
         try {
@@ -62,6 +63,7 @@ public class DocumentServiceImpl implements DocumentService {
         List<DocumentResponseDTO> filteredResults = new ArrayList<>();
 
         for (CitizenDocument doc : allDocuments) {
+            // Check through the Citizen object
             if (doc.getCitizen() != null && doc.getCitizen().getCitizenId().equals(citizenId)) {
                 filteredResults.add(mapToDTO(doc));
             }
@@ -116,8 +118,12 @@ public class DocumentServiceImpl implements DocumentService {
 
     private DocumentResponseDTO mapToDTO(CitizenDocument d) {
         return new DocumentResponseDTO(
-                d.getDocumentId(), d.getDocumentName(), d.getDocType().name(),
-                d.getFileURI(), d.getUploadedDate(), d.getCitizen().getCitizenId(),
+                d.getDocumentId(), 
+                d.getDocumentName(), 
+                d.getDocType().name(),
+                d.getFileURI(), 
+                d.getUploadedDate(), 
+                d.getCitizen().getCitizenId(), 
                 d.getVerificationStatus() != null ? d.getVerificationStatus().name() : "PENDING"
         );
     }

@@ -1,7 +1,7 @@
 package com.healthgov.service;
 
-
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.healthgov.dto.HealthProfileRequestDTO;
 import com.healthgov.dto.HealthProfileResponseDTO;
@@ -13,7 +13,6 @@ import com.healthgov.model.HealthProfile;
 import com.healthgov.repository.CitizenRepository;
 import com.healthgov.repository.HealthProfileRepository;
 
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -24,7 +23,7 @@ import lombok.extern.slf4j.Slf4j;
 public class HealthProfileServiceImpl implements HealthProfileService {
 
     private final HealthProfileRepository profileRepo;
-    private final CitizenRepository citizenRepo;
+    private final CitizenRepository citizenRepo; 
 
     @Override
     public HealthProfileResponseDTO saveOrUpdateProfile(Long citizenId, HealthProfileRequestDTO input) {
@@ -36,7 +35,7 @@ public class HealthProfileServiceImpl implements HealthProfileService {
         HealthProfile profile = profileRepo.findByCitizen_CitizenId(citizenId)
                 .orElseGet(() -> {
                     HealthProfile newProfile = new HealthProfile();
-                    newProfile.setCitizen(citizen);
+                    newProfile.setCitizen(citizen); 
                     return newProfile;
                 });
 
@@ -68,7 +67,6 @@ public class HealthProfileServiceImpl implements HealthProfileService {
 
     @Override
     public HealthProfileResponseDTO getProfile(Long citizenId) {
-    
         return profileRepo.findByCitizen_CitizenId(citizenId)
                 .map(this::mapToDTO)
                 .orElseThrow(() -> new HealthProfileNotFoundException(citizenId));
@@ -76,7 +74,6 @@ public class HealthProfileServiceImpl implements HealthProfileService {
 
     @Override
     public void deleteProfile(Long citizenId) {
-      
         HealthProfile profile = profileRepo.findByCitizen_CitizenId(citizenId)
                 .orElseThrow(() -> new HealthProfileNotFoundException(citizenId));
         
@@ -86,14 +83,19 @@ public class HealthProfileServiceImpl implements HealthProfileService {
     private HealthProfileResponseDTO mapToDTO(HealthProfile hp) {
         HealthProfileResponseDTO dto = new HealthProfileResponseDTO();
         dto.setProfileId(hp.getProfileId());
+        
+        // Safely fetching the ID from the associated Citizen object
         if (hp.getCitizen() != null) {
-            dto.setCitizenId(hp.getCitizen().getCitizenId());
+            dto.setCitizenId(hp.getCitizen().getCitizenId()); 
         }
+        
         dto.setMedicalHistoryJson(hp.getMedicalHistoryJson());
         dto.setAllergies(hp.getAllergies());
+        
         if (hp.getStatus() != null) {
             dto.setStatus(hp.getStatus().name());
         }
+        
         return dto;
     }
 }

@@ -3,7 +3,7 @@ package com.healthgov.model;
 import java.time.LocalDateTime;
 
 import com.healthgov.enums.DocumentType;
-import com.healthgov.enums.VerificationStatus; 
+import com.healthgov.enums.VerificationStatus;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -23,23 +23,23 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CitizenDocument {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long documentId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long documentId;
 
-	private String documentName;
+    private String documentName;
 
-	@Enumerated(EnumType.STRING)
-	private DocumentType docType;
+    @Enumerated(EnumType.STRING)
+    private DocumentType docType;
 
-	private String fileURI;
-	
-	private LocalDateTime uploadedDate;
+    private String fileURI;
+    
+    private LocalDateTime uploadedDate;
 
-	@Enumerated(EnumType.STRING)
-	private VerificationStatus verificationStatus;
+    @Enumerated(EnumType.STRING)
+    private VerificationStatus verificationStatus;
 
-	@ManyToOne
-	@JoinColumn(name = "citizen_id")
-	private Citizen citizen;
+    @ManyToOne
+    @JoinColumn(name = "citizen_id", nullable = false)
+    private Citizen citizen;
 }

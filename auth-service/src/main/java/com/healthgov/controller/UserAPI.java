@@ -23,6 +23,7 @@ import com.healthgov.dto.UserDTO;
 import com.healthgov.dto.UserReqDTO;
 import com.healthgov.enums.Role;
 import com.healthgov.exception.AuthenticationFailedException;
+import com.healthgov.service.AuditLogService;
 import com.healthgov.service.ForgetPasswordService;
 import com.healthgov.service.LoginServiceImpl;
 import com.healthgov.service.RegistrationService;
@@ -35,6 +36,9 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class UserAPI {
 
+	@Autowired
+	private AuditLogService auditLogService;
+	
 	@Autowired
 	private ForgetPasswordService forgetPasswordService;
 	
@@ -84,7 +88,7 @@ public class UserAPI {
 		final String token = jwtTokenUtil.generateToken(userDetails, Role.valueOf(role));
 
 		log.info("After token generated");
-		//auditLogService.createAuditLog(loginService.getUserById(loginDto.getEmail()), "login", "Profile");
+		auditLogService.createAuditLog(loginServiceImpl.getUserById(loginDto.getEmail()), "login", "Profile");
 
 		return ResponseEntity.ok(new JwtResponse(token));
 	}

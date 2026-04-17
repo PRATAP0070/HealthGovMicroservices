@@ -15,6 +15,9 @@ import com.healthgov.enums.ComplianceResult;
 import com.healthgov.enums.ComplianceType;
 import com.healthgov.exceptions.ComplianceRequestException;
 import com.healthgov.exceptions.ResourceNotFoundException;
+import com.healthgov.feignclients.GrantClient;
+import com.healthgov.feignclients.ProgramClient;
+import com.healthgov.feignclients.ProjectClient;
 import com.healthgov.models.ComplianceRecord;
 import com.healthgov.repository.ComplianceRecordRepository;
 //import com.healthgov.repository.GrantRepository;
@@ -28,9 +31,9 @@ import lombok.RequiredArgsConstructor;
 public class ComplianceServiceImpl implements ComplianceService {
 
 	private final ComplianceRecordRepository complianceRepo;
-//	private final HealthProgramRepository healthProgramRepo;
-//	private final ResearchProjectRepository researchProjectRepo;
-//	private final GrantRepository grantsRepo;
+    private final ProgramClient programClient;
+    private final ProjectClient projectClient;
+    private final GrantClient grantClient;
 
 	private static final Logger log = LoggerFactory.getLogger(ComplianceServiceImpl.class);
 

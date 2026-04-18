@@ -1,12 +1,16 @@
 package com.healthgov.exceptions;
 
 import java.time.LocalDate;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -66,6 +70,50 @@ public class GlobalExceptionHandler {
 				error -> errors.append(error.getField()).append(": ").append(error.getDefaultMessage()).append("; "));
 
 		return new ResponseEntity<>("Validation error(s): " + errors, HttpStatus.BAD_REQUEST);
+	}
+
+	@ExceptionHandler(MethodArgumentTypeMismatchException.class)
+	public ResponseEntity<ExceptionResponse> handleMethodArgumentTypeMismatch(
+	        MethodArgumentTypeMismatchException ex) {
+
+	    String paramName = ex.getName();
+	    Object invalidValue = ex.getValue();
+
+	    String message;
+
+	    if (ex.getRequiredType() != null && ex.getRequiredType().isEnum()) {
+
+	        // Extract enum values
+	        List<String> allowedValues = Arrays.stream(ex.getRequiredType().getEnumConstants())
+	                .map(Object::toString)
+	                .collect(Collectors.toList());
+
+	        message = String.format(
+	                "Invalid value '%s' for parameter '%s'. Allowed values are %s",
+	                invalidValue, paramName, allowedValues
+	        );
+
+	    } else {
+
+	        String requiredType = ex.getRequiredType() != null
+	                ? ex.getRequiredType().getSimpleName()
+	                : "unknown";
+
+	        message = String.format(
+	                "Invalid value '%s' for parameter '%s'. Expected type: %s",
+	                invalidValue, paramName, requiredType
+	        );
+	    }
+
+	    log.error("Method argument type mismatch: {}", message);
+
+	    ExceptionResponse response = new ExceptionResponse(
+	            message,
+	            LocalDate.now(),
+	            400
+	    );
+
+	    return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
 	}
 
 	@ExceptionHandler(Exception.class)

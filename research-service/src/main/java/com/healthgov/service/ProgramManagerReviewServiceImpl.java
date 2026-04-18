@@ -32,103 +32,170 @@ public class ProgramManagerReviewServiceImpl implements ProgramManagerReviewServ
     private final GrantRepository grantRepo;
     private final GrantApplicationRepository grantApplicationRepo;
 
+    // ✅ Get project by id
     @Override
     @Transactional(readOnly = true)
     public ResearchProjectResponse getProject(Long projectId) {
 
-        ResearchProject project = projectRepo.findById(projectId)
-                .orElseThrow(() -> new MedicalResearchException(
-                        HttpStatus.NOT_FOUND, "Project not found"));
+        log.info("Fetching project for PM review: projectId={}", projectId);
 
-        return toResponse(project);
+        ResearchProject p = projectRepo.findById(projectId).orElseThrow(() -> {
+            log.error("Project NOT FOUND: projectId={}", projectId);
+            return new MedicalResearchException(
+                    HttpStatus.NOT_FOUND,
+                    "Project not found: " + projectId);
+        });
+
+        log.info("Project fetched successfully: projectId={}", projectId);
+        return toResponse(p);
     }
 
+    // ✅ List pending projects
     @Override
     @Transactional(readOnly = true)
     public List<ResearchProjectResponse> listPending() {
-        return toResponseList(
-                projectRepo.findByStatus(ProjectStatus.PENDING));
+
+        log.info("Fetching ALL PENDING projects for PM dashboard.");
+
+        List<ResearchProject> pending =
+                projectRepo.findByStatus(ProjectStatus.PENDING);
+
+        log.info("Total pending projects found: {}", pending.size());
+        return toResponseList(pending);
     }
 
+    // ✅ List projects by status
     @Override
     @Transactional(readOnly = true)
     public List<ResearchProjectResponse> listByStatus(String status) {
 
-        ProjectStatus ps;
+        log.info("Fetching projects with status={}", status);
+
+        ProjectStatus s;
         try {
-            ps = ProjectStatus.valueOf(status.toUpperCase());
-        } catch (Exception e) {
+            s = ProjectStatus.valueOf(status.toUpperCase());
+        } catch (Exception ex) {
+            log.error("Invalid status received: {}", status);
             throw new MedicalResearchException(
                     HttpStatus.BAD_REQUEST,
-                    "Allowed values: PENDING, APPROVED, REJECTED");
+                    "Allowed: PENDING, APPROVED, REJECTED");
         }
 
-        return toResponseList(projectRepo.findByStatus(ps));
+        List<ResearchProject> list = projectRepo.findByStatus(s);
+        log.info("Projects found with status {}: {}", status, list.size());
+
+        return toResponseList(list);
     }
 
+    // ✅ PM Decision
     @Override
     public ResearchProjectResponse decide(
             Long projectId, String decision, String reason, Double amount) {
 
-        ResearchProject project = projectRepo.findById(projectId)
-                .orElseThrow(() -> new MedicalResearchException(
-                        HttpStatus.NOT_FOUND, "Project not found"));
+        log.info("PM decision received: projectId={}, decision={}", projectId, decision);
 
-        ProjectStatus ps;
-        try {
-            ps = ProjectStatus.valueOf(decision.toUpperCase());
-        } catch (Exception e) {
+        if (decision == null || decision.isBlank()) {
+            log.error("PM decision missing for projectId={}", projectId);
             throw new MedicalResearchException(
-                    HttpStatus.BAD_REQUEST, "Invalid decision");
+                    HttpStatus.BAD_REQUEST,
+                    "decision is required");
         }
+
+        ProjectStatus d;
+        try {
+            d = ProjectStatus.valueOf(decision.toUpperCase());
+        } catch (Exception e) {
+            log.error("Invalid decision={} for projectId={}", decision, projectId);
+            throw new MedicalResearchException(
+                    HttpStatus.BAD_REQUEST,
+                    "Allowed: APPROVED, REJECTED");
+        }
+
+        ResearchProject p = projectRepo.findById(projectId).orElseThrow(() -> {
+            log.error("Project not found during PM decision: projectId={}", projectId);
+            return new MedicalResearchException(
+                    HttpStatus.NOT_FOUND,
+                    "Project not found: " + projectId);
+        });
+
+        log.info("Project found. Applying decision={} for projectId={}", decision, projectId);
 
         GrantApplication ga =
                 grantApplicationRepo
                         .findTopByProject_ProjectIdOrderByApplicationIdDesc(projectId);
 
-        if (ps == ProjectStatus.REJECTED) {
+        // ✅ REJECTED
+        if (d == ProjectStatus.REJECTED) {
+
+            log.warn("Rejecting project: projectId={}", projectId);
 
             if (reason == null || reason.isBlank()) {
+                log.error("Rejection reason missing for projectId={}", projectId);
                 throw new MedicalResearchException(
                         HttpStatus.BAD_REQUEST,
-                        "Reason is mandatory when rejecting");
+                        "reason is required when REJECTED");
             }
 
-            project.setReason(reason);
+            p.setReason(reason);
             ga.setStatus(GrantStatus.REJECTED);
+            grantApplicationRepo.save(ga);
+
+            log.info("Project rejected: projectId={}, reason={}", projectId, reason);
         }
 
-        if (ps == ProjectStatus.APPROVED) {
+        // ✅ APPROVED
+        else if (d == ProjectStatus.APPROVED) {
 
-            if (amount == null || amount < 0) {
+            log.info("Approving project: projectId={}", projectId);
+
+            if (amount == null || amount <= 0) {
+                log.error("Missing/invalid amount for APPROVED projectId={}", projectId);
                 throw new MedicalResearchException(
                         HttpStatus.BAD_REQUEST,
-                        "Valid amount required for approval");
+                        "amount must be provided when APPROVED & amount > 0");
             }
 
             ga.setStatus(GrantStatus.APPROVED);
+            grantApplicationRepo.save(ga);
 
+            log.info("GrantApplication updated to APPROVED for projectId={}", projectId);
+
+            // ✅ Create grant if not exists
             if (grantRepo.countByProject_ProjectId(projectId) == 0) {
 
-                Grants grant = new Grants();
-                grant.setProject(project);
-                grant.setResearcherId(project.getResearcherId());
-                grant.setAmount(amount);
-                grant.setDate(LocalDateTime.now());
-                grant.setStatus(GrantStatus.APPROVED);
+                log.info("No existing grant found. Creating new grant for projectId={}, amount={}",
+                        projectId, amount);
 
-                grantRepo.save(grant);
+                Grants g = new Grants();
+                g.setProject(p);
+                g.setResearcherId(p.getResearcherId()); // ✅ MICROservice change
+                g.setDate(LocalDateTime.now());
+                g.setAmount(amount);
+                g.setStatus(GrantStatus.APPROVED);
+
+                grantRepo.save(g);
+
+                log.info("Grant created successfully: projectId={}, amount={}", projectId, amount);
             }
         }
 
-        project.setStatus(ps);
-        projectRepo.save(project);
-        grantApplicationRepo.save(ga);
+        p.setStatus(d);
+        ResearchProject saved = projectRepo.save(p);
 
-        return toResponse(project);
+        log.info("Project decision applied successfully: projectId={}, finalStatus={}",
+                projectId, d);
+
+        return toResponse(saved);
     }
 
     /* ---------- DTO Mapping ---------- */
+
+    private List<ResearchProjectResponse> toResponseList(List<ResearchProject> list) {
+        List<ResearchProjectResponse> out = new ArrayList<>();
+        for (ResearchProject p : list)
+            out.add(toResponse(p));
+        return out;
+    }
 
     private ResearchProjectResponse toResponse(ResearchProject p) {
         ResearchProjectResponse r = new ResearchProjectResponse();
@@ -139,15 +206,7 @@ public class ProgramManagerReviewServiceImpl implements ProgramManagerReviewServ
         r.setEndDate(p.getEndDate());
         r.setStatus(p.getStatus().name());
         r.setReason(p.getReason());
-        r.setResearcherId(p.getResearcherId());
+        r.setResearcherId(p.getResearcherId()); // ✅ MICROservice change
         return r;
-    }
-
-    private List<ResearchProjectResponse> toResponseList(List<ResearchProject> list) {
-        List<ResearchProjectResponse> out = new ArrayList<>();
-        for (ResearchProject p : list) {
-            out.add(toResponse(p));
-        }
-        return out;
     }
 }

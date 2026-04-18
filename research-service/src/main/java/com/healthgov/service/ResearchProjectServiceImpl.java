@@ -12,8 +12,10 @@ import com.healthgov.client.UserClient;
 import com.healthgov.dto.ResearchProjectCreateRequest;
 import com.healthgov.dto.ResearchProjectResponse;
 import com.healthgov.dto.ResearchProjectUpdateRequest;
+import com.healthgov.dto.UserReqDTO;
 import com.healthgov.enums.GrantStatus;
 import com.healthgov.enums.ProjectStatus;
+import com.healthgov.enums.Role;
 import com.healthgov.exceptions.MedicalResearchException;
 import com.healthgov.model.GrantApplication;
 import com.healthgov.model.ResearchProject;
@@ -31,79 +33,139 @@ import lombok.extern.slf4j.Slf4j;
 public class ResearchProjectServiceImpl implements ResearchProjectService {
 
     private final ResearchProjectRepository projectRepo;
-    private final GrantApplicationRepository grantApplicationRepo;
     private final GrantRepository grantRepo;
-    private final UserClient userClient; // ✅ Feign client
+    private final GrantApplicationRepository grantApplicationRepo;
+    private final UserClient userClient;
+
+    /* ================= CREATE PROJECT ================= */
 
     @Override
     public ResearchProjectResponse create(ResearchProjectCreateRequest req) {
 
-        log.info("Creating research project for researcherId={}", req.getResearcherId());
+        log.info("Creating new research project for researcherId={}", req.getResearcherId());
 
-        if (req.getStartDate().isBefore(LocalDate.now())) {
+        LocalDate today = LocalDate.now();
+
+        if (req.getStartDate().isBefore(today)) {
             throw new MedicalResearchException(
-                    HttpStatus.BAD_REQUEST, "startDate cannot be in the past");
+                    HttpStatus.BAD_REQUEST,
+                    "startDate cannot be in the past");
         }
 
         if (req.getEndDate().isBefore(req.getStartDate())) {
             throw new MedicalResearchException(
-                    HttpStatus.BAD_REQUEST, "endDate cannot be before startDate");
+                    HttpStatus.BAD_REQUEST,
+                    "endDate cannot be before startDate");
         }
 
-        // ✅ Validate researcher via User Service
-        userClient.getUserById(req.getResearcherId());
+        // ✅ Validate researcher existence + role
+        UserReqDTO user;
+        try {
+            user = userClient.getUserById(req.getResearcherId());
+        } catch (Exception e) {
+            throw new MedicalResearchException(
+                    HttpStatus.NOT_FOUND,
+                    "Researcher not found: " + req.getResearcherId());
+        }
 
-        ResearchProject project = new ResearchProject();
-        project.setTitle(req.getTitle());
-        project.setDescription(req.getDescription());
-        project.setResearcherId(req.getResearcherId());
-        project.setStartDate(req.getStartDate());
-        project.setEndDate(req.getEndDate());
-        project.setStatus(ProjectStatus.PENDING);
-        project.setReason(null);
+        if (user.getRole() != Role.RESEARCHER) {
+            throw new MedicalResearchException(
+                    HttpStatus.BAD_REQUEST,
+                    "Only users with RESEARCHER role can create research projects");
+        }
 
-        ResearchProject saved = projectRepo.save(project);
+        ResearchProject p = new ResearchProject();
+        p.setTitle(req.getTitle());
+        p.setDescription(req.getDescription());
+        p.setResearcherId(req.getResearcherId());
+        p.setStartDate(req.getStartDate());
+        p.setEndDate(req.getEndDate());
+        p.setStatus(ProjectStatus.PENDING);
+        p.setReason(null);
+
+        ResearchProject saved = projectRepo.save(p);
 
         GrantApplication ga = new GrantApplication();
         ga.setProject(saved);
         ga.setResearcherId(req.getResearcherId());
-        ga.setStatus(GrantStatus.PENDING);
         ga.setSubmittedDate(LocalDate.now());
+        ga.setStatus(GrantStatus.PENDING);
         grantApplicationRepo.save(ga);
 
         return toResponse(saved);
     }
+
+    /* ================= UPDATE PROJECT ================= */
 
     @Override
     public ResearchProjectResponse update(ResearchProjectUpdateRequest req) {
 
-        ResearchProject project = projectRepo.findById(req.getProjectId())
-                .orElseThrow(() -> new MedicalResearchException(
-                        HttpStatus.NOT_FOUND, "Project not found"));
+        log.info("Updating research project with projectId={}", req.getProjectId());
 
-        if (project.getStatus() == ProjectStatus.APPROVED) {
+        ResearchProject p = projectRepo.findById(req.getProjectId())
+                .orElseThrow(() ->
+                        new MedicalResearchException(
+                                HttpStatus.NOT_FOUND,
+                                "Project not found: " + req.getProjectId()
+                        )
+                );
+
+        // ✅ Validate existing researcher + role
+        UserReqDTO user;
+        try {
+            user = userClient.getUserById(p.getResearcherId());
+        } catch (Exception e) {
             throw new MedicalResearchException(
-                    HttpStatus.BAD_REQUEST, "Approved projects cannot be updated");
+                    HttpStatus.NOT_FOUND,
+                    "Researcher not found: " + p.getResearcherId());
         }
 
-        project.setTitle(req.getTitle());
-        project.setDescription(req.getDescription());
-        project.setStartDate(req.getStartDate());
-        project.setEndDate(req.getEndDate());
-        project.setStatus(ProjectStatus.PENDING);
-        project.setReason(null);
+        if (user.getRole() != Role.RESEARCHER) {
+            throw new MedicalResearchException(
+                    HttpStatus.BAD_REQUEST,
+                    "Project researcher must have RESEARCHER role");
+        }
 
-        ResearchProject saved = projectRepo.save(project);
+        LocalDate today = LocalDate.now();
+
+        if (req.getStartDate().isBefore(today)) {
+            throw new MedicalResearchException(
+                    HttpStatus.BAD_REQUEST,
+                    "startDate cannot be in the past");
+        }
+
+        if (req.getEndDate().isBefore(req.getStartDate())) {
+            throw new MedicalResearchException(
+                    HttpStatus.BAD_REQUEST,
+                    "endDate cannot be before startDate");
+        }
+
+        if (p.getStatus() == ProjectStatus.APPROVED) {
+            throw new MedicalResearchException(
+                    HttpStatus.BAD_REQUEST,
+                    "Approved projects cannot be updated.");
+        }
+
+        p.setTitle(req.getTitle());
+        p.setDescription(req.getDescription());
+        p.setStartDate(req.getStartDate());
+        p.setEndDate(req.getEndDate());
+        p.setStatus(ProjectStatus.PENDING);
+        p.setReason(null);
+
+        ResearchProject saved = projectRepo.save(p);
 
         GrantApplication ga = new GrantApplication();
         ga.setProject(saved);
         ga.setResearcherId(saved.getResearcherId());
-        ga.setStatus(GrantStatus.PENDING);
         ga.setSubmittedDate(LocalDate.now());
+        ga.setStatus(GrantStatus.PENDING);
         grantApplicationRepo.save(ga);
 
         return toResponse(saved);
     }
+
+    /* ================= LIST PROJECTS ================= */
 
     @Override
     @Transactional(readOnly = true)
@@ -113,11 +175,12 @@ public class ResearchProjectServiceImpl implements ResearchProjectService {
 
         if (status != null && !status.isBlank()) {
             try {
-                projects = projectRepo.findByStatus(
-                        ProjectStatus.valueOf(status.toUpperCase()));
-            } catch (Exception e) {
+                ProjectStatus s = ProjectStatus.valueOf(status.toUpperCase());
+                projects = projectRepo.findByStatus(s);
+            } catch (IllegalArgumentException e) {
                 throw new MedicalResearchException(
-                        HttpStatus.BAD_REQUEST, "Invalid project status");
+                        HttpStatus.BAD_REQUEST,
+                        "Invalid status. Allowed: PENDING, APPROVED, REJECTED");
             }
         } else {
             projects = projectRepo.findAll();
@@ -126,36 +189,47 @@ public class ResearchProjectServiceImpl implements ResearchProjectService {
         return toResponseList(projects);
     }
 
+    /* ================= GET PROJECT ================= */
+
     @Override
     @Transactional(readOnly = true)
     public ResearchProjectResponse get(Long id) {
 
-        ResearchProject project = projectRepo.findById(id)
-                .orElseThrow(() -> new MedicalResearchException(
-                        HttpStatus.NOT_FOUND, "Project not found"));
+        ResearchProject p = projectRepo.findById(id)
+                .orElseThrow(() ->
+                        new MedicalResearchException(
+                                HttpStatus.NOT_FOUND,
+                                "Project not found: " + id
+                        ));
 
-        return toResponse(project);
+        return toResponse(p);
     }
+
+    /* ================= DELETE PROJECT ================= */
 
     @Override
     public void delete(Long id) {
 
-        ResearchProject project = projectRepo.findById(id)
-                .orElseThrow(() -> new MedicalResearchException(
-                        HttpStatus.NOT_FOUND, "Project not found"));
+        ResearchProject p = projectRepo.findById(id)
+                .orElseThrow(() ->
+                        new MedicalResearchException(
+                                HttpStatus.NOT_FOUND,
+                                "Project not found: " + id
+                        ));
 
-        if (project.getStatus() != ProjectStatus.PENDING) {
-            throw new MedicalResearchException(
-                    HttpStatus.CONFLICT,
-                    "Only PENDING projects can be deleted");
+        if (p.getStatus() == ProjectStatus.PENDING) {
+            grantRepo.deleteByProject_ProjectId(id);
+            grantApplicationRepo.deleteByProject_ProjectId(id);
+            projectRepo.delete(p);
+            return;
         }
 
-        grantRepo.deleteByProject_ProjectId(id);
-        grantApplicationRepo.deleteByProject_ProjectId(id);
-        projectRepo.delete(project);
+        throw new MedicalResearchException(
+                HttpStatus.CONFLICT,
+                "Cannot delete project with APPROVED/REJECTED status.");
     }
 
-    /* ---------- DTO Mapping ---------- */
+    /* ================= DTO MAPPING ================= */
 
     private ResearchProjectResponse toResponse(ResearchProject p) {
         ResearchProjectResponse r = new ResearchProjectResponse();

@@ -2,6 +2,7 @@ package com.healthgov.config;
 
 import java.io.Serializable;
 
+
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;

@@ -10,17 +10,21 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.healthgov.config.JwtTokenUtil;
+import com.healthgov.dto.ForgetPasswordDto;
 import com.healthgov.dto.JwtResponse;
 import com.healthgov.dto.LoginDTO;
 import com.healthgov.dto.UserDTO;
 import com.healthgov.dto.UserReqDTO;
 import com.healthgov.enums.Role;
 import com.healthgov.exception.AuthenticationFailedException;
+import com.healthgov.service.AuditLogService;
+import com.healthgov.service.ForgetPasswordService;
 import com.healthgov.service.LoginServiceImpl;
 import com.healthgov.service.RegistrationService;
 import com.healthgov.service.UserService;
@@ -32,6 +36,12 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class UserAPI {
 
+	@Autowired
+	private AuditLogService auditLogService;
+	
+	@Autowired
+	private ForgetPasswordService forgetPasswordService;
+	
 	@Autowired
 	private AuthenticationManager authenticationManager;
 	
@@ -53,7 +63,7 @@ public class UserAPI {
 		return new ResponseEntity<>(savedDto, HttpStatus.CREATED);
 	}
 
-	@PostMapping("/citizenRegisterForAdmin")
+	@PostMapping("/userRegisterByAdmin")
 	public ResponseEntity<UserDTO> addCitizenAsperRole(@RequestBody UserDTO userDTO) {
 		UserDTO savedDto = registrationService.registerUser(userDTO);
 		return new ResponseEntity<>(savedDto, HttpStatus.CREATED);
@@ -78,7 +88,7 @@ public class UserAPI {
 		final String token = jwtTokenUtil.generateToken(userDetails, Role.valueOf(role));
 
 		log.info("After token generated");
-		//auditLogService.createAuditLog(loginService.getUserById(loginDto.getEmail()), "login", "Profile");
+		auditLogService.createAuditLog(loginServiceImpl.getUserById(loginDto.getEmail()), "login", "Profile");
 
 		return ResponseEntity.ok(new JwtResponse(token));
 	}
@@ -95,5 +105,10 @@ public class UserAPI {
 	public UserReqDTO getUserById(@PathVariable Long userId) {
 		UserReqDTO userDto = service.getUserDetailsById(userId);
 		return userDto;
+	}
+	
+	@PutMapping("/forgotPassword")
+	public ResponseEntity<String> forgotPassword(@RequestBody ForgetPasswordDto dto) {
+		return new ResponseEntity<>(forgetPasswordService.resetPassword(dto), HttpStatus.CREATED);
 	}
 }

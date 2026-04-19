@@ -37,8 +37,7 @@ public class ResearchProjectServiceImpl implements ResearchProjectService {
     private final GrantApplicationRepository grantApplicationRepo;
     private final UserClient userClient;
 
-    /* ================= CREATE PROJECT ================= */
-
+    // Create project
     @Override
     public ResearchProjectResponse create(ResearchProjectCreateRequest req) {
 
@@ -58,7 +57,7 @@ public class ResearchProjectServiceImpl implements ResearchProjectService {
                     "endDate cannot be before startDate");
         }
 
-        // ✅ Validate researcher existence + role
+        // Validate researcher existence + role
         UserReqDTO user;
         try {
             user = userClient.getUserById(req.getResearcherId());
@@ -85,6 +84,7 @@ public class ResearchProjectServiceImpl implements ResearchProjectService {
 
         ResearchProject saved = projectRepo.save(p);
 
+        // Creating grant application
         GrantApplication ga = new GrantApplication();
         ga.setProject(saved);
         ga.setResearcherId(req.getResearcherId());
@@ -95,8 +95,7 @@ public class ResearchProjectServiceImpl implements ResearchProjectService {
         return toResponse(saved);
     }
 
-    /* ================= UPDATE PROJECT ================= */
-
+    // Update project
     @Override
     public ResearchProjectResponse update(ResearchProjectUpdateRequest req) {
 
@@ -110,7 +109,7 @@ public class ResearchProjectServiceImpl implements ResearchProjectService {
                         )
                 );
 
-        // ✅ Validate existing researcher + role
+        // Validate existing researcher + role
         UserReqDTO user;
         try {
             user = userClient.getUserById(p.getResearcherId());
@@ -165,8 +164,7 @@ public class ResearchProjectServiceImpl implements ResearchProjectService {
         return toResponse(saved);
     }
 
-    /* ================= LIST PROJECTS ================= */
-
+    // List projects
     @Override
     @Transactional(readOnly = true)
     public List<ResearchProjectResponse> list(String status) {
@@ -189,8 +187,7 @@ public class ResearchProjectServiceImpl implements ResearchProjectService {
         return toResponseList(projects);
     }
 
-    /* ================= GET PROJECT ================= */
-
+    // Get project by id
     @Override
     @Transactional(readOnly = true)
     public ResearchProjectResponse get(Long id) {
@@ -205,7 +202,7 @@ public class ResearchProjectServiceImpl implements ResearchProjectService {
         return toResponse(p);
     }
 
-    /* ================= DELETE PROJECT ================= */
+    // Delete project
 
     @Override
     public void delete(Long id) {
@@ -229,8 +226,7 @@ public class ResearchProjectServiceImpl implements ResearchProjectService {
                 "Cannot delete project with APPROVED/REJECTED status.");
     }
 
-    /* ================= DTO MAPPING ================= */
-
+    // DTO mapping
     private ResearchProjectResponse toResponse(ResearchProject p) {
         ResearchProjectResponse r = new ResearchProjectResponse();
         r.setProjectId(p.getProjectId());

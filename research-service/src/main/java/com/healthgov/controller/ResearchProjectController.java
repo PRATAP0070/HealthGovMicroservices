@@ -20,65 +20,53 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class ResearchProjectController {
 
-    private final ResearchProjectService service;
+	private final ResearchProjectService service;
 
-    // ✅ Create project
-    @PostMapping("/createProject")
-    public ResponseEntity<List<String>> create(
-            @Valid @RequestBody ResearchProjectCreateRequest req) {
+	// Create project
+	@PostMapping("/createProject")
+	public ResponseEntity<List<String>> create(@Valid @RequestBody ResearchProjectCreateRequest req) {
 
-        log.info("CREATE project request for researcherId={}", req.getResearcherId());
+		log.info("CREATE project request for researcherId={}", req.getResearcherId());
 
-        ResearchProjectResponse created = service.create(req);
+		ResearchProjectResponse created = service.create(req);
 
-        return ResponseEntity.ok(
-                List.of(
-                        "Project created successfully",
-                        "Project ID: " + created.getProjectId()
-                )
-        );
-    }
+		return ResponseEntity.ok(List.of("Project created successfully", "Project ID: " + created.getProjectId()));
+	}
 
-    // ✅ Update project
-    @PutMapping("/updateProject")
-    public ResponseEntity<List<String>> update(
-            @Valid @RequestBody ResearchProjectUpdateRequest req) {
+	// Update project
+	@PutMapping("/updateProject")
+	public ResponseEntity<List<String>> update(@Valid @RequestBody ResearchProjectUpdateRequest req) {
 
-        log.info("UPDATE project request for projectId={}", req.getProjectId());
+		log.info("UPDATE project request for projectId={}", req.getProjectId());
 
-        service.update(req);
+		service.update(req);
 
-        return ResponseEntity.ok(
-                List.of("Project updated successfully")
-        );
-    }
+		return ResponseEntity.ok(List.of("Project updated successfully"));
+	}
 
-    // ✅ List projects
-    @GetMapping("/projects")
-    public List<ResearchProjectResponse> list(
-            @RequestParam(required = false) String status) {
+	// List projects
+	@GetMapping("/projects")
+	public List<ResearchProjectResponse> list(@RequestParam(required = false) String status) {
 
-        log.info("Fetching project list. Status={}", status);
-        return service.list(status);
-    }
+		log.info("Fetching project list. Status={}", status);
+		return service.list(status);
+	}
 
-    // ✅ Get project by ID
-    @GetMapping("/projects/{id}")
-    public ResearchProjectResponse get(@PathVariable Long id) {
+	// Get project by ID
+	@GetMapping("/projects/{id}")
+	public ResearchProjectResponse get(@PathVariable Long id) {
 
-        log.info("Fetching project by ID={}", id);
-        return service.get(id);
-    }
+		log.info("Fetching project by ID={}", id);
+		return service.get(id);
+	}
 
-    // ✅ Delete project
-    @DeleteMapping("/projects/{id}")
-    public ResponseEntity<List<String>> delete(@PathVariable Long id) {
+	// Delete project
+	@DeleteMapping("/projects/{id}")
+	public ResponseEntity<List<String>> delete(@PathVariable Long id) {
 
-        log.warn("DELETE project request for projectId={}", id);
-        service.delete(id);
+		log.warn("DELETE project request for projectId={}", id);
+		service.delete(id);
 
-        return ResponseEntity.ok(
-                List.of("Project deleted successfully")
-        );
-    }
+		return ResponseEntity.ok(List.of("Project deleted successfully"));
+	}
 }

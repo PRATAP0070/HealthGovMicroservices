@@ -32,7 +32,7 @@ public class ProgramManagerReviewServiceImpl implements ProgramManagerReviewServ
     private final GrantRepository grantRepo;
     private final GrantApplicationRepository grantApplicationRepo;
 
-    // ✅ Get project by id
+    // Get project by id
     @Override
     @Transactional(readOnly = true)
     public ResearchProjectResponse getProject(Long projectId) {
@@ -50,7 +50,7 @@ public class ProgramManagerReviewServiceImpl implements ProgramManagerReviewServ
         return toResponse(p);
     }
 
-    // ✅ List pending projects
+    // List pending projects
     @Override
     @Transactional(readOnly = true)
     public List<ResearchProjectResponse> listPending() {
@@ -64,7 +64,7 @@ public class ProgramManagerReviewServiceImpl implements ProgramManagerReviewServ
         return toResponseList(pending);
     }
 
-    // ✅ List projects by status
+    // List projects by status
     @Override
     @Transactional(readOnly = true)
     public List<ResearchProjectResponse> listByStatus(String status) {
@@ -87,7 +87,7 @@ public class ProgramManagerReviewServiceImpl implements ProgramManagerReviewServ
         return toResponseList(list);
     }
 
-    // ✅ PM Decision
+    // PM Decision
     @Override
     public ResearchProjectResponse decide(
             Long projectId, String decision, String reason, Double amount) {
@@ -124,7 +124,7 @@ public class ProgramManagerReviewServiceImpl implements ProgramManagerReviewServ
                 grantApplicationRepo
                         .findTopByProject_ProjectIdOrderByApplicationIdDesc(projectId);
 
-        // ✅ REJECTED
+        // REJECTED
         if (d == ProjectStatus.REJECTED) {
 
             log.warn("Rejecting project: projectId={}", projectId);
@@ -143,7 +143,7 @@ public class ProgramManagerReviewServiceImpl implements ProgramManagerReviewServ
             log.info("Project rejected: projectId={}, reason={}", projectId, reason);
         }
 
-        // ✅ APPROVED
+        // APPROVED
         else if (d == ProjectStatus.APPROVED) {
 
             log.info("Approving project: projectId={}", projectId);
@@ -160,7 +160,7 @@ public class ProgramManagerReviewServiceImpl implements ProgramManagerReviewServ
 
             log.info("GrantApplication updated to APPROVED for projectId={}", projectId);
 
-            // ✅ Create grant if not exists
+            // Create grant if not exists
             if (grantRepo.countByProject_ProjectId(projectId) == 0) {
 
                 log.info("No existing grant found. Creating new grant for projectId={}, amount={}",
@@ -168,7 +168,7 @@ public class ProgramManagerReviewServiceImpl implements ProgramManagerReviewServ
 
                 Grants g = new Grants();
                 g.setProject(p);
-                g.setResearcherId(p.getResearcherId()); // ✅ MICROservice change
+                g.setResearcherId(p.getResearcherId()); // MICROservice change
                 g.setDate(LocalDateTime.now());
                 g.setAmount(amount);
                 g.setStatus(GrantStatus.APPROVED);
@@ -188,7 +188,7 @@ public class ProgramManagerReviewServiceImpl implements ProgramManagerReviewServ
         return toResponse(saved);
     }
 
-    /* ---------- DTO Mapping ---------- */
+    // DTO Mapping 
 
     private List<ResearchProjectResponse> toResponseList(List<ResearchProject> list) {
         List<ResearchProjectResponse> out = new ArrayList<>();
@@ -206,7 +206,7 @@ public class ProgramManagerReviewServiceImpl implements ProgramManagerReviewServ
         r.setEndDate(p.getEndDate());
         r.setStatus(p.getStatus().name());
         r.setReason(p.getReason());
-        r.setResearcherId(p.getResearcherId()); // ✅ MICROservice change
+        r.setResearcherId(p.getResearcherId()); // MICROservice change
         return r;
     }
 }

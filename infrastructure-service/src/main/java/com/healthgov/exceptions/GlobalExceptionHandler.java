@@ -7,12 +7,14 @@ import java.util.stream.Collectors;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import lombok.extern.slf4j.Slf4j;
+import tools.jackson.databind.exc.InvalidFormatException;
 
 @RestControllerAdvice
 @Slf4j
@@ -73,47 +75,52 @@ public class GlobalExceptionHandler {
 	}
 
 	@ExceptionHandler(MethodArgumentTypeMismatchException.class)
-	public ResponseEntity<ExceptionResponse> handleMethodArgumentTypeMismatch(
-	        MethodArgumentTypeMismatchException ex) {
+	public ResponseEntity<ExceptionResponse> handleMethodArgumentTypeMismatch(MethodArgumentTypeMismatchException ex) {
 
-	    String paramName = ex.getName();
-	    Object invalidValue = ex.getValue();
+		String paramName = ex.getName();
+		Object invalidValue = ex.getValue();
 
-	    String message;
+		String message;
 
-	    if (ex.getRequiredType() != null && ex.getRequiredType().isEnum()) {
+		if (ex.getRequiredType() != null && ex.getRequiredType().isEnum()) {
 
-	        // Extract enum values
-	        List<String> allowedValues = Arrays.stream(ex.getRequiredType().getEnumConstants())
-	                .map(Object::toString)
-	                .collect(Collectors.toList());
+			// Extract enum values
+			List<String> allowedValues = Arrays.stream(ex.getRequiredType().getEnumConstants()).map(Object::toString)
+					.collect(Collectors.toList());
 
-	        message = String.format(
-	                "Invalid value '%s' for parameter '%s'. Allowed values are %s",
-	                invalidValue, paramName, allowedValues
-	        );
+			message = String.format("Invalid value '%s' for parameter '%s'. Allowed values are %s", invalidValue,
+					paramName, allowedValues);
 
-	    } else {
+		} else {
 
-	        String requiredType = ex.getRequiredType() != null
-	                ? ex.getRequiredType().getSimpleName()
-	                : "unknown";
+			String requiredType = ex.getRequiredType() != null ? ex.getRequiredType().getSimpleName() : "unknown";
 
-	        message = String.format(
-	                "Invalid value '%s' for parameter '%s'. Expected type: %s",
-	                invalidValue, paramName, requiredType
-	        );
-	    }
+			message = String.format("Invalid value '%s' for parameter '%s'. Expected type: %s", invalidValue, paramName,
+					requiredType);
+		}
 
-	    log.error("Method argument type mismatch: {}", message);
+		log.error("Method argument type mismatch: {}", message);
 
-	    ExceptionResponse response = new ExceptionResponse(
-	            message,
-	            LocalDate.now(),
-	            400
-	    );
+		ExceptionResponse response = new ExceptionResponse(message, LocalDate.now(), 400);
 
-	    return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+		return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+	}
+
+	@ExceptionHandler(HttpMessageNotReadableException.class)
+	public ResponseEntity<ExceptionResponse> handleHttpMessageNotReadable(HttpMessageNotReadableException ex) {
+
+		log.error("Invalid request payload", ex);
+
+		String message = "Invalid request payload";
+
+		// Extract exact Jackson enum error
+		if (ex.getCause() instanceof InvalidFormatException ife) {
+			message = ife.getOriginalMessage();
+		}
+
+		ExceptionResponse response = new ExceptionResponse(message, LocalDate.now(), 400);
+
+		return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
 	}
 
 	@ExceptionHandler(Exception.class)

@@ -4,11 +4,13 @@ import java.time.LocalDate;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import lombok.extern.slf4j.Slf4j;
+import tools.jackson.databind.exc.InvalidFormatException;
 
 @RestControllerAdvice
 @Slf4j
@@ -66,6 +68,24 @@ public class GlobalExceptionHandler {
 				error -> errors.append(error.getField()).append(": ").append(error.getDefaultMessage()).append("; "));
 
 		return new ResponseEntity<>("Validation error(s): " + errors, HttpStatus.BAD_REQUEST);
+	}
+
+
+	@ExceptionHandler(HttpMessageNotReadableException.class)
+	public ResponseEntity<ExceptionResponse> handleHttpMessageNotReadable(HttpMessageNotReadableException ex) {
+
+		log.error("Invalid request payload", ex);
+
+		String message = "Invalid request payload";
+
+		// Extract exact Jackson enum error
+		if (ex.getCause() instanceof InvalidFormatException ife) {
+			message = ife.getOriginalMessage();
+		}
+
+		ExceptionResponse response = new ExceptionResponse(message, LocalDate.now(), 400);
+
+		return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
 	}
 
 	@ExceptionHandler(Exception.class)

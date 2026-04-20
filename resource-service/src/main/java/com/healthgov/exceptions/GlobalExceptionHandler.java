@@ -71,27 +71,22 @@ public class GlobalExceptionHandler {
 	}
 
 
-@ExceptionHandler(HttpMessageNotReadableException.class)
-    public ResponseEntity<ExceptionResponse> handleHttpMessageNotReadable(
-            HttpMessageNotReadableException ex) {
+	@ExceptionHandler(HttpMessageNotReadableException.class)
+	public ResponseEntity<ExceptionResponse> handleHttpMessageNotReadable(HttpMessageNotReadableException ex) {
 
-        log.error("Invalid request payload", ex);
+		log.error("Invalid request payload", ex);
 
-        String message = "Invalid request payload";
+		String message = "Invalid request payload";
 
-        // Extract exact Jackson enum error
-        if (ex.getCause() instanceof InvalidFormatException ife) {
-            message = ife.getOriginalMessage();
-        }
+		// Extract exact Jackson enum error
+		if (ex.getCause() instanceof InvalidFormatException ife) {
+			message = ife.getOriginalMessage();
+		}
 
-        ExceptionResponse response = new ExceptionResponse(
-                message,
-                LocalDate.now(),
-                400
-        );
+		ExceptionResponse response = new ExceptionResponse(message, LocalDate.now(), 400);
 
-        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
-    }
+		return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+	}
 
 	@ExceptionHandler(Exception.class)
 	public ResponseEntity<ExceptionResponse> handleGenericException(Exception e) {

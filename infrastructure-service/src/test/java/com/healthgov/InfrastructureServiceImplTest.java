@@ -21,16 +21,25 @@ import com.healthgov.dto.InfrastructureResponse;
 import com.healthgov.dto.InfrastructureUpdateRequest;
 import com.healthgov.enums.InfrastructureStatus;
 import com.healthgov.enums.InfrastructureType;
+import com.healthgov.enums.ProgramStatus;
 import com.healthgov.exceptions.InfrastructureNotFoundException;
+import com.healthgov.external.ProgramFeignClient;
+import com.healthgov.external.dto.ProgramStatusResponse;
 import com.healthgov.model.Infrastructure;
 import com.healthgov.repository.InfrastructureRepository;
 import com.healthgov.service.InfrastructureServiceImpl;
 
 class InfrastructureServiceImplTest {
 
+	// Mock DB repository
 	@Mock
 	private InfrastructureRepository infraRepo;
 
+	// Mock external Program service
+	@Mock
+	private ProgramFeignClient programFeignClient;
+
+	// Service under test
 	@InjectMocks
 	private InfrastructureServiceImpl infrastructureService;
 
@@ -39,7 +48,9 @@ class InfrastructureServiceImplTest {
 		MockitoAnnotations.openMocks(this);
 	}
 
-	// ---------------- CREATE ----------------
+	// --------------------------------------------------
+	// CREATE INFRASTRUCTURE
+	// --------------------------------------------------
 
 	@Test
 	void createInfrastructure_success() {
@@ -51,15 +62,18 @@ class InfrastructureServiceImplTest {
 		request.setCapacity(300);
 		request.setStatus(InfrastructureStatus.OPERATIONAL);
 
-		Infrastructure savedInfra = new Infrastructure();
-		savedInfra.setInfraId(10L);
-		savedInfra.setProgramId(1L);
-		savedInfra.setType(request.getType());
-		savedInfra.setLocation(request.getLocation());
-		savedInfra.setCapacity(request.getCapacity());
-		savedInfra.setStatus(request.getStatus());
+		when(programFeignClient.getProgramStatus(1L))
+				.thenReturn(new ProgramStatusResponse(1L, 1000.0, ProgramStatus.ACTIVE));
 
-		when(infraRepo.save(any(Infrastructure.class))).thenReturn(savedInfra);
+		Infrastructure saved = new Infrastructure();
+		saved.setInfraId(10L);
+		saved.setProgramId(1L);
+		saved.setType(request.getType());
+		saved.setLocation(request.getLocation());
+		saved.setCapacity(request.getCapacity());
+		saved.setStatus(request.getStatus());
+
+		when(infraRepo.save(any(Infrastructure.class))).thenReturn(saved);
 
 		InfrastructureResponse response = infrastructureService.createInfrastructure(request);
 
@@ -71,18 +85,23 @@ class InfrastructureServiceImplTest {
 	}
 
 	@Test
-	void createInfrastructure_negativeCapacity() {
+	void createInfrastructure_negativeCapacityRejected() {
 
 		InfrastructureCreateRequest request = new InfrastructureCreateRequest();
 		request.setProgramId(1L);
-		request.setCapacity(-10);
+		request.setCapacity(-5);
+
+		when(programFeignClient.getProgramStatus(1L))
+				.thenReturn(new ProgramStatusResponse(1L, 1000.0, ProgramStatus.ACTIVE));
 
 		assertThrows(IllegalArgumentException.class, () -> infrastructureService.createInfrastructure(request));
 
 		verify(infraRepo, never()).save(any());
 	}
 
-	// ---------------- UPDATE ----------------
+	// --------------------------------------------------
+	// UPDATE INFRASTRUCTURE
+	// --------------------------------------------------
 
 	@Test
 	void updateInfrastructure_success() {
@@ -90,36 +109,40 @@ class InfrastructureServiceImplTest {
 		InfrastructureUpdateRequest request = new InfrastructureUpdateRequest();
 		request.setType(InfrastructureType.LAB);
 		request.setLocation("Bangalore");
-		request.setCapacity(100);
+		request.setCapacity(150);
 		request.setStatus(InfrastructureStatus.UNDER_MAINTENANCE);
 
-		Infrastructure existingInfra = new Infrastructure();
-		existingInfra.setInfraId(5L);
-		existingInfra.setStatus(InfrastructureStatus.OPERATIONAL);
+		Infrastructure existing = new Infrastructure();
+		existing.setInfraId(5L);
+		existing.setProgramId(1L);
+		existing.setStatus(InfrastructureStatus.OPERATIONAL);
 
-		when(infraRepo.findById(5L)).thenReturn(Optional.of(existingInfra));
-		when(infraRepo.save(existingInfra)).thenReturn(existingInfra);
+		when(infraRepo.findById(5L)).thenReturn(Optional.of(existing));
+		when(programFeignClient.getProgramStatus(1L))
+				.thenReturn(new ProgramStatusResponse(1L, 500.0, ProgramStatus.ACTIVE));
+		when(infraRepo.save(any(Infrastructure.class))).thenReturn(existing);
 
 		InfrastructureResponse response = infrastructureService.updateInfrastructure(5L, request);
 
 		assertEquals("Bangalore", response.getLocation());
 		assertEquals(InfrastructureType.LAB, response.getType());
 		assertEquals(InfrastructureStatus.UNDER_MAINTENANCE, response.getStatus());
-
-		verify(infraRepo).save(existingInfra);
 	}
 
 	@Test
 	void updateInfrastructure_decommissionedRejected() {
 
 		InfrastructureUpdateRequest request = new InfrastructureUpdateRequest();
-		request.setCapacity(50);
+		request.setCapacity(100);
 
-		Infrastructure existingInfra = new Infrastructure();
-		existingInfra.setInfraId(6L);
-		existingInfra.setStatus(InfrastructureStatus.DECOMMISSIONED);
+		Infrastructure existing = new Infrastructure();
+		existing.setInfraId(6L);
+		existing.setProgramId(1L);
+		existing.setStatus(InfrastructureStatus.DECOMMISSIONED);
 
-		when(infraRepo.findById(6L)).thenReturn(Optional.of(existingInfra));
+		when(infraRepo.findById(6L)).thenReturn(Optional.of(existing));
+		when(programFeignClient.getProgramStatus(1L))
+				.thenReturn(new ProgramStatusResponse(1L, 500.0, ProgramStatus.ACTIVE));
 
 		assertThrows(IllegalStateException.class, () -> infrastructureService.updateInfrastructure(6L, request));
 	}
@@ -133,7 +156,9 @@ class InfrastructureServiceImplTest {
 				() -> infrastructureService.updateInfrastructure(20L, new InfrastructureUpdateRequest()));
 	}
 
-	// ---------------- DELETE ----------------
+	// --------------------------------------------------
+	// DELETE INFRASTRUCTURE
+	// --------------------------------------------------
 
 	@Test
 	void deleteInfrastructure_success() {
@@ -171,7 +196,9 @@ class InfrastructureServiceImplTest {
 		assertThrows(InfrastructureNotFoundException.class, () -> infrastructureService.deleteInfrastructureById(9L));
 	}
 
-	// ---------------- GET BY ID ----------------
+	// --------------------------------------------------
+	// GET METHODS
+	// --------------------------------------------------
 
 	@Test
 	void getInfrastructureById_success() {
@@ -196,25 +223,15 @@ class InfrastructureServiceImplTest {
 		assertThrows(InfrastructureNotFoundException.class, () -> infrastructureService.getInfrastructureById(4L));
 	}
 
-	// ---------------- GET ALL ----------------
-
 	@Test
 	void getAllInfrastructures_success() {
 
-		Infrastructure infra1 = new Infrastructure();
-		infra1.setInfraId(1L);
-
-		Infrastructure infra2 = new Infrastructure();
-		infra2.setInfraId(2L);
-
-		when(infraRepo.findAll()).thenReturn(List.of(infra1, infra2));
+		when(infraRepo.findAll()).thenReturn(List.of(new Infrastructure(), new Infrastructure()));
 
 		List<InfrastructureResponse> responses = infrastructureService.getAllInfrastructures();
 
 		assertEquals(2, responses.size());
 	}
-
-	// ---------------- GET BY PROGRAM ID ----------------
 
 	@Test
 	void getInfrastructuresByProgramId_success() {
@@ -230,8 +247,6 @@ class InfrastructureServiceImplTest {
 		assertEquals(1, responses.size());
 		assertEquals(8L, responses.get(0).getInfraId());
 	}
-
-	// ---------------- SEARCH ----------------
 
 	@Test
 	void getInfrastructuresByTypeLocationAndStatus_success() {

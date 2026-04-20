@@ -45,13 +45,7 @@ public class ResourceServiceImpl implements ResourceService {
 			throw new IllegalStateException("Cannot create resource for program with status: " + program.getStatus());
 		}
 
-		// Validate quantity input
-		if (request.getQuantity() < 0) {
-			throw new IllegalArgumentException("Resource quantity cannot be negative");
-		}
-		if (request.getType() != ResourceType.FUNDS && request.getStatus() == ResourceStatus.PENDING) {
-			throw new IllegalStateException("PENDING is only allowed for FUNDS");
-		}
+		validateResourceRequest(request.getQuantity(), request.getType(), request.getStatus());
 
 		// Build entity with proposed values (NOT persisted yet)
 		Resource entity = new Resource();
@@ -92,28 +86,26 @@ public class ResourceServiceImpl implements ResourceService {
 
 		// Load existing resource
 		Resource entity = getResourceOrThrow(resourceId);
-
+		
 		// Validate program
 		ProgramStatusResponse program = programFeignClient.getProgramStatus(entity.getProgramId());
 
+		// Program must be ACTIVE
 		if (program.getStatus() != ProgramStatus.ACTIVE) {
 			throw new IllegalStateException("Cannot update resource for program with status: " + program.getStatus());
 		}
-
 		// Completed resources are immutable
 		if (entity.getStatus() == ResourceStatus.COMPLETED) {
 			throw new IllegalStateException("Completed resource cannot be modified");
 		}
 
-		// Validate quantity
-		if (request.getQuantity() < 0) {
-			throw new IllegalArgumentException("Resource quantity cannot be negative");
+		// Only ACTIVE → COMPLETED allowed
+		if (request.getStatus() == ResourceStatus.COMPLETED && entity.getStatus() != ResourceStatus.ACTIVE) {
+			throw new IllegalStateException("Only ACTIVE resources can be completed");
 		}
 
-		if (request.getType() != ResourceType.FUNDS && request.getStatus() == ResourceStatus.PENDING) {
-			throw new IllegalStateException("PENDING is only allowed for FUNDS");
-		}
-
+		validateResourceRequest(request.getQuantity(), request.getType(), request.getStatus());
+		
 		ResourceType newType = request.getType();
 
 		/* ---------- FUNDS BUDGET VALIDATION ---------- */
@@ -132,16 +124,19 @@ public class ResourceServiceImpl implements ResourceService {
 			if (effectiveAllocated > budget) {
 				throw new IllegalStateException(
 						"Insufficient budget. Remaining: " + (budget - (allocated - oldQuantity)));
-			}
+			}	
 		}
-
+			
+		log.info("Updating resourceId={}, oldStatus={}, newStatus={}", resourceId, entity.getStatus(), request.getStatus());
+		
 		// Apply update after all validations
 		entity.setType(request.getType());
 		entity.setQuantity(request.getQuantity());
 		entity.setStatus(request.getStatus());
 
-		resourceRepo.save(entity);
 
+		resourceRepo.save(entity);
+	
 		log.info("Resource updated successfully with resourceId={}", resourceId);
 
 		return toResponse(entity);
@@ -155,8 +150,8 @@ public class ResourceServiceImpl implements ResourceService {
 		// Confirm resource exists before deleting
 		Resource entity = getResourceOrThrow(resourceId);
 
-		if (entity.getStatus() == ResourceStatus.ACTIVE || entity.getStatus() == ResourceStatus.COMPLETED) {
-			throw new IllegalStateException("Cannot delete active or completed resource");
+		if (entity.getStatus() == ResourceStatus.ACTIVE || entity.getStatus() == ResourceStatus.ALLOCATED || entity.getStatus() == ResourceStatus.COMPLETED) {
+			throw new IllegalStateException("Cannot delete active or allocated or completed resource");
 		}
 		// ACTIVE resources are in use; deleting them would cause data loss.
 		// COMPLETED resources are historical records; deleting them breaks
@@ -228,4 +223,18 @@ public class ResourceServiceImpl implements ResourceService {
 				.stream().mapToDouble(Resource::getQuantity).sum();
 	}
 
+	private void validateResourceRequest(int quantity, ResourceType type, ResourceStatus status) {
+
+		if (quantity < 0) {
+			throw new IllegalArgumentException("Resource quantity cannot be negative");
+		}
+
+		if (type != ResourceType.FUNDS && status == ResourceStatus.PENDING) {
+			throw new IllegalStateException("PENDING is only allowed for FUNDS");
+		}
+
+		if (type == ResourceType.FUNDS && status == ResourceStatus.INACTIVE) {
+			throw new IllegalStateException("FUNDS cannot be INACTIVE");
+		}
+	}
 }

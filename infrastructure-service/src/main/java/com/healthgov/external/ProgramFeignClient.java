@@ -6,9 +6,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import com.healthgov.external.dto.ProgramStatusResponse;
 
-@FeignClient(name = "program-service")
+@FeignClient(name = "health-program-service")
 public interface ProgramFeignClient {
 
-	@GetMapping("/programs/{programId}")
+	@GetMapping("/api/programs/program-status/{programId}")
 	ProgramStatusResponse getProgramStatus(@PathVariable("programId") Long programId);
 }

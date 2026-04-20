@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import com.healthgov.dto.GrantResponse;
 import com.healthgov.dto.ResearchProjectCreateRequest;
 import com.healthgov.dto.ResearchProjectResponse;
 import com.healthgov.dto.ResearchProjectUpdateRequest;
@@ -81,9 +82,8 @@ public class ResearchProjectController {
 
 	// Get grant by ID
 	@GetMapping("/grant/{grantId}")
-	public ResponseEntity<Grants> getGrantById(@PathVariable Long grantId) {
+	public ResponseEntity<GrantResponse> getGrantById(@PathVariable Long grantId) {
 
-		log.info("Fetching grant by grantId={}", grantId);
 		return ResponseEntity.ok(grantService.getGrantById(grantId));
 	}
 

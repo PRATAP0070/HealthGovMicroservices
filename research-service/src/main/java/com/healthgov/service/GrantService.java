@@ -1,10 +1,10 @@
 package com.healthgov.service;
 
-import com.healthgov.model.Grants;
+import com.healthgov.dto.GrantResponse;
 
 public interface GrantService {
 
-    Grants getGrantById(Long grantId);
+    GrantResponse getGrantById(Long grantId);
 
     boolean grantExists(Long grantId);
 }

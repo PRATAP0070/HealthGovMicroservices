@@ -23,7 +23,7 @@ public class EnrollmentController {
     private final EnrollmentService service; // Use Interface here
 
     @PostMapping("/create")
-    public EnrollmentDTO create(@RequestBody EnrollmentDTO dto) {
+    public EnrollmentDTO create(@RequestBody EnrollmentDTO dto) throws Exception {
         return service.createEnrollment(dto);
     }
 
@@ -36,9 +36,9 @@ public class EnrollmentController {
         return service.getEnrollmentById(id);
     }
     
-    @PutMapping("/{id}")
-    public EnrollmentDTO update(@PathVariable Long id, @RequestBody EnrollmentDTO dto) {
-        return service.updateEnrollment(id, dto);
+    @PutMapping("/update")
+    public EnrollmentDTO update( @RequestBody EnrollmentDTO dto) {
+        return service.updateEnrollment(dto);
     }
     
     @DeleteMapping("/{id}")

@@ -1,17 +1,21 @@
 package com.healthgov.exceptions;
 
 import java.time.Instant;
+import java.util.Map;
 
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.transaction.TransactionSystemException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
-import org.springframework.transaction.TransactionSystemException;
+
 import com.healthgov.dtos.ApiError;
 
 import jakarta.servlet.http.HttpServletRequest;
+import tools.jackson.databind.exc.InvalidFormatException;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -88,6 +92,44 @@ public class GlobalExceptionHandler {
 
 		return ResponseEntity.badRequest().body(body);
 	}
+	 @ExceptionHandler(HttpMessageNotReadableException.class)
+	    public ResponseEntity<Map<String, Object>> handleInvalidEnumValue(
+	            HttpMessageNotReadableException ex) {
+
+	        Throwable cause = ex.getCause();
+
+	        if (cause instanceof InvalidFormatException ife &&
+	                ife.getTargetType().isEnum()) {
+
+	            String invalidValue = ife.getValue().toString();
+	            String enumName = ife.getTargetType().getSimpleName();
+
+	            Object[] allowedValues = ife.getTargetType().getEnumConstants();
+
+	            return ResponseEntity
+	                    .status(HttpStatus.BAD_REQUEST)
+	                    .body(Map.of(
+	                            "status", 400,
+	                            "error", "Invalid value provided",
+	                            "message", String.format(
+	                                    "Invalid %s value '%s'. Allowed values are: %s",
+	                                    enumName,
+	                                    invalidValue,
+	                                    java.util.Arrays.toString(allowedValues)
+	                            )
+	                    ));
+	        }
+
+	        // fallback
+	        return ResponseEntity
+	                .status(HttpStatus.BAD_REQUEST)
+	                .body(Map.of(
+	                        "status", 400,
+	                        "error", "Malformed request",
+	                        "message", "Request body or path variable is invalid"
+	                ));
+	    }
+
 
 	@ExceptionHandler(DataIntegrityViolationException.class)
 	public ResponseEntity<ApiError> handleConstraint(DataIntegrityViolationException ex, HttpServletRequest req) {

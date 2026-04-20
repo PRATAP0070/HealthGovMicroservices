@@ -28,8 +28,7 @@ public class InfrastructureServiceImpl implements InfrastructureService {
 	private final ProgramFeignClient programFeignClient;
 
 	// Constructor injection for repositories
-	public InfrastructureServiceImpl(InfrastructureRepository infraRepo, ProgramFeignClient programFeignClient
-	) {
+	public InfrastructureServiceImpl(InfrastructureRepository infraRepo, ProgramFeignClient programFeignClient) {
 		this.infraRepo = infraRepo;
 		this.programFeignClient = programFeignClient;
 	}
@@ -75,10 +74,15 @@ public class InfrastructureServiceImpl implements InfrastructureService {
 		// Load existing infrastructure or throw exception
 		Infrastructure entity = getInfrastructureOrThrow(infraId);
 
+		ProgramStatusResponse program = programFeignClient.getProgramStatus(entity.getProgramId());
+
+		if (program.getStatus() != ProgramStatus.ACTIVE) {
+			throw new IllegalStateException(
+					"Cannot update infrastructure because program is status: " + program.getStatus());
+		}
 		if (entity.getStatus() == InfrastructureStatus.DECOMMISSIONED) {
 			throw new IllegalStateException("Decommissioned infrastructure cannot be modified");
 		}
-
 		if (request.getCapacity() < 0) {
 			throw new IllegalArgumentException("Infrastructure capacity cannot be negative");
 		}
@@ -100,8 +104,8 @@ public class InfrastructureServiceImpl implements InfrastructureService {
 		// Ensure infrastructure exists before deletion
 		Infrastructure entity = getInfrastructureOrThrow(infraId);
 
-		if (entity.getStatus() == InfrastructureStatus.OPERATIONAL) {
-			throw new IllegalStateException("Operational infrastructure cannot be deleted");
+		if (entity.getStatus() == InfrastructureStatus.OPERATIONAL || entity.getStatus() == InfrastructureStatus.DECOMMISSIONED) {
+			throw new IllegalStateException("OPERATIONAL or DECOMMISSIONED infrastructure cannot be deleted");
 		}
 
 		infraRepo.delete(entity);

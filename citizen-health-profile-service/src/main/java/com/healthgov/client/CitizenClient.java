@@ -1,14 +1,16 @@
 package com.healthgov.client;
 
+import java.util.List;
+
+
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 
-import com.healthgov.dto.CitizenResponseDTO;
+import com.healthgov.dto.UserReqDTO;
 
-@FeignClient(name = "citizen-service")
+@FeignClient(name = "auth-service")
 public interface CitizenClient {
     
-    @GetMapping("/citizen/{id}")
-    CitizenResponseDTO getCitizenById(@PathVariable("id") Long id);
+    @GetMapping("/healthGov/getAllCitizens")
+    List<UserReqDTO> getAllCitizens();
 }

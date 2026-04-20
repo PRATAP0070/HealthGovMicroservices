@@ -23,7 +23,7 @@ public class EnrollmentController {
     private final EnrollmentService service; // Use Interface here
 
     @PostMapping("/create")
-    public EnrollmentDTO create(@RequestBody EnrollmentDTO dto) {
+    public EnrollmentDTO create(@RequestBody EnrollmentDTO dto) throws Exception {
         return service.createEnrollment(dto);
     }
 

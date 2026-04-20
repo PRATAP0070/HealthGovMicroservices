@@ -6,7 +6,7 @@ import java.util.List;
 public interface EnrollmentService {
     List<EnrollmentDTO> getAllEnrollments();
     EnrollmentDTO getEnrollmentById(Long id);
-    EnrollmentDTO createEnrollment(EnrollmentDTO dto);
+    EnrollmentDTO createEnrollment(EnrollmentDTO dto) throws Exception;
     EnrollmentDTO updateEnrollment(Long id, EnrollmentDTO dto);
     void deleteEnrollment(Long id);
 }

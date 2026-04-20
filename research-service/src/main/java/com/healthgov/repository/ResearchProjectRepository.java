@@ -10,5 +10,7 @@ import com.healthgov.model.ResearchProject;
 public interface ResearchProjectRepository extends JpaRepository<ResearchProject, Long> {
 
 	List<ResearchProject> findByStatus(ProjectStatus status);
+	
+	boolean existsByProjectId(Long projectId);
 
 }

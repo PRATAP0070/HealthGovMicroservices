@@ -226,6 +226,13 @@ public class ResearchProjectServiceImpl implements ResearchProjectService {
                 "Cannot delete project with APPROVED/REJECTED status.");
     }
 
+    @Override
+    @Transactional(readOnly = true)
+    public boolean projectExists(Long projectId) {
+        return projectRepo.existsByProjectId(projectId);
+    }
+
+    
     // DTO mapping
     private ResearchProjectResponse toResponse(ResearchProject p) {
         ResearchProjectResponse r = new ResearchProjectResponse();

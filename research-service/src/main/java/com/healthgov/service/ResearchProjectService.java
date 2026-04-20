@@ -17,4 +17,6 @@ public interface ResearchProjectService {
     ResearchProjectResponse get(Long id);
 
     void delete(Long id);
+    
+    boolean projectExists(Long projectId);
 }

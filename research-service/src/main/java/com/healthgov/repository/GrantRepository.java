@@ -9,4 +9,6 @@ public interface GrantRepository extends JpaRepository<Grants, Long> {
 	long countByProject_ProjectId(Long projectId);
 
 	void deleteByProject_ProjectId(Long projectId);
+	
+	boolean existsByGrantId(Long grantId);
 }

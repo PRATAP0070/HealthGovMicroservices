@@ -1,5 +1,7 @@
 package com.healthgov.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -110,5 +112,10 @@ public class UserAPI {
 	@PutMapping("/forgotPassword")
 	public ResponseEntity<String> forgotPassword(@RequestBody ForgetPasswordDto dto) {
 		return new ResponseEntity<>(forgetPasswordService.resetPassword(dto), HttpStatus.CREATED);
+	}
+	
+	@GetMapping("/getAllCitizens")
+	public List<UserReqDTO> getAllCitizens(){
+		return service.listOfCitizen();
 	}
 }

@@ -33,7 +33,7 @@ public class RegistrationServiceImpl implements RegistrationService {
 			user.setRole(userDto.getRole());
 		}
 		user.setPhone(userDto.getPhone());
-		user.setStatus("Registered");
+		user.setStatus("ACTIVE");
 		user.setPassword(bcryptEncoder.encode(userDto.getPassword()));
 		
 		registrationRepo.save(user);

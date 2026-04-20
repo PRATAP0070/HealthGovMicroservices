@@ -1,13 +1,16 @@
 package com.healthgov.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import com.healthgov.citizenFeignClient.CitizenClient;
 import com.healthgov.dto.CitizenResponseDTO;
 import com.healthgov.dto.EnrollmentDTO;
+import com.healthgov.exceptions.ProgramException;
 import com.healthgov.model.Enrollment;
 import com.healthgov.repository.EnrollmentRepository;
 
@@ -47,12 +50,30 @@ public class EnrollmentServiceImpl implements EnrollmentService { // Added imple
 	// Implement other methods from interface or leave empty for now
 	@Override
 	public EnrollmentDTO getEnrollmentById(Long id) {
-		return null;
+		Enrollment enrollment = repo.findById(id)
+                .orElseThrow(() ->
+                new ProgramException("Program not found", HttpStatus.NOT_FOUND));
+//		EnrollmentDTO enrollmentDTO = new EnrollmentDTO();
+//		enrollmentDTO.setCitizenId(enrollment.getCitizenId());
+//		enrollmentDTO.setProgramId(enrollment.getProgramId());
+//		enrollmentDTO.setEnrollmentId(enrollment.getEnrollmentId());
+//		enrollmentDTO.setDate(enrollment.getDate());
+//		enrollmentDTO.setStatus(enrollment.getStatus());
+		
+		return map(enrollment);
 	}
 
 	@Override
-	public EnrollmentDTO updateEnrollment(Long id, EnrollmentDTO dto) {
-		return null;
+	public EnrollmentDTO updateEnrollment(EnrollmentDTO dto) {
+		Enrollment enrollment = repo.findById(dto.getEnrollmentId())
+                .orElseThrow(() ->
+                new ProgramException("Program not found", HttpStatus.NOT_FOUND));
+		enrollment.setCitizenId(dto.getCitizenId());
+		enrollment.setDate(dto.getDate());
+		enrollment.setEnrollmentId(dto.getEnrollmentId());
+		enrollment.setProgramId(dto.getProgramId());
+		enrollment.setStatus(dto.getStatus());
+		return map(repo.save(enrollment));
 	}
 
 	@Override

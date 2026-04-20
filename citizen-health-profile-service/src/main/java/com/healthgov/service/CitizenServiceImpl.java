@@ -1,10 +1,14 @@
 package com.healthgov.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.healthgov.client.CitizenClient;
 import com.healthgov.dto.CitizenRequestDTO;
 import com.healthgov.dto.CitizenResponseDTO;
+import com.healthgov.dto.UserReqDTO;
 import com.healthgov.enums.Gender;
 import com.healthgov.enums.RegistrationStatus;
 import com.healthgov.exceptions.CitizenNotFoundException;
@@ -21,8 +25,8 @@ import lombok.extern.slf4j.Slf4j;
 public class CitizenServiceImpl implements CitizenService {
 
     private final CitizenRepository repository;
+    private final CitizenClient citizenClient;
 
-   
     @Override
     public CitizenResponseDTO getCitizen(Long id) {
         log.info("Fetching citizen details for ID: {}", id);
@@ -35,7 +39,24 @@ public class CitizenServiceImpl implements CitizenService {
     public CitizenResponseDTO registerCitizen(CitizenRequestDTO request) {
         log.info("Starting registration for citizen: {}", request.getName());
 
+        // --- Cross-Module Validation ---
+        Long requiredUserId = request.getUserId(); 
+        
+        log.info("Verifying user ID {} with auth-service...", requiredUserId);
+        List<UserReqDTO> allAuthUsers = citizenClient.getAllCitizens();
+        
+        // Using your exact UserReqDTO field: getUserId()
+        boolean userExists = allAuthUsers.stream()
+                .anyMatch(user -> user.getUserId() != null && user.getUserId().equals(requiredUserId)); 
+
+        if (!userExists) {
+            log.error("Registration aborted. User ID {} does not exist in auth-service.", requiredUserId);
+            throw new IllegalArgumentException("User ID " + requiredUserId + " not found in Auth Service. Registration denied.");
+        }
+        // -------------------------------
+
         Citizen citizen = new Citizen();
+        citizen.setUserId(request.getUserId()); // Linking the valid User ID to the Citizen profile
         citizen.setName(request.getName());
         citizen.setDob(request.getDob());
         
@@ -111,6 +132,7 @@ public class CitizenServiceImpl implements CitizenService {
     }
 
     private CitizenResponseDTO mapToResponse(Citizen c) {
-        return new CitizenResponseDTO(c.getCitizenId(), c.getName(), c.getDob(), c.getGender().name(), c.getAddress(), c.getStatus().name());
+        // Added c.getUserId() as the first parameter to match your CitizenResponseDTO
+        return new CitizenResponseDTO(c.getUserId(), c.getCitizenId(), c.getName(), c.getDob(), c.getGender().name(), c.getAddress(), c.getStatus().name());
     }
 }

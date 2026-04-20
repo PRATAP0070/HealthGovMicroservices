@@ -1,10 +1,13 @@
 package com.healthgov.model;
 
-import java.sql.Date;
+import java.time.LocalDate;
 
 import com.healthgov.enums.ProgramStatus;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,8 +24,8 @@ public class HealthProgram {
 
     private String title;
     private String description;
-    private Date startDate;
-    private Date endDate;
+    private LocalDate startDate;
+    private LocalDate endDate;
     private Double budget;
     private ProgramStatus status;
 }

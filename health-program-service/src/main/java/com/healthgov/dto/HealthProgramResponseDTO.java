@@ -1,6 +1,7 @@
 package com.healthgov.dto;
 
 import java.sql.Date;
+import java.time.LocalDate;
 
 import com.healthgov.enums.ProgramStatus;
 
@@ -11,8 +12,8 @@ public class HealthProgramResponseDTO {
     private Long programId;
     private String title;
     private String description;
-    private Date startDate;
-    private Date endDate;
+    private LocalDate startDate;
+    private LocalDate endDate;
     private Double budget;
     private ProgramStatus status;
 }

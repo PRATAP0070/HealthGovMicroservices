@@ -10,20 +10,18 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.healthgov.dtos.ComplianceCreateRequest;
+import com.healthgov.dtos.ComplianceResponseDTO;
 import com.healthgov.dtos.ComplianceUpdateRequest;
 import com.healthgov.enums.ComplianceResult;
 import com.healthgov.enums.ComplianceType;
 import com.healthgov.exceptions.ComplianceRequestException;
 import com.healthgov.exceptions.ResourceNotFoundException;
-import com.healthgov.feignclients.GrantClient;
 import com.healthgov.feignclients.ProgramClient;
 import com.healthgov.feignclients.ProjectClient;
 import com.healthgov.models.ComplianceRecord;
 import com.healthgov.repository.ComplianceRecordRepository;
-//import com.healthgov.repository.GrantRepository;
-//import com.healthgov.repository.HealthProgramRepository;
-//import com.healthgov.repository.ResearchProjectRepository;
 
+import feign.FeignException.FeignClientException;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -31,44 +29,49 @@ import lombok.RequiredArgsConstructor;
 public class ComplianceServiceImpl implements ComplianceService {
 
 	private final ComplianceRecordRepository complianceRepo;
-    private final ProgramClient programClient;
-    private final ProjectClient projectClient;
-    private final GrantClient grantClient;
+	private final ProgramClient programClient;
+	private final ProjectClient projectClient;
 
 	private static final Logger log = LoggerFactory.getLogger(ComplianceServiceImpl.class);
 
 	@Override
 	@Transactional(readOnly = true)
-	public List<ComplianceRecord> getAllComplianceRecords() {
+	public List<ComplianceResponseDTO> getAllComplianceRecords() {
 		log.info("Retrived All Compliance Records form the table.");
-		return complianceRepo.findAll();
+		return complianceRepo.findAll().stream().map(this::convertToDto).toList();
 	}
 
 	@Override
 	@Transactional(readOnly = true)
-	public ComplianceRecord getOneByEntityIdAndType(ComplianceType type, Long entityId) {
-		validateTypeAndEntityId(type, entityId);
-		ensureTargetExists(type, entityId);
+	public ComplianceResponseDTO getOneByEntityIdAndType(ComplianceType type, Long entityId) {
 
-		ComplianceRecord record = complianceRepo.findOneByEntityIdAndType(entityId, type)
+		ComplianceRecord compRecord = complianceRepo.findOneByEntityIdAndType(entityId, type)
 				.orElseThrow(() -> new ResourceNotFoundException(
 						"Compliance record not found for type= " + type + " and entityId=" + entityId));
-		log.info("Executed Get Compliance Record By Id function : {}", record);
-		return record;
+		log.info("Executed Get Compliance Record By Id function : {}", compRecord);
+		return convertToDto(compRecord);
 	}
 
 	@Override
-	public ComplianceRecord createRecord(ComplianceCreateRequest request) {
+	public ComplianceResponseDTO getComplianceById(Long complianceId) {
+		ComplianceRecord record = complianceRepo.findById(complianceId).orElseThrow(
+				() -> new ResourceNotFoundException("Compliance record not found for ID =" + complianceId));
+		return convertToDto(record);
+
+	}
+
+	@Override
+	public ComplianceResponseDTO createRecord(ComplianceCreateRequest request) {
 		if (request == null)
 			throw new ComplianceRequestException("Request body is required.");
-
-		validateTypeAndEntityId(request.getType(), request.getEntityId());
-		ensureTargetExists(request.getType(), request.getEntityId());
 
 		if (complianceRepo.existsByEntityIdAndType(request.getEntityId(), request.getType())) {
 			throw new ComplianceRequestException("Compliance record already exists for type=" + request.getType()
 					+ " and entityId=" + request.getEntityId());
 		}
+		
+		validateTypeAndEntityId(request.getType(), request.getEntityId());
+		ensureTargetExists(request.getType(), request.getEntityId());
 
 		ComplianceRecord compRecord = new ComplianceRecord();
 		compRecord.setType(request.getType());
@@ -82,11 +85,11 @@ public class ComplianceServiceImpl implements ComplianceService {
 		log.info("Created ComplianceRecord id={} type={} entityId={}", saved.getComplianceId(), saved.getType(),
 				saved.getEntityId());
 
-		return saved;
+		return convertToDto(saved);
 	}
 
 	@Override
-	public ComplianceRecord updateExisting(ComplianceType type, Long entityId, ComplianceUpdateRequest dto) {
+	public ComplianceResponseDTO updateExisting(ComplianceType type, Long entityId, ComplianceUpdateRequest dto) {
 		validateTypeAndEntityId(type, entityId);
 		if (dto == null)
 			throw new ComplianceRequestException("Request body is required.");
@@ -106,11 +109,11 @@ public class ComplianceServiceImpl implements ComplianceService {
 		log.info("Updated ComplianceRecord id={} type={} entityId={}", saved.getComplianceId(), saved.getType(),
 				saved.getEntityId());
 
-		return saved;
+		return convertToDto(saved);
 	}
 
 	@Override
-	public ComplianceRecord updateResultByEntityIdAndType(ComplianceType type, Long entityId, String result) {
+	public ComplianceResponseDTO updateResultByEntityIdAndType(ComplianceType type, Long entityId, String result) {
 		validateTypeAndEntityId(type, entityId);
 		ensureTargetExists(type, entityId);
 
@@ -125,11 +128,11 @@ public class ComplianceServiceImpl implements ComplianceService {
 
 		log.info("Compliance Record Updated with new Result : {}", saved);
 
-		return saved;
+		return convertToDto(saved);
 	}
 
 	@Override
-	public ComplianceRecord updateNotesByEntityIdAndType(ComplianceType type, Long entityId, String notes) {
+	public ComplianceResponseDTO updateNotesByEntityIdAndType(ComplianceType type, Long entityId, String notes) {
 		validateTypeAndEntityId(type, entityId);
 		ensureTargetExists(type, entityId);
 
@@ -143,20 +146,20 @@ public class ComplianceServiceImpl implements ComplianceService {
 
 		log.info("Compliance Notes Updates Successfully.. {}", saved);
 
-		return saved;
+		return convertToDto(saved);
 	}
 
 	@Override
-	public ComplianceRecord deleteById(Long Id) {
-		if (Id == null)
-			throw new ComplianceRequestException("Compliance Record Not found with Id : " + Id);
+	public ComplianceResponseDTO deleteById(Long id) {
+		if (id == null)
+			throw new ComplianceRequestException("Compliance Record Not found with Id : " + id);
 
-		ComplianceRecord existing = complianceRepo.findById(Id)
-				.orElseThrow(() -> new ResourceNotFoundException("Compliance record not found with ID:" + Id));
+		ComplianceRecord existing = complianceRepo.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("Compliance record not found with ID:" + id));
 
-		complianceRepo.deleteById(Id);
+		complianceRepo.deleteById(id);
 		log.info("Deleted Compliance Record form the table : {}", existing);
-		return existing;
+		return convertToDto(existing);
 	}
 
 	private void validateTypeAndEntityId(ComplianceType type, Long entityId) {
@@ -181,6 +184,7 @@ public class ComplianceServiceImpl implements ComplianceService {
 		return effective;
 	}
 
+	
 	private ComplianceResult parseResultOrThrow(String result) {
 		log.info("Validating the compliance result based on the enums");
 		try {
@@ -191,17 +195,40 @@ public class ComplianceServiceImpl implements ComplianceService {
 	}
 
 	private void ensureTargetExists(ComplianceType type, Long entityId) {
-		log.info("Validating the Entity ID and It's Type pair in respective table");
-		boolean exists=true;
-//		switch (type) {
-//		case PROGRAM -> exists = healthProgramRepo.existsById(entityId);
-//		case PROJECT -> exists = researchProjectRepo.existsById(entityId);
-//		case GRANT -> exists = grantsRepo.existsById(entityId);
-//		default -> exists = false;
-//		}
-		if (!exists) {
+
+		log.info("Validating target entity: type={}, entityId={}", type, entityId);
+
+		if (type == null || entityId == null) {
+			throw new ComplianceRequestException("type and entityId are required.");
+		}
+
+		Boolean exists;
+
+		try {
+			exists = switch (type) {
+			case PROGRAM -> programClient.programExists(entityId);
+			case PROJECT -> projectClient.projectExists(entityId);
+			case GRANT -> projectClient.grantExists(entityId);
+			};
+		} catch (FeignClientException e) {
+			log.error("Feign validation failed for {}:{}", type, entityId, e);
+			throw new ComplianceRequestException("Unable to validate target entity. Please try again later.");
+		}
+
+		if (exists == null || !exists) {
 			throw new ResourceNotFoundException("Target not found: " + type + " id=" + entityId);
 		}
+	}
+
+	private ComplianceResponseDTO convertToDto(ComplianceRecord rec) {
+		ComplianceResponseDTO dto = new ComplianceResponseDTO();
+		dto.setComplianceId(rec.getComplianceId());
+		dto.setDate(rec.getDate());
+		dto.setNotes(rec.getNotes());
+		dto.setResult(rec.getResult());
+		dto.setEntityId(rec.getEntityId());
+		dto.setType(rec.getType());
+		return dto;
 	}
 
 }

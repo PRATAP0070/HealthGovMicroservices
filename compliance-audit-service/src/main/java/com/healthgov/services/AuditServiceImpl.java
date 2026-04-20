@@ -10,18 +10,18 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.healthgov.dtos.AuditCreateRequest;
+import com.healthgov.dtos.AuditReponseDTO;
 import com.healthgov.dtos.AuditUpdateRequest;
 import com.healthgov.enums.AuditStatus;
+import com.healthgov.enums.UserRole;
 import com.healthgov.exceptions.AuditRequestException;
 import com.healthgov.exceptions.ResourceNotFoundException;
-//import com.healthgov.models.Users;
+import com.healthgov.feignclients.ProgramClient;
+import com.healthgov.feignclients.ProjectClient;
 import com.healthgov.models.Audit;
 import com.healthgov.repository.AuditRepository;
-//import com.healthgov.repository.GrantRepository;
-//import com.healthgov.repository.HealthProgramRepository;
-//import com.healthgov.repository.ResearchProjectRepository;
-//import com.healthgov.repository.UsersRepository;
 
+import feign.FeignException.FeignClientException;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -32,19 +32,18 @@ public class AuditServiceImpl implements AuditService {
 	private static final Set<String> ALLOWED_SCOPE_TYPES = Set.of("PROGRAM", "PROJECT", "GRANT");
 
 	private final AuditRepository auditRepo;
-//	private final UsersRepository usersRepo;
-//	private final HealthProgramRepository healthProgramRepo;
-//	private final ResearchProjectRepository researchProjectRepo;
-//	private final GrantRepository grantsRepo;
+	private final ProgramClient programClient;
+	private final ProjectClient projectClient;
+
 	private static final Logger log = LoggerFactory.getLogger(AuditServiceImpl.class);
 
 	@Override
-	public List<Audit> getAllAudits() {
-		return auditRepo.findAll();
+	public List<AuditReponseDTO> getAllAudits() {
+		return auditRepo.findAll().stream().map(this::convertToDto).toList();
 	}
 
 	@Override
-	public Audit createAudit(AuditCreateRequest request) {
+	public AuditReponseDTO createAudit(AuditCreateRequest request) {
 
 //		Users officer = usersRepo.findByUserIdAndRole(request.getOfficerId(), UserRole.COMPLIANCE)
 //				.orElseThrow(() -> new ResourceNotFoundException(
@@ -54,8 +53,8 @@ public class AuditServiceImpl implements AuditService {
 		String scope = request.getScope().trim();
 		validateAndEnsureScopeTargetExists(scope);
 
-		// DUPLICATE CHECK (officer + scope)
-//		if (auditRepo.existsByOfficer_UserIdAndScopeIgnoreCase(officer.getUserId(), scope)) {
+//		// DUPLICATE CHECK (officer + scope)
+//		if (auditRepo.existsByOfficerIdAndScopeIgnoreCase(officer.getUserId(), scope)) {
 //			throw new AuditRequestException("Duplicate audit: audit already exists for officerId=" + officer.getUserId()
 //					+ " and scope=" + scope);
 //		}
@@ -72,17 +71,25 @@ public class AuditServiceImpl implements AuditService {
 		}
 
 		Audit audit = new Audit();
-		audit.setOfficerId(new Long(123)); // get userId
+		audit.setOfficerId(new Long(4));
 		audit.setScope(scope);
 		audit.setFindings(request.getFindings().trim());
 		audit.setDate(date);
 		audit.setStatus(status);
 
-		return audit;
+		try {
+			Audit saved = auditRepo.save(audit);
+			log.info("AUDIT_CREATE Audit(auditId={}, officerId={}, scope={})", saved.getAuditId(), audit.getOfficerId(),
+					saved.getScope());
+			return convertToDto(saved);
+		} catch (org.springframework.dao.DataIntegrityViolationException ex) {
+			throw new AuditRequestException("Duplicate audit: audit already exists for officerId=" + audit.getAuditId()
+					+ " and scope=" + scope);
+		}
 	}
 
 	@Override
-	public Audit updateAudit(Long auditId, AuditUpdateRequest request) {
+	public AuditReponseDTO updateAudit(Long auditId, AuditUpdateRequest request) {
 		if (auditId == null)
 			throw new AuditRequestException("auditId is required.");
 
@@ -97,13 +104,13 @@ public class AuditServiceImpl implements AuditService {
 
 		Audit saved = auditRepo.save(existing);
 
-		log.info("AUDIT_UPDATE", "Audit(auditId=" + saved.getAuditId() + ", status=" + saved.getStatus() + ")");
+		log.info("Audit Record updated Successfully {}", saved);
 
-		return saved;
+		return convertToDto(saved);
 	}
 
 	@Override
-	public Audit updateStatus(Long auditId, String status) {
+	public AuditReponseDTO updateStatus(Long auditId, String status) {
 		if (auditId == null)
 			throw new AuditRequestException("auditId is required.");
 		AuditStatus parsed = parseStatusOrThrow(status);
@@ -114,22 +121,22 @@ public class AuditServiceImpl implements AuditService {
 		existing.setStatus(parsed);
 		Audit saved = auditRepo.save(existing);
 
-		log.info("AUDIT_UPDATE_STATUS", "Audit(auditId=" + saved.getAuditId() + ", status=" + saved.getStatus() + ")");
+		log.info("AUDIT Status updated Successfully. {}", saved);
 
-		return saved;
+		return convertToDto(saved);
 	}
 
 	@Override
-	public List<Audit> getAllAuditsByOfficer(Long officerId) {
+	public List<AuditReponseDTO> getAllAuditsByOfficer(Long officerId) {
 
 		if (officerId == null)
 			throw new AuditRequestException("Officer Id is required.");
 
-		return auditRepo.findByOfficerId(officerId);
+		return auditRepo.findByOfficerId(officerId).stream().map(this::convertToDto).toList();
 	}
 
 	@Override
-	public Audit updateFindings(Long auditId, String findings) {
+	public AuditReponseDTO updateFindings(Long auditId, String findings) {
 		if (auditId == null)
 			throw new AuditRequestException("auditId is required.");
 		if (findings == null || findings.isBlank())
@@ -141,21 +148,24 @@ public class AuditServiceImpl implements AuditService {
 		existing.setFindings(findings.trim());
 		Audit saved = auditRepo.save(existing);
 
-		log.info("AUDIT_UPDATE_FINDINGS", "Audit(auditId=" + saved.getAuditId() + ")");
+		log.info("AUDIT findings updated Successfully {}", saved);
 
-		return saved;
+		return convertToDto(saved);
 	}
 
 	@Override
 	@Transactional(readOnly = true)
-	public Audit getAudit(Long auditId) {
+	public AuditReponseDTO getAudit(Long auditId) {
 		if (auditId == null)
 			throw new AuditRequestException("auditId is required.");
-		return auditRepo.findById(auditId)
+
+		log.info("Found Auidt in the Database with ID {}", auditId);
+		Audit audit = auditRepo.findById(auditId)
 				.orElseThrow(() -> new ResourceNotFoundException("Audit not found: id=" + auditId));
+		return convertToDto(audit);
 	}
 
-	private AuditStatus parseStatusOrThrow(String status) throws AuditRequestException {
+	private AuditStatus parseStatusOrThrow(String status) {
 		if (status == null || status.isBlank()) {
 			throw new AuditRequestException(
 					"status is required. Allowed: SCHEDULED, IN_REVIEW, COMPLETED, FOLLOW_UP_REQUIRED.");
@@ -168,37 +178,65 @@ public class AuditServiceImpl implements AuditService {
 		}
 	}
 
-	private void validateAndEnsureScopeTargetExists(String scope) throws AuditRequestException {
-		String[] parts = scope.split(":", 2);
-		if (parts.length != 2) {
-			throw new AuditRequestException("Invalid scope format. Use PROGRAM:<id>, PROJECT:<id>, or GRANT:<id>.");
-		}
+	private void validateAndEnsureScopeTargetExists(String scope) {
 
-		String type = parts[0].trim().toUpperCase();
-		String idPart = parts[1].trim();
+	    String[] parts = scope.split(":", 2);
+	    if (parts.length != 2) {
+	        throw new AuditRequestException(
+	            "Invalid scope format. Use PROGRAM:<id>, PROJECT:<id>, or GRANT:<id>."
+	        );
+	    }
 
-		if (!ALLOWED_SCOPE_TYPES.contains(type)) {
-			throw new AuditRequestException("Invalid scope type. Allowed: PROGRAM, PROJECT, GRANT.");
-		}
+	    String type = parts[0].trim().toUpperCase();
+	    String idPart = parts[1].trim();
 
-		long id;
-		try {
-			id = Long.parseLong(idPart);
-		} catch (NumberFormatException ex) {
-			throw new AuditRequestException("Invalid scope id. Use numeric id. Example: PROGRAM:4");
-		}
+	    if (!ALLOWED_SCOPE_TYPES.contains(type)) {
+	        throw new AuditRequestException(
+	            "Invalid scope type. Allowed: PROGRAM, PROJECT, GRANT."
+	        );
+	    }
 
-		boolean exists=true;
-//		switch (type) {
-//		case "PROGRAM" -> exists = healthProgramRepo.existsById(id);
-//		case "PROJECT" -> exists = researchProjectRepo.existsById(id);
-//		case "GRANT" -> exists = grantsRepo.existsById(id);
-//		default -> exists = false;
-//		} other service data is 
+	    long id;
+	    try {
+	        id = Long.parseLong(idPart);
+	    } catch (NumberFormatException ex) {
+	        throw new AuditRequestException(
+	            "Invalid scope id. Use numeric id. Example: PROGRAM:4"
+	        );
+	    }
 
-		if (!exists) {
-			throw new ResourceNotFoundException("Scope target not found: " + type + " id=" + id);
-		}
+	    Boolean exists;
+	    try {
+	        exists = switch (type) {
+	            case "PROGRAM" -> programClient.programExists(id);
+	            case "PROJECT" -> projectClient.projectExists(id);
+	            case "GRANT"   -> projectClient.grantExists(id);
+	            default -> false;
+	        };
+	    } catch (FeignClientException e) {
+	        throw new AuditRequestException(
+	            "Unable to validate scope. Dependent service unavailable."
+	        );
+	    }
+
+	    if (exists == null || !exists) {
+	        throw new ResourceNotFoundException(
+	            "Scope target not found: " + type + " id=" + id
+	        );
+	    }
+	}
+
+	private AuditReponseDTO convertToDto(Audit a) {
+		AuditReponseDTO dto = new AuditReponseDTO();
+		dto.setAuditId(a.getAuditId());
+		dto.setScope(a.getScope());
+		dto.setDate(a.getDate());
+		dto.setFindings(a.getFindings());
+		dto.setStatus(a.getStatus());
+		// dto.setOfficer(a.getOfficer());
+
+		return dto;
+
 	}
 
 }

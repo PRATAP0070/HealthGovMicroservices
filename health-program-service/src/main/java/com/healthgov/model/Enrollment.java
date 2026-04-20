@@ -1,8 +1,15 @@
 package com.healthgov.model;
 
-import java.util.Date;
-import jakarta.persistence.*;
-import lombok.*;
+import java.time.LocalDate;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Getter @Setter
@@ -15,6 +22,6 @@ public class Enrollment {
 
     private Long citizenId;
     private Long programId;
-    private Date date;
+    private LocalDate date;
     private String status;
 }

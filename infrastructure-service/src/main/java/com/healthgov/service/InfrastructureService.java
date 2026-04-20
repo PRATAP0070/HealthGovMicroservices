@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.healthgov.dto.InfrastructureCreateRequest;
 import com.healthgov.dto.InfrastructureResponse;
+import com.healthgov.dto.InfrastructureSummaryResponse;
 import com.healthgov.dto.InfrastructureUpdateRequest;
 import com.healthgov.enums.InfrastructureStatus;
 import com.healthgov.enums.InfrastructureType;
@@ -24,5 +25,7 @@ public interface InfrastructureService {
 
 	List<InfrastructureResponse> getInfrastructuresByTypeLocationAndStatus(InfrastructureType type, String location,
 			InfrastructureStatus status);
+	
+	InfrastructureSummaryResponse getSummaryByProgramId(Long programId);
 
 }

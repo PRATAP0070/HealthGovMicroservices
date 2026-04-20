@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.healthgov.dto.InfrastructureCreateRequest;
 import com.healthgov.dto.InfrastructureResponse;
+import com.healthgov.dto.InfrastructureSummaryResponse;
 import com.healthgov.dto.InfrastructureUpdateRequest;
 import com.healthgov.enums.InfrastructureStatus;
 import com.healthgov.enums.InfrastructureType;
@@ -81,4 +82,14 @@ public class InfrastructureController {
 		log.info("Searching infrastructures with type={}, location={}, status={}", type, location, status);
 		return service.getInfrastructuresByTypeLocationAndStatus(type, location.trim(), status);
 	}
+	
+
+	@GetMapping("/program/{programId}/summary")
+	public InfrastructureSummaryResponse getInfrastructureSummary(@PathVariable Long programId) {
+
+		InfrastructureSummaryResponse summary = service.getSummaryByProgramId(programId);
+
+		return summary;
+	}
+
 }

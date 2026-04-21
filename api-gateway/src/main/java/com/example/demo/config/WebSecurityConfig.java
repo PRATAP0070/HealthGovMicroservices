@@ -32,7 +32,7 @@ public class WebSecurityConfig {
                     "/healthGov/login",
                     "/healthGov/getUserById/**",
                     "/healthGov/citizenRegister",
-                    "/healthGov/forgotPassword",
+                    "/healthGov/forgotPassword/**",
                     "/citizen/**"
                 ).permitAll()
                 .pathMatchers(HttpMethod.OPTIONS, "/**").permitAll()

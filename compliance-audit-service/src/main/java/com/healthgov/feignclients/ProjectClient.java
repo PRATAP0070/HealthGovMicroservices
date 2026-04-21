@@ -10,18 +10,18 @@ import com.healthgov.dtos.ResearchProjectResponse;
 @FeignClient(name = "research-service")
 public interface ProjectClient {
 
-	@GetMapping("/api/projects/{id}/exists")
-	Boolean projectExists(@PathVariable Long id);
+	@GetMapping("/research/project/{projectId}/exists")
+	Boolean projectExists(@PathVariable Long projectId);
 	
 	
-	@GetMapping("/api/projects/{id}")
+	@GetMapping("/research/projects/{id}")
 	ResearchProjectResponse getProjectById(@PathVariable("id") Long projectId);
 	
 	
-	@GetMapping("/api/grants/{id}")
-	GrantResponseDto getGrantById(@PathVariable("id") Long id);
+	@GetMapping("/research/grant/{grantId}")
+	GrantResponseDto getGrantById(@PathVariable Long grantId);
 
-	@GetMapping("/api/grants/{id}/exists")
-	Boolean grantExists(@PathVariable("id") Long id);
+	@GetMapping("/research/grant/{grantId}/exists")
+	Boolean grantExists(@PathVariable Long grantId);
 
 }

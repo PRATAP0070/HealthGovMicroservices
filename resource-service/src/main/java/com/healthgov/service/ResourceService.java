@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.healthgov.dto.ResourceCreateRequest;
 import com.healthgov.dto.ResourceResponse;
+import com.healthgov.dto.ResourceSummaryResponse;
 import com.healthgov.dto.ResourceUpdateRequest;
 import com.healthgov.enums.ResourceStatus;
 import com.healthgov.enums.ResourceType;
@@ -23,4 +24,6 @@ public interface ResourceService {
 	List<ResourceResponse> getResourcesByProgramId(Long programId);
 
 	List<ResourceResponse> getResourcesByTypeAndStatus(ResourceType type, ResourceStatus status);
+	
+	ResourceSummaryResponse getResourceSummary(Long programId);
 }

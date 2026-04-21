@@ -46,6 +46,10 @@ public class WebSecurityConfig {
                 .pathMatchers("/manager/**").hasRole("MANAGER")
                 .pathMatchers("/api/v1/compliance-records/**").hasAnyRole("COMPLIANCE","AUDITOR")
                 .pathMatchers("/api/v1/audits/**").hasRole("AUDITOR")
+                .pathMatchers("/api/programs/**").hasRole("MANAGER")
+                .pathMatchers("/resources/**").hasRole("MANAGER")
+                .pathMatchers("/infrastructures/**").hasRole("MANAGER")
+ 
 
                 .anyExchange().authenticated()
             );

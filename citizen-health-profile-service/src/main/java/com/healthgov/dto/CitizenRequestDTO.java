@@ -11,8 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class CitizenRequestDTO {
     
-    private Long userId; // <-- Add this line!
-    
+    private Long userId;
     private String name;
     private LocalDate dob;
     private String gender;

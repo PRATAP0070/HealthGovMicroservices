@@ -9,11 +9,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CitizenResponseDTO {
-    private Long userId;     // Order 1
-    private Long citizenId;  // Order 2
-    private String name;     // Order 3
-    private LocalDate dob;   // Order 4
-    private String gender;   // Order 5
-    private String address;  // Order 6
-    private String status;   // Order 7
+    private Long userId;     
+    private Long citizenId;  
+    private String name;     
+    private LocalDate dob;   
+    private String gender;   
+    private String address;  
+    private String status;   
 }

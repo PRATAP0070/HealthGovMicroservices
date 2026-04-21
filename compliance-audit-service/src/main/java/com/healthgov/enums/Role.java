@@ -1,5 +1,5 @@
 package com.healthgov.enums;
 
-public enum UserRole {
+public enum Role {
 	CITIZEN, PROVIDER, RESEARCHER, MANAGER, ADMIN, COMPLIANCE, AUDITOR
 }

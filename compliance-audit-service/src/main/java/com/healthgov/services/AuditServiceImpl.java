@@ -12,7 +12,9 @@ import org.springframework.transaction.annotation.Transactional;
 import com.healthgov.dtos.AuditCreateRequest;
 import com.healthgov.dtos.AuditReponseDTO;
 import com.healthgov.dtos.AuditUpdateRequest;
+import com.healthgov.dtos.UserResponseDto;
 import com.healthgov.enums.AuditStatus;
+import com.healthgov.enums.Role;
 import com.healthgov.exceptions.AuditRequestException;
 import com.healthgov.exceptions.ResourceNotFoundException;
 import com.healthgov.feignclients.ProgramClient;
@@ -54,18 +56,24 @@ public class AuditServiceImpl implements AuditService {
 			throw new AuditRequestException("Compliance officer ID is required.");
 		}
 
-		Boolean exists;
 		Boolean isCompliance;
 
 		try {
-			isCompliance = userClient.userHasRole(officerId, "COMPLIANCE");
-			log.info("Response from the User-Client {}", isCompliance);
+			UserResponseDto user = userClient.getUserById(officerId);
+			log.info("Response from the User-Client {}", user);
+
+			if (user == null || user.getRole() == null) {
+				throw new AuditRequestException("Invalid user data returned for officerId=" + officerId);
+			}
+
+			// ✅ SAFE comparison
+			if (!user.getRole().equals(Role.COMPLIANCE)) {
+				throw new AuditRequestException(
+						"User with ID: " + user.getUserId() + " : " + user.getName() + " is not a Compliance Officer");
+			}
+
 		} catch (FeignClientException e) {
 			throw new AuditRequestException("Unable to validate compliance officer. User service unavailable.");
-		}
-
-		if (isCompliance == null || !isCompliance) {
-			throw new AuditRequestException("User is not a COMPLIANCE officer: id=" + officerId);
 		}
 
 		String scope = request.getScope().trim();
@@ -243,7 +251,17 @@ public class AuditServiceImpl implements AuditService {
 		dto.setDate(a.getDate());
 		dto.setFindings(a.getFindings());
 		dto.setStatus(a.getStatus());
-		// dto.setOfficer(a.getOfficer());
+
+		if (a.getOfficerId() != null) {
+			try {
+				dto.setOfficer(userClient.getUserById(a.getOfficerId()));
+			} catch (Exception e) {
+				log.warn("Unable to fetch officer details for officerId={}, setting officer=null", a.getOfficerId(), e);
+				dto.setOfficer(null);
+			}
+		} else {
+			dto.setOfficer(null);
+		}
 
 		return dto;
 

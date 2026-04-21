@@ -1,19 +1,52 @@
-2026-04-20T09:13:46.861+05:30  INFO 5624 --- [research-service] [main] c.healthgov.ResearchServiceApplication   : Starting ResearchServiceApplication using Java 21.0.8 with PID 5624 (C:\Users\2481703\git\HealthGovMicroservices\research-service\target\classes started by 2481703 in C:\Users\2481703\git\HealthGovMicroservices\research-service)
-2026-04-20T09:13:46.870+05:30  INFO 5624 --- [research-service] [main] c.healthgov.ResearchServiceApplication   : No active profile set, falling back to 1 default profile: "default"
-2026-04-20T09:13:47.652+05:30  INFO 5624 --- [research-service] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2026-04-20T09:13:47.752+05:30  INFO 5624 --- [research-service] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 90 ms. Found 3 JPA repository interfaces.
-2026-04-20T09:13:47.997+05:30  INFO 5624 --- [research-service] [main] o.s.cloud.context.scope.GenericScope     : BeanFactory id=495de0c2-5bb5-3dc5-bbde-cb1e56273d76
-2026-04-20T09:13:48.249+05:30  INFO 5624 --- [research-service] [main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 7777 (http)
-2026-04-20T09:13:48.258+05:30  INFO 5624 --- [research-service] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
-2026-04-20T09:13:48.258+05:30  INFO 5624 --- [research-service] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.20]
-2026-04-20T09:13:48.305+05:30  INFO 5624 --- [research-service] [main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 1372 ms
-2026-04-20T09:13:48.562+05:30  INFO 5624 --- [research-service] [main] org.hibernate.orm.jpa                    : HHH008540: Processing PersistenceUnitInfo [name: default]
-2026-04-20T09:13:48.600+05:30  INFO 5624 --- [research-service] [main] org.hibernate.orm.core                   : HHH000001: Hibernate ORM core version 7.2.7.Final
-2026-04-20T09:13:48.913+05:30  INFO 5624 --- [research-service] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
-2026-04-20T09:13:48.935+05:30  INFO 5624 --- [research-service] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
-2026-04-20T09:13:49.148+05:30  INFO 5624 --- [research-service] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@6e80de85
-2026-04-20T09:13:49.149+05:30  INFO 5624 --- [research-service] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
-2026-04-20T09:13:49.224+05:30  INFO 5624 --- [research-service] [main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+2026-04-21T06:57:29.566+05:30  WARN 32116 --- [research-service] [HikariPool-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=7h26m58s852ms505µs300ns).
+2026-04-21T07:34:45.139+05:30  WARN 32116 --- [research-service] [HikariPool-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=37m21s383ms114µs600ns).
+2026-04-21T07:35:17.378+05:30  INFO 32116 --- [research-service] [AsyncResolver-bootstrap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-04-21T08:51:21.941+05:30  WARN 32116 --- [research-service] [HikariPool-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=1h14m6s757ms726µs800ns).
+2026-04-21T08:52:54.535+05:30  WARN 32116 --- [research-service] [HikariPool-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=1m2s61ms321µs200ns).
+2026-04-21T08:53:54.142+05:30  INFO 32116 --- [research-service] [AsyncResolver-bootstrap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-04-21T08:57:55.054+05:30  INFO 32116 --- [research-service] [DiscoveryClient-HeartbeatExecutor-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_RESEARCH-SERVICE/LTIN718314.cts.com:research-service:7777 - Re-registering apps/RESEARCH-SERVICE
+2026-04-21T08:57:55.056+05:30  INFO 32116 --- [research-service] [DiscoveryClient-HeartbeatExecutor-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_RESEARCH-SERVICE/LTIN718314.cts.com:research-service:7777: registering service...
+2026-04-21T08:57:55.425+05:30  INFO 32116 --- [research-service] [DiscoveryClient-HeartbeatExecutor-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_RESEARCH-SERVICE/LTIN718314.cts.com:research-service:7777 - registration status: 204
+2026-04-21T08:58:24.946+05:30  INFO 32116 --- [research-service] [DiscoveryClient-CacheRefreshExecutor-%d] com.netflix.discovery.DiscoveryClient    : Disable delta property : false
+2026-04-21T08:58:24.947+05:30  INFO 32116 --- [research-service] [DiscoveryClient-CacheRefreshExecutor-%d] com.netflix.discovery.DiscoveryClient    : Single vip registry refresh property : null
+2026-04-21T08:58:24.947+05:30  INFO 32116 --- [research-service] [DiscoveryClient-CacheRefreshExecutor-%d] com.netflix.discovery.DiscoveryClient    : Force full registry fetch : false
+2026-04-21T08:58:24.947+05:30  INFO 32116 --- [research-service] [DiscoveryClient-CacheRefreshExecutor-%d] com.netflix.discovery.DiscoveryClient    : Application is null : false
+2026-04-21T08:58:24.947+05:30  INFO 32116 --- [research-service] [DiscoveryClient-CacheRefreshExecutor-%d] com.netflix.discovery.DiscoveryClient    : Registered Applications size is zero : true
+2026-04-21T08:58:24.947+05:30  INFO 32116 --- [research-service] [DiscoveryClient-CacheRefreshExecutor-%d] com.netflix.discovery.DiscoveryClient    : Application version is -1: false
+2026-04-21T08:58:24.947+05:30  INFO 32116 --- [research-service] [DiscoveryClient-CacheRefreshExecutor-%d] com.netflix.discovery.DiscoveryClient    : Getting all instance registry info from the eureka server
+2026-04-21T08:58:24.993+05:30  INFO 32116 --- [research-service] [DiscoveryClient-CacheRefreshExecutor-%d] com.netflix.discovery.DiscoveryClient    : The response status is 200
+2026-04-21T08:58:54.149+05:30  INFO 32116 --- [research-service] [AsyncResolver-bootstrap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-04-21T09:03:54.154+05:30  INFO 32116 --- [research-service] [AsyncResolver-bootstrap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-04-21T09:05:33.270+05:30  INFO 32116 --- [research-service] [RMI TCP Connection(61)-127.0.0.1] inMXBeanRegistrar$SpringApplicationAdmin : Application shutdown requested.
+2026-04-21T09:05:33.323+05:30  INFO 32116 --- [research-service] [RMI TCP Connection(61)-127.0.0.1] o.s.c.n.e.s.EurekaServiceRegistry        : Unregistering application RESEARCH-SERVICE with eureka with status DOWN
+2026-04-21T09:05:33.323+05:30  INFO 32116 --- [research-service] [RMI TCP Connection(61)-127.0.0.1] com.netflix.discovery.DiscoveryClient    : Saw local status change event StatusChangeEvent [timestamp=1776742533323, current=DOWN, previous=UP]
+2026-04-21T09:05:33.324+05:30  INFO 32116 --- [research-service] [DiscoveryClient-InstanceInfoReplicator-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_RESEARCH-SERVICE/LTIN718314.cts.com:research-service:7777: registering service...
+2026-04-21T09:05:33.336+05:30  INFO 32116 --- [research-service] [DiscoveryClient-InstanceInfoReplicator-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_RESEARCH-SERVICE/LTIN718314.cts.com:research-service:7777 - registration status: 204
+2026-04-21T09:05:33.400+05:30  INFO 32116 --- [research-service] [RMI TCP Connection(61)-127.0.0.1] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
+2026-04-21T09:05:33.439+05:30  INFO 32116 --- [research-service] [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete
+2026-04-21T09:05:33.518+05:30  INFO 32116 --- [research-service] [RMI TCP Connection(61)-127.0.0.1] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-04-21T09:05:33.601+05:30  INFO 32116 --- [research-service] [RMI TCP Connection(61)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2026-04-21T09:05:33.637+05:30  INFO 32116 --- [research-service] [RMI TCP Connection(61)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2026-04-21T09:05:33.642+05:30  INFO 32116 --- [research-service] [RMI TCP Connection(61)-127.0.0.1] com.netflix.discovery.DiscoveryClient    : Shutting down DiscoveryClient ...
+2026-04-21T09:05:36.656+05:30  INFO 32116 --- [research-service] [RMI TCP Connection(61)-127.0.0.1] com.netflix.discovery.DiscoveryClient    : Unregistering ...
+2026-04-21T09:05:36.697+05:30  INFO 32116 --- [research-service] [RMI TCP Connection(61)-127.0.0.1] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_RESEARCH-SERVICE/LTIN718314.cts.com:research-service:7777 - deregister  status: 200
+2026-04-21T09:05:36.700+05:30  INFO 32116 --- [research-service] [RMI TCP Connection(61)-127.0.0.1] com.netflix.discovery.DiscoveryClient    : Completed shut down of DiscoveryClient
+2026-04-21T09:05:54.269+05:30  INFO 17512 --- [research-service] [main] c.healthgov.ResearchServiceApplication   : Starting ResearchServiceApplication using Java 21.0.8 with PID 17512 (C:\Users\2481285\git\HealthGovMicroservices\research-service\target\classes started by 2481285 in C:\Users\2481285\git\HealthGovMicroservices\research-service)
+2026-04-21T09:05:54.278+05:30  INFO 17512 --- [research-service] [main] c.healthgov.ResearchServiceApplication   : No active profile set, falling back to 1 default profile: "default"
+2026-04-21T09:05:56.973+05:30  INFO 17512 --- [research-service] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-04-21T09:05:57.304+05:30  INFO 17512 --- [research-service] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 309 ms. Found 3 JPA repository interfaces.
+2026-04-21T09:05:58.102+05:30  INFO 17512 --- [research-service] [main] o.s.cloud.context.scope.GenericScope     : BeanFactory id=87affe21-6549-35aa-9791-e9e20fb70c39
+2026-04-21T09:05:58.901+05:30  INFO 17512 --- [research-service] [main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 7777 (http)
+2026-04-21T09:05:58.927+05:30  INFO 17512 --- [research-service] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-04-21T09:05:58.927+05:30  INFO 17512 --- [research-service] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.20]
+2026-04-21T09:05:59.061+05:30  INFO 17512 --- [research-service] [main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 4671 ms
+2026-04-21T09:05:59.814+05:30  INFO 17512 --- [research-service] [main] org.hibernate.orm.jpa                    : HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-04-21T09:05:59.963+05:30  INFO 17512 --- [research-service] [main] org.hibernate.orm.core                   : HHH000001: Hibernate ORM core version 7.2.7.Final
+2026-04-21T09:06:01.543+05:30  INFO 17512 --- [research-service] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-04-21T09:06:01.666+05:30  INFO 17512 --- [research-service] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-04-21T09:06:02.441+05:30  INFO 17512 --- [research-service] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@7a22302c
+2026-04-21T09:06:02.444+05:30  INFO 17512 --- [research-service] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-04-21T09:06:02.621+05:30  INFO 17512 --- [research-service] [main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
 	Database JDBC URL [jdbc:mysql://localhost:3306/research_service_db]
 	Database driver: MySQL Connector/J
 	Database dialect: MySQLDialect
@@ -25,250 +58,420 @@
 	Pool: DataSourceConnectionProvider
 	Minimum pool size: undefined/unknown
 	Maximum pool size: undefined/unknown
-2026-04-20T09:13:49.908+05:30  INFO 5624 --- [research-service] [main] org.hibernate.orm.core                   : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-2026-04-20T09:13:49.998+05:30  INFO 5624 --- [research-service] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
-2026-04-20T09:13:50.071+05:30  INFO 5624 --- [research-service] [main] o.s.d.j.r.query.QueryEnhancerFactories   : Hibernate is in classpath; If applicable, HQL parser will be used.
-2026-04-20T09:13:50.272+05:30  WARN 5624 --- [research-service] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2026-04-20T09:13:50.344+05:30  INFO 5624 --- [research-service] [main] o.s.c.openfeign.FeignClientFactoryBean   : For 'auth-service' URL not provided. Will try picking an instance via load-balancing.
-2026-04-20T09:13:50.845+05:30  INFO 5624 --- [research-service] [main] DiscoveryClientOptionalArgsConfiguration : Eureka HTTP Client uses RestClient.
-2026-04-20T09:13:50.864+05:30  WARN 5624 --- [research-service] [main] iguration$LoadBalancerCaffeineWarnLogger : Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
-2026-04-20T09:13:50.877+05:30  INFO 5624 --- [research-service] [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 2 endpoints beneath base path '/actuator'
-2026-04-20T09:13:50.942+05:30  INFO 5624 --- [research-service] [main] o.s.c.n.eureka.InstanceInfoFactory       : Setting initial instance status as: STARTING
-2026-04-20T09:13:50.964+05:30  INFO 5624 --- [research-service] [main] com.netflix.discovery.DiscoveryClient    : Initializing Eureka in region us-east-1
-2026-04-20T09:13:50.967+05:30  INFO 5624 --- [research-service] [main] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
-2026-04-20T09:13:50.973+05:30  INFO 5624 --- [research-service] [main] com.netflix.discovery.DiscoveryClient    : Disable delta property : false
-2026-04-20T09:13:50.973+05:30  INFO 5624 --- [research-service] [main] com.netflix.discovery.DiscoveryClient    : Single vip registry refresh property : null
-2026-04-20T09:13:50.973+05:30  INFO 5624 --- [research-service] [main] com.netflix.discovery.DiscoveryClient    : Force full registry fetch : false
-2026-04-20T09:13:50.973+05:30  INFO 5624 --- [research-service] [main] com.netflix.discovery.DiscoveryClient    : Application is null : false
-2026-04-20T09:13:50.973+05:30  INFO 5624 --- [research-service] [main] com.netflix.discovery.DiscoveryClient    : Registered Applications size is zero : true
-2026-04-20T09:13:50.973+05:30  INFO 5624 --- [research-service] [main] com.netflix.discovery.DiscoveryClient    : Application version is -1: true
-2026-04-20T09:13:50.973+05:30  INFO 5624 --- [research-service] [main] com.netflix.discovery.DiscoveryClient    : Getting all instance registry info from the eureka server
-2026-04-20T09:13:51.257+05:30  INFO 5624 --- [research-service] [main] com.netflix.discovery.DiscoveryClient    : The response status is 200
-2026-04-20T09:13:51.260+05:30  INFO 5624 --- [research-service] [main] com.netflix.discovery.DiscoveryClient    : Starting heartbeat executor: renew interval is: 30
-2026-04-20T09:13:51.262+05:30  INFO 5624 --- [research-service] [main] c.n.discovery.InstanceInfoReplicator     : InstanceInfoReplicator onDemand update allowed rate per min is 4
-2026-04-20T09:13:51.264+05:30  INFO 5624 --- [research-service] [main] com.netflix.discovery.DiscoveryClient    : Discovery Client initialized at timestamp 1776656631263 with initial instances count: 1
-2026-04-20T09:13:51.268+05:30  INFO 5624 --- [research-service] [main] o.s.c.n.e.s.EurekaServiceRegistry        : Registering application RESEARCH-SERVICE with eureka with status UP
-2026-04-20T09:13:51.269+05:30  INFO 5624 --- [research-service] [main] com.netflix.discovery.DiscoveryClient    : Saw local status change event StatusChangeEvent [timestamp=1776656631269, current=UP, previous=STARTING]
-2026-04-20T09:13:51.271+05:30  INFO 5624 --- [research-service] [DiscoveryClient-InstanceInfoReplicator-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_RESEARCH-SERVICE/LTIN717597.cts.com:research-service:7777: registering service...
-2026-04-20T09:13:51.308+05:30  INFO 5624 --- [research-service] [main] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 7777 (http) with context path '/'
-2026-04-20T09:13:51.308+05:30  INFO 5624 --- [research-service] [main] .s.c.n.e.s.EurekaAutoServiceRegistration : Updating port to 7777
-2026-04-20T09:13:51.326+05:30  INFO 5624 --- [research-service] [main] c.healthgov.ResearchServiceApplication   : Started ResearchServiceApplication in 4.805 seconds (process running for 5.444)
-2026-04-20T09:13:51.334+05:30  INFO 5624 --- [research-service] [DiscoveryClient-InstanceInfoReplicator-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_RESEARCH-SERVICE/LTIN717597.cts.com:research-service:7777 - registration status: 204
-2026-04-20T09:13:51.628+05:30  INFO 5624 --- [research-service] [RMI TCP Connection(6)-127.0.0.1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
-2026-04-20T09:13:51.629+05:30  INFO 5624 --- [research-service] [RMI TCP Connection(6)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
-2026-04-20T09:13:51.632+05:30  INFO 5624 --- [research-service] [RMI TCP Connection(6)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
-2026-04-20T09:15:40.558+05:30  INFO 5624 --- [research-service] [http-nio-7777-exec-3] c.h.c.ResearchProjectController          : UPDATE project request for projectId=8
-2026-04-20T09:15:40.572+05:30  INFO 5624 --- [research-service] [http-nio-7777-exec-3] c.h.service.ResearchProjectServiceImpl   : Updating research project with projectId=8
-2026-04-20T09:16:13.286+05:30  INFO 5624 --- [research-service] [http-nio-7777-exec-2] c.h.c.ResearchProjectController          : Fetching project list. Status=REJECTED
-2026-04-20T09:17:06.475+05:30  INFO 5624 --- [research-service] [RMI TCP Connection(15)-127.0.0.1] inMXBeanRegistrar$SpringApplicationAdmin : Application shutdown requested.
-2026-04-20T09:17:06.477+05:30  INFO 5624 --- [research-service] [RMI TCP Connection(15)-127.0.0.1] o.s.c.n.e.s.EurekaServiceRegistry        : Unregistering application RESEARCH-SERVICE with eureka with status DOWN
-2026-04-20T09:17:06.477+05:30  INFO 5624 --- [research-service] [RMI TCP Connection(15)-127.0.0.1] com.netflix.discovery.DiscoveryClient    : Saw local status change event StatusChangeEvent [timestamp=1776656826477, current=DOWN, previous=UP]
-2026-04-20T09:17:06.477+05:30  INFO 5624 --- [research-service] [DiscoveryClient-InstanceInfoReplicator-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_RESEARCH-SERVICE/LTIN717597.cts.com:research-service:7777: registering service...
-2026-04-20T09:17:06.479+05:30  INFO 5624 --- [research-service] [RMI TCP Connection(15)-127.0.0.1] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
-2026-04-20T09:17:06.490+05:30  INFO 5624 --- [research-service] [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete
-2026-04-20T09:17:06.497+05:30  INFO 5624 --- [research-service] [DiscoveryClient-InstanceInfoReplicator-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_RESEARCH-SERVICE/LTIN717597.cts.com:research-service:7777 - registration status: 204
-2026-04-20T09:17:06.498+05:30  INFO 5624 --- [research-service] [RMI TCP Connection(15)-127.0.0.1] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
-2026-04-20T09:17:06.500+05:30  INFO 5624 --- [research-service] [RMI TCP Connection(15)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
-2026-04-20T09:17:06.505+05:30  INFO 5624 --- [research-service] [RMI TCP Connection(15)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
-2026-04-20T09:17:06.506+05:30  INFO 5624 --- [research-service] [RMI TCP Connection(15)-127.0.0.1] com.netflix.discovery.DiscoveryClient    : Shutting down DiscoveryClient ...
-2026-04-20T09:17:09.514+05:30  INFO 5624 --- [research-service] [RMI TCP Connection(15)-127.0.0.1] com.netflix.discovery.DiscoveryClient    : Unregistering ...
-2026-04-20T09:17:09.532+05:30  INFO 5624 --- [research-service] [RMI TCP Connection(15)-127.0.0.1] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_RESEARCH-SERVICE/LTIN717597.cts.com:research-service:7777 - deregister  status: 200
-2026-04-20T09:17:09.532+05:30  INFO 5624 --- [research-service] [RMI TCP Connection(15)-127.0.0.1] com.netflix.discovery.DiscoveryClient    : Completed shut down of DiscoveryClient
-2026-04-20T09:22:38.293+05:30  INFO 10280 --- [research-service] [main] c.healthgov.ResearchServiceApplication   : Starting ResearchServiceApplication using Java 21.0.8 with PID 10280 (C:\Users\2481703\git\HealthGovMicroservices\research-service\target\classes started by 2481703 in C:\Users\2481703\git\HealthGovMicroservices\research-service)
-2026-04-20T09:22:38.299+05:30  INFO 10280 --- [research-service] [main] c.healthgov.ResearchServiceApplication   : No active profile set, falling back to 1 default profile: "default"
-2026-04-20T09:22:40.759+05:30  INFO 10280 --- [research-service] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2026-04-20T09:22:40.990+05:30  INFO 10280 --- [research-service] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 212 ms. Found 3 JPA repository interfaces.
-2026-04-20T09:22:41.453+05:30  INFO 10280 --- [research-service] [main] o.s.cloud.context.scope.GenericScope     : BeanFactory id=495de0c2-5bb5-3dc5-bbde-cb1e56273d76
-2026-04-20T09:22:41.959+05:30  INFO 10280 --- [research-service] [main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 7777 (http)
-2026-04-20T09:22:41.977+05:30  INFO 10280 --- [research-service] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
-2026-04-20T09:22:41.977+05:30  INFO 10280 --- [research-service] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.20]
-2026-04-20T09:22:42.080+05:30  INFO 10280 --- [research-service] [main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 3702 ms
-2026-04-20T09:22:42.577+05:30  INFO 10280 --- [research-service] [main] org.hibernate.orm.jpa                    : HHH008540: Processing PersistenceUnitInfo [name: default]
-2026-04-20T09:22:42.644+05:30  INFO 10280 --- [research-service] [main] org.hibernate.orm.core                   : HHH000001: Hibernate ORM core version 7.2.7.Final
-2026-04-20T09:22:43.360+05:30  INFO 10280 --- [research-service] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
-2026-04-20T09:22:43.403+05:30  INFO 10280 --- [research-service] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
-2026-04-20T09:22:43.840+05:30  INFO 10280 --- [research-service] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@57466fb7
-2026-04-20T09:22:43.843+05:30  INFO 10280 --- [research-service] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
-2026-04-20T09:22:43.997+05:30  INFO 10280 --- [research-service] [main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
-	Database JDBC URL [jdbc:mysql://localhost:3306/research_service_db]
-	Database driver: MySQL Connector/J
-	Database dialect: MySQLDialect
-	Database version: 8.0.44
-	Default catalog/schema: research_service_db/undefined
-	Autocommit mode: undefined/unknown
-	Isolation level: REPEATABLE_READ [default REPEATABLE_READ]
-	JDBC fetch size: none
-	Pool: DataSourceConnectionProvider
-	Minimum pool size: undefined/unknown
-	Maximum pool size: undefined/unknown
-2026-04-20T09:22:45.471+05:30  INFO 10280 --- [research-service] [main] org.hibernate.orm.core                   : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-2026-04-20T09:22:45.629+05:30  INFO 10280 --- [research-service] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
-2026-04-20T09:22:45.743+05:30  INFO 10280 --- [research-service] [main] o.s.d.j.r.query.QueryEnhancerFactories   : Hibernate is in classpath; If applicable, HQL parser will be used.
-2026-04-20T09:22:46.146+05:30  WARN 10280 --- [research-service] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2026-04-20T09:22:46.280+05:30  INFO 10280 --- [research-service] [main] o.s.c.openfeign.FeignClientFactoryBean   : For 'auth-service' URL not provided. Will try picking an instance via load-balancing.
-2026-04-20T09:22:47.316+05:30  INFO 10280 --- [research-service] [main] DiscoveryClientOptionalArgsConfiguration : Eureka HTTP Client uses RestClient.
-2026-04-20T09:22:47.357+05:30  WARN 10280 --- [research-service] [main] iguration$LoadBalancerCaffeineWarnLogger : Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
-2026-04-20T09:22:47.378+05:30  INFO 10280 --- [research-service] [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 2 endpoints beneath base path '/actuator'
-2026-04-20T09:22:47.493+05:30  INFO 10280 --- [research-service] [main] o.s.c.n.eureka.InstanceInfoFactory       : Setting initial instance status as: STARTING
-2026-04-20T09:22:47.526+05:30  INFO 10280 --- [research-service] [main] com.netflix.discovery.DiscoveryClient    : Initializing Eureka in region us-east-1
-2026-04-20T09:22:47.532+05:30  INFO 10280 --- [research-service] [main] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
-2026-04-20T09:22:47.545+05:30  INFO 10280 --- [research-service] [main] com.netflix.discovery.DiscoveryClient    : Disable delta property : false
-2026-04-20T09:22:47.545+05:30  INFO 10280 --- [research-service] [main] com.netflix.discovery.DiscoveryClient    : Single vip registry refresh property : null
-2026-04-20T09:22:47.545+05:30  INFO 10280 --- [research-service] [main] com.netflix.discovery.DiscoveryClient    : Force full registry fetch : false
-2026-04-20T09:22:47.546+05:30  INFO 10280 --- [research-service] [main] com.netflix.discovery.DiscoveryClient    : Application is null : false
-2026-04-20T09:22:47.546+05:30  INFO 10280 --- [research-service] [main] com.netflix.discovery.DiscoveryClient    : Registered Applications size is zero : true
-2026-04-20T09:22:47.546+05:30  INFO 10280 --- [research-service] [main] com.netflix.discovery.DiscoveryClient    : Application version is -1: true
-2026-04-20T09:22:47.546+05:30  INFO 10280 --- [research-service] [main] com.netflix.discovery.DiscoveryClient    : Getting all instance registry info from the eureka server
-2026-04-20T09:22:48.047+05:30  INFO 10280 --- [research-service] [main] com.netflix.discovery.DiscoveryClient    : The response status is 200
-2026-04-20T09:22:48.050+05:30  INFO 10280 --- [research-service] [main] com.netflix.discovery.DiscoveryClient    : Starting heartbeat executor: renew interval is: 30
-2026-04-20T09:22:48.053+05:30  INFO 10280 --- [research-service] [main] c.n.discovery.InstanceInfoReplicator     : InstanceInfoReplicator onDemand update allowed rate per min is 4
-2026-04-20T09:22:48.057+05:30  INFO 10280 --- [research-service] [main] com.netflix.discovery.DiscoveryClient    : Discovery Client initialized at timestamp 1776657168055 with initial instances count: 1
-2026-04-20T09:22:48.063+05:30  INFO 10280 --- [research-service] [main] o.s.c.n.e.s.EurekaServiceRegistry        : Registering application RESEARCH-SERVICE with eureka with status UP
-2026-04-20T09:22:48.065+05:30  INFO 10280 --- [research-service] [main] com.netflix.discovery.DiscoveryClient    : Saw local status change event StatusChangeEvent [timestamp=1776657168065, current=UP, previous=STARTING]
-2026-04-20T09:22:48.068+05:30  INFO 10280 --- [research-service] [DiscoveryClient-InstanceInfoReplicator-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_RESEARCH-SERVICE/LTIN717597.cts.com:research-service:7777: registering service...
-2026-04-20T09:22:48.101+05:30  INFO 10280 --- [research-service] [main] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 7777 (http) with context path '/'
-2026-04-20T09:22:48.102+05:30  INFO 10280 --- [research-service] [main] .s.c.n.e.s.EurekaAutoServiceRegistration : Updating port to 7777
-2026-04-20T09:22:48.127+05:30  INFO 10280 --- [research-service] [main] c.healthgov.ResearchServiceApplication   : Started ResearchServiceApplication in 10.65 seconds (process running for 11.974)
-2026-04-20T09:22:48.131+05:30  INFO 10280 --- [research-service] [DiscoveryClient-InstanceInfoReplicator-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_RESEARCH-SERVICE/LTIN717597.cts.com:research-service:7777 - registration status: 204
-2026-04-20T09:22:48.607+05:30  INFO 10280 --- [research-service] [RMI TCP Connection(6)-127.0.0.1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
-2026-04-20T09:22:48.608+05:30  INFO 10280 --- [research-service] [RMI TCP Connection(6)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
-2026-04-20T09:22:48.610+05:30  INFO 10280 --- [research-service] [RMI TCP Connection(6)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
-2026-04-20T09:27:47.555+05:30  INFO 10280 --- [research-service] [AsyncResolver-bootstrap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
-2026-04-20T09:29:27.142+05:30  INFO 10280 --- [research-service] [http-nio-7777-exec-1] c.h.c.ResearchProjectController          : Fetching project list. Status=null
-2026-04-20T09:29:38.206+05:30  INFO 10280 --- [research-service] [http-nio-7777-exec-2] c.h.c.ResearchProjectController          : CREATE project request for researcherId=3
-2026-04-20T09:29:38.212+05:30  INFO 10280 --- [research-service] [http-nio-7777-exec-2] c.h.service.ResearchProjectServiceImpl   : Creating new research project for researcherId=3
-2026-04-20T09:30:14.296+05:30  INFO 10280 --- [research-service] [http-nio-7777-exec-3] c.h.c.ResearchProjectController          : CREATE project request for researcherId=3
-2026-04-20T09:30:14.300+05:30  INFO 10280 --- [research-service] [http-nio-7777-exec-3] c.h.service.ResearchProjectServiceImpl   : Creating new research project for researcherId=3
-2026-04-20T09:30:24.534+05:30  INFO 10280 --- [research-service] [http-nio-7777-exec-4] c.h.c.ResearchProjectController          : CREATE project request for researcherId=3
-2026-04-20T09:30:24.539+05:30  INFO 10280 --- [research-service] [http-nio-7777-exec-4] c.h.service.ResearchProjectServiceImpl   : Creating new research project for researcherId=3
-2026-04-20T09:30:32.624+05:30  INFO 10280 --- [research-service] [http-nio-7777-exec-5] c.h.c.ResearchProjectController          : CREATE project request for researcherId=3
-2026-04-20T09:30:32.624+05:30  INFO 10280 --- [research-service] [http-nio-7777-exec-5] c.h.service.ResearchProjectServiceImpl   : Creating new research project for researcherId=3
-2026-04-20T09:30:52.690+05:30  INFO 10280 --- [research-service] [http-nio-7777-exec-7] c.h.c.ResearchProjectController          : UPDATE project request for projectId=8
-2026-04-20T09:30:52.690+05:30  INFO 10280 --- [research-service] [http-nio-7777-exec-7] c.h.service.ResearchProjectServiceImpl   : Updating research project with projectId=8
-2026-04-20T09:31:08.453+05:30  INFO 10280 --- [research-service] [http-nio-7777-exec-8] c.h.c.ResearchProjectController          : UPDATE project request for projectId=11
-2026-04-20T09:31:08.453+05:30  INFO 10280 --- [research-service] [http-nio-7777-exec-8] c.h.service.ResearchProjectServiceImpl   : Updating research project with projectId=11
-2026-04-20T09:32:47.572+05:30  INFO 10280 --- [research-service] [AsyncResolver-bootstrap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
-2026-04-20T09:33:23.467+05:30  INFO 10280 --- [research-service] [http-nio-7777-exec-2] c.h.c.ProgramManagerReviewController     : Fetching PENDING projects for Program Manager
-2026-04-20T09:33:23.480+05:30  INFO 10280 --- [research-service] [http-nio-7777-exec-2] c.h.s.ProgramManagerReviewServiceImpl    : Fetching ALL PENDING projects for PM dashboard.
-2026-04-20T09:33:24.944+05:30  INFO 10280 --- [research-service] [http-nio-7777-exec-2] c.h.s.ProgramManagerReviewServiceImpl    : Total pending projects found: 4
-2026-04-20T09:33:33.620+05:30  INFO 10280 --- [research-service] [http-nio-7777-exec-3] c.h.c.ProgramManagerReviewController     : Fetching projects by status=rejected
-2026-04-20T09:33:33.629+05:30  INFO 10280 --- [research-service] [http-nio-7777-exec-3] c.h.s.ProgramManagerReviewServiceImpl    : Fetching projects with status=rejected
-2026-04-20T09:33:33.653+05:30  INFO 10280 --- [research-service] [http-nio-7777-exec-3] c.h.s.ProgramManagerReviewServiceImpl    : Projects found with status rejected: 2
-2026-04-20T09:33:54.811+05:30  INFO 10280 --- [research-service] [http-nio-7777-exec-4] c.h.c.ProgramManagerReviewController     : Fetching project details for projectId=8
-2026-04-20T09:33:54.817+05:30  INFO 10280 --- [research-service] [http-nio-7777-exec-4] c.h.s.ProgramManagerReviewServiceImpl    : Fetching project for PM review: projectId=8
-2026-04-20T09:33:54.829+05:30  INFO 10280 --- [research-service] [http-nio-7777-exec-4] c.h.s.ProgramManagerReviewServiceImpl    : Project fetched successfully: projectId=8
-2026-04-20T09:34:30.079+05:30  INFO 10280 --- [research-service] [http-nio-7777-exec-5] c.h.c.ProgramManagerReviewController     : PM decision received. projectId=11, decision=APPROVED
-2026-04-20T09:34:30.087+05:30  INFO 10280 --- [research-service] [http-nio-7777-exec-5] c.h.s.ProgramManagerReviewServiceImpl    : PM decision received: projectId=11, decision=APPROVED
-2026-04-20T09:34:30.095+05:30  INFO 10280 --- [research-service] [http-nio-7777-exec-5] c.h.s.ProgramManagerReviewServiceImpl    : Project found. Applying decision=APPROVED for projectId=11
-2026-04-20T09:34:30.169+05:30  INFO 10280 --- [research-service] [http-nio-7777-exec-5] c.h.s.ProgramManagerReviewServiceImpl    : Approving project: projectId=11
-2026-04-20T09:34:30.169+05:30  INFO 10280 --- [research-service] [http-nio-7777-exec-5] c.h.s.ProgramManagerReviewServiceImpl    : GrantApplication updated to APPROVED for projectId=11
-2026-04-20T09:34:30.263+05:30  INFO 10280 --- [research-service] [http-nio-7777-exec-5] c.h.s.ProgramManagerReviewServiceImpl    : No existing grant found. Creating new grant for projectId=11, amount=7000.0
-2026-04-20T09:34:30.276+05:30  INFO 10280 --- [research-service] [http-nio-7777-exec-5] c.h.s.ProgramManagerReviewServiceImpl    : Grant created successfully: projectId=11, amount=7000.0
-2026-04-20T09:34:30.276+05:30  INFO 10280 --- [research-service] [http-nio-7777-exec-5] c.h.s.ProgramManagerReviewServiceImpl    : Project decision applied successfully: projectId=11, finalStatus=APPROVED
-2026-04-20T09:36:11.885+05:30  INFO 10280 --- [research-service] [http-nio-7777-exec-9] c.h.c.ResearchProjectController          : UPDATE project request for projectId=11
-2026-04-20T09:36:11.890+05:30  INFO 10280 --- [research-service] [http-nio-7777-exec-9] c.h.service.ResearchProjectServiceImpl   : Updating research project with projectId=11
-2026-04-20T09:36:21.973+05:30  INFO 10280 --- [research-service] [http-nio-7777-exec-10] c.h.c.ResearchProjectController          : UPDATE project request for projectId=12
-2026-04-20T09:36:21.975+05:30  INFO 10280 --- [research-service] [http-nio-7777-exec-10] c.h.service.ResearchProjectServiceImpl   : Updating research project with projectId=12
-2026-04-20T09:36:48.422+05:30  INFO 10280 --- [research-service] [http-nio-7777-exec-1] c.h.c.ResearchProjectController          : UPDATE project request for projectId=12
-2026-04-20T09:36:48.422+05:30  INFO 10280 --- [research-service] [http-nio-7777-exec-1] c.h.service.ResearchProjectServiceImpl   : Updating research project with projectId=12
-2026-04-20T09:37:47.494+05:30  INFO 10280 --- [research-service] [http-nio-7777-exec-2] c.h.c.ResearchProjectController          : Fetching project list. Status=REJECTED
-2026-04-20T09:37:47.574+05:30  INFO 10280 --- [research-service] [AsyncResolver-bootstrap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
-2026-04-20T09:38:28.264+05:30  INFO 10280 --- [research-service] [http-nio-7777-exec-3] c.h.c.ResearchProjectController          : Fetching project list. Status=REJECTED
-2026-04-20T09:38:49.419+05:30  INFO 10280 --- [research-service] [http-nio-7777-exec-9] c.h.c.ResearchProjectController          : Fetching project list. Status=null
-2026-04-20T09:38:56.591+05:30  INFO 10280 --- [research-service] [http-nio-7777-exec-8] c.h.c.ResearchProjectController          : Fetching project list. Status=REJECTED
-2026-04-20T09:39:12.941+05:30  INFO 10280 --- [research-service] [RMI TCP Connection(29)-127.0.0.1] inMXBeanRegistrar$SpringApplicationAdmin : Application shutdown requested.
-2026-04-20T09:39:12.943+05:30  INFO 10280 --- [research-service] [RMI TCP Connection(29)-127.0.0.1] o.s.c.n.e.s.EurekaServiceRegistry        : Unregistering application RESEARCH-SERVICE with eureka with status DOWN
-2026-04-20T09:39:12.944+05:30  INFO 10280 --- [research-service] [RMI TCP Connection(29)-127.0.0.1] com.netflix.discovery.DiscoveryClient    : Saw local status change event StatusChangeEvent [timestamp=1776658152944, current=DOWN, previous=UP]
-2026-04-20T09:39:12.945+05:30  INFO 10280 --- [research-service] [DiscoveryClient-InstanceInfoReplicator-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_RESEARCH-SERVICE/LTIN717597.cts.com:research-service:7777: registering service...
-2026-04-20T09:39:12.953+05:30  INFO 10280 --- [research-service] [RMI TCP Connection(29)-127.0.0.1] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
-2026-04-20T09:39:12.965+05:30  INFO 10280 --- [research-service] [DiscoveryClient-InstanceInfoReplicator-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_RESEARCH-SERVICE/LTIN717597.cts.com:research-service:7777 - registration status: 204
-2026-04-20T09:39:12.984+05:30  INFO 10280 --- [research-service] [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete
-2026-04-20T09:39:13.003+05:30  INFO 10280 --- [research-service] [RMI TCP Connection(29)-127.0.0.1] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
-2026-04-20T09:39:13.006+05:30  INFO 10280 --- [research-service] [RMI TCP Connection(29)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
-2026-04-20T09:39:13.017+05:30  INFO 10280 --- [research-service] [RMI TCP Connection(29)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
-2026-04-20T09:39:13.019+05:30  INFO 10280 --- [research-service] [RMI TCP Connection(29)-127.0.0.1] com.netflix.discovery.DiscoveryClient    : Shutting down DiscoveryClient ...
-2026-04-20T09:39:16.031+05:30  INFO 10280 --- [research-service] [RMI TCP Connection(29)-127.0.0.1] com.netflix.discovery.DiscoveryClient    : Unregistering ...
-2026-04-20T09:39:16.052+05:30  INFO 10280 --- [research-service] [RMI TCP Connection(29)-127.0.0.1] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_RESEARCH-SERVICE/LTIN717597.cts.com:research-service:7777 - deregister  status: 200
-2026-04-20T09:39:16.054+05:30  INFO 10280 --- [research-service] [RMI TCP Connection(29)-127.0.0.1] com.netflix.discovery.DiscoveryClient    : Completed shut down of DiscoveryClient
-2026-04-20T09:51:21.723+05:30  INFO 6656 --- [research-service] [main] c.healthgov.ResearchServiceApplication   : Starting ResearchServiceApplication using Java 21.0.8 with PID 6656 (C:\Users\2481703\git\HealthGovMicroservices\research-service\target\classes started by 2481703 in C:\Users\2481703\git\HealthGovMicroservices\research-service)
-2026-04-20T09:51:21.729+05:30  INFO 6656 --- [research-service] [main] c.healthgov.ResearchServiceApplication   : No active profile set, falling back to 1 default profile: "default"
-2026-04-20T09:51:22.902+05:30  INFO 6656 --- [research-service] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2026-04-20T09:51:23.032+05:30  INFO 6656 --- [research-service] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 121 ms. Found 3 JPA repository interfaces.
-2026-04-20T09:51:23.355+05:30  INFO 6656 --- [research-service] [main] o.s.cloud.context.scope.GenericScope     : BeanFactory id=495de0c2-5bb5-3dc5-bbde-cb1e56273d76
-2026-04-20T09:51:23.657+05:30  INFO 6656 --- [research-service] [main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 7777 (http)
-2026-04-20T09:51:23.667+05:30  INFO 6656 --- [research-service] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
-2026-04-20T09:51:23.667+05:30  INFO 6656 --- [research-service] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.20]
-2026-04-20T09:51:23.722+05:30  INFO 6656 --- [research-service] [main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 1920 ms
-2026-04-20T09:51:24.085+05:30  INFO 6656 --- [research-service] [main] org.hibernate.orm.jpa                    : HHH008540: Processing PersistenceUnitInfo [name: default]
-2026-04-20T09:51:24.144+05:30  INFO 6656 --- [research-service] [main] org.hibernate.orm.core                   : HHH000001: Hibernate ORM core version 7.2.7.Final
-2026-04-20T09:51:24.620+05:30  INFO 6656 --- [research-service] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
-2026-04-20T09:51:24.649+05:30  INFO 6656 --- [research-service] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
-2026-04-20T09:51:24.941+05:30  INFO 6656 --- [research-service] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@16f15a4
-2026-04-20T09:51:24.943+05:30  INFO 6656 --- [research-service] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
-2026-04-20T09:51:25.035+05:30  INFO 6656 --- [research-service] [main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
-	Database JDBC URL [jdbc:mysql://localhost:3306/research_service_db]
-	Database driver: MySQL Connector/J
-	Database dialect: MySQLDialect
-	Database version: 8.0.44
-	Default catalog/schema: research_service_db/undefined
-	Autocommit mode: undefined/unknown
-	Isolation level: REPEATABLE_READ [default REPEATABLE_READ]
-	JDBC fetch size: none
-	Pool: DataSourceConnectionProvider
-	Minimum pool size: undefined/unknown
-	Maximum pool size: undefined/unknown
-2026-04-20T09:51:25.847+05:30  INFO 6656 --- [research-service] [main] org.hibernate.orm.core                   : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-2026-04-20T09:51:25.919+05:30  INFO 6656 --- [research-service] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
-2026-04-20T09:51:25.985+05:30  INFO 6656 --- [research-service] [main] o.s.d.j.r.query.QueryEnhancerFactories   : Hibernate is in classpath; If applicable, HQL parser will be used.
-2026-04-20T09:51:26.211+05:30  WARN 6656 --- [research-service] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2026-04-20T09:51:26.284+05:30  INFO 6656 --- [research-service] [main] o.s.c.openfeign.FeignClientFactoryBean   : For 'auth-service' URL not provided. Will try picking an instance via load-balancing.
-2026-04-20T09:51:26.766+05:30  INFO 6656 --- [research-service] [main] DiscoveryClientOptionalArgsConfiguration : Eureka HTTP Client uses RestClient.
-2026-04-20T09:51:26.786+05:30  WARN 6656 --- [research-service] [main] iguration$LoadBalancerCaffeineWarnLogger : Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
-2026-04-20T09:51:26.795+05:30  INFO 6656 --- [research-service] [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 2 endpoints beneath base path '/actuator'
-2026-04-20T09:51:26.858+05:30  INFO 6656 --- [research-service] [main] o.s.c.n.eureka.InstanceInfoFactory       : Setting initial instance status as: STARTING
-2026-04-20T09:51:26.875+05:30  INFO 6656 --- [research-service] [main] com.netflix.discovery.DiscoveryClient    : Initializing Eureka in region us-east-1
-2026-04-20T09:51:26.877+05:30  INFO 6656 --- [research-service] [main] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
-2026-04-20T09:51:26.883+05:30  INFO 6656 --- [research-service] [main] com.netflix.discovery.DiscoveryClient    : Disable delta property : false
-2026-04-20T09:51:26.883+05:30  INFO 6656 --- [research-service] [main] com.netflix.discovery.DiscoveryClient    : Single vip registry refresh property : null
-2026-04-20T09:51:26.883+05:30  INFO 6656 --- [research-service] [main] com.netflix.discovery.DiscoveryClient    : Force full registry fetch : false
-2026-04-20T09:51:26.883+05:30  INFO 6656 --- [research-service] [main] com.netflix.discovery.DiscoveryClient    : Application is null : false
-2026-04-20T09:51:26.883+05:30  INFO 6656 --- [research-service] [main] com.netflix.discovery.DiscoveryClient    : Registered Applications size is zero : true
-2026-04-20T09:51:26.884+05:30  INFO 6656 --- [research-service] [main] com.netflix.discovery.DiscoveryClient    : Application version is -1: true
-2026-04-20T09:51:26.884+05:30  INFO 6656 --- [research-service] [main] com.netflix.discovery.DiscoveryClient    : Getting all instance registry info from the eureka server
-2026-04-20T09:51:27.150+05:30  INFO 6656 --- [research-service] [main] com.netflix.discovery.DiscoveryClient    : The response status is 200
-2026-04-20T09:51:27.151+05:30  INFO 6656 --- [research-service] [main] com.netflix.discovery.DiscoveryClient    : Starting heartbeat executor: renew interval is: 30
-2026-04-20T09:51:27.152+05:30  INFO 6656 --- [research-service] [main] c.n.discovery.InstanceInfoReplicator     : InstanceInfoReplicator onDemand update allowed rate per min is 4
-2026-04-20T09:51:27.153+05:30  INFO 6656 --- [research-service] [main] com.netflix.discovery.DiscoveryClient    : Discovery Client initialized at timestamp 1776658887153 with initial instances count: 0
-2026-04-20T09:51:27.157+05:30  INFO 6656 --- [research-service] [main] o.s.c.n.e.s.EurekaServiceRegistry        : Registering application RESEARCH-SERVICE with eureka with status UP
-2026-04-20T09:51:27.157+05:30  INFO 6656 --- [research-service] [main] com.netflix.discovery.DiscoveryClient    : Saw local status change event StatusChangeEvent [timestamp=1776658887157, current=UP, previous=STARTING]
-2026-04-20T09:51:27.161+05:30  INFO 6656 --- [research-service] [DiscoveryClient-InstanceInfoReplicator-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_RESEARCH-SERVICE/LTIN717597.cts.com:research-service:7777: registering service...
-2026-04-20T09:51:27.179+05:30  INFO 6656 --- [research-service] [main] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 7777 (http) with context path '/'
-2026-04-20T09:51:27.180+05:30  INFO 6656 --- [research-service] [main] .s.c.n.e.s.EurekaAutoServiceRegistration : Updating port to 7777
-2026-04-20T09:51:27.191+05:30  INFO 6656 --- [research-service] [main] c.healthgov.ResearchServiceApplication   : Started ResearchServiceApplication in 5.915 seconds (process running for 6.835)
-2026-04-20T09:51:27.198+05:30  INFO 6656 --- [research-service] [DiscoveryClient-InstanceInfoReplicator-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_RESEARCH-SERVICE/LTIN717597.cts.com:research-service:7777 - registration status: 204
-2026-04-20T09:51:27.700+05:30  INFO 6656 --- [research-service] [RMI TCP Connection(7)-127.0.0.1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
-2026-04-20T09:51:27.700+05:30  INFO 6656 --- [research-service] [RMI TCP Connection(7)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
-2026-04-20T09:51:27.701+05:30  INFO 6656 --- [research-service] [RMI TCP Connection(7)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
-2026-04-20T09:51:57.155+05:30  INFO 6656 --- [research-service] [DiscoveryClient-CacheRefreshExecutor-%d] com.netflix.discovery.DiscoveryClient    : Disable delta property : false
-2026-04-20T09:51:57.156+05:30  INFO 6656 --- [research-service] [DiscoveryClient-CacheRefreshExecutor-%d] com.netflix.discovery.DiscoveryClient    : Single vip registry refresh property : null
-2026-04-20T09:51:57.156+05:30  INFO 6656 --- [research-service] [DiscoveryClient-CacheRefreshExecutor-%d] com.netflix.discovery.DiscoveryClient    : Force full registry fetch : false
-2026-04-20T09:51:57.156+05:30  INFO 6656 --- [research-service] [DiscoveryClient-CacheRefreshExecutor-%d] com.netflix.discovery.DiscoveryClient    : Application is null : false
-2026-04-20T09:51:57.156+05:30  INFO 6656 --- [research-service] [DiscoveryClient-CacheRefreshExecutor-%d] com.netflix.discovery.DiscoveryClient    : Registered Applications size is zero : true
-2026-04-20T09:51:57.156+05:30  INFO 6656 --- [research-service] [DiscoveryClient-CacheRefreshExecutor-%d] com.netflix.discovery.DiscoveryClient    : Application version is -1: false
-2026-04-20T09:51:57.156+05:30  INFO 6656 --- [research-service] [DiscoveryClient-CacheRefreshExecutor-%d] com.netflix.discovery.DiscoveryClient    : Getting all instance registry info from the eureka server
-2026-04-20T09:51:57.191+05:30  INFO 6656 --- [research-service] [DiscoveryClient-CacheRefreshExecutor-%d] com.netflix.discovery.DiscoveryClient    : The response status is 200
-2026-04-20T09:52:20.528+05:30  INFO 6656 --- [research-service] [http-nio-7777-exec-2] c.h.c.ResearchProjectController          : Fetching project by ID=26
-2026-04-20T09:54:04.579+05:30  INFO 6656 --- [research-service] [RMI TCP Connection(13)-127.0.0.1] inMXBeanRegistrar$SpringApplicationAdmin : Application shutdown requested.
-2026-04-20T09:54:04.580+05:30  INFO 6656 --- [research-service] [RMI TCP Connection(13)-127.0.0.1] o.s.c.n.e.s.EurekaServiceRegistry        : Unregistering application RESEARCH-SERVICE with eureka with status DOWN
-2026-04-20T09:54:04.581+05:30  INFO 6656 --- [research-service] [RMI TCP Connection(13)-127.0.0.1] com.netflix.discovery.DiscoveryClient    : Saw local status change event StatusChangeEvent [timestamp=1776659044581, current=DOWN, previous=UP]
-2026-04-20T09:54:04.581+05:30  INFO 6656 --- [research-service] [DiscoveryClient-InstanceInfoReplicator-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_RESEARCH-SERVICE/LTIN717597.cts.com:research-service:7777: registering service...
-2026-04-20T09:54:04.584+05:30  INFO 6656 --- [research-service] [RMI TCP Connection(13)-127.0.0.1] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
-2026-04-20T09:54:04.589+05:30  INFO 6656 --- [research-service] [DiscoveryClient-InstanceInfoReplicator-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_RESEARCH-SERVICE/LTIN717597.cts.com:research-service:7777 - registration status: 204
-2026-04-20T09:54:04.592+05:30  INFO 6656 --- [research-service] [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete
-2026-04-20T09:54:04.601+05:30  INFO 6656 --- [research-service] [RMI TCP Connection(13)-127.0.0.1] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
-2026-04-20T09:54:04.603+05:30  INFO 6656 --- [research-service] [RMI TCP Connection(13)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
-2026-04-20T09:54:04.610+05:30  INFO 6656 --- [research-service] [RMI TCP Connection(13)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
-2026-04-20T09:54:04.610+05:30  INFO 6656 --- [research-service] [RMI TCP Connection(13)-127.0.0.1] com.netflix.discovery.DiscoveryClient    : Shutting down DiscoveryClient ...
-2026-04-20T09:54:07.624+05:30  INFO 6656 --- [research-service] [RMI TCP Connection(13)-127.0.0.1] com.netflix.discovery.DiscoveryClient    : Unregistering ...
-2026-04-20T09:54:07.642+05:30  INFO 6656 --- [research-service] [RMI TCP Connection(13)-127.0.0.1] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_RESEARCH-SERVICE/LTIN717597.cts.com:research-service:7777 - deregister  status: 200
-2026-04-20T09:54:07.643+05:30  INFO 6656 --- [research-service] [RMI TCP Connection(13)-127.0.0.1] com.netflix.discovery.DiscoveryClient    : Completed shut down of DiscoveryClient
+2026-04-21T09:06:05.072+05:30  INFO 17512 --- [research-service] [main] org.hibernate.orm.core                   : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-04-21T09:06:05.336+05:30  INFO 17512 --- [research-service] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-04-21T09:06:05.501+05:30  INFO 17512 --- [research-service] [main] o.s.d.j.r.query.QueryEnhancerFactories   : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-04-21T09:06:06.088+05:30  WARN 17512 --- [research-service] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-04-21T09:06:06.311+05:30  INFO 17512 --- [research-service] [main] o.s.c.openfeign.FeignClientFactoryBean   : For 'auth-service' URL not provided. Will try picking an instance via load-balancing.
+2026-04-21T09:06:06.475+05:30  INFO 17512 --- [research-service] [main] o.s.c.openfeign.FeignClientFactoryBean   : For 'compliance-audit-service' URL not provided. Will try picking an instance via load-balancing.
+2026-04-21T09:06:07.912+05:30  INFO 17512 --- [research-service] [main] DiscoveryClientOptionalArgsConfiguration : Eureka HTTP Client uses RestClient.
+2026-04-21T09:06:07.965+05:30  WARN 17512 --- [research-service] [main] iguration$LoadBalancerCaffeineWarnLogger : Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2026-04-21T09:06:07.997+05:30  INFO 17512 --- [research-service] [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 2 endpoints beneath base path '/actuator'
+2026-04-21T09:06:08.158+05:30  INFO 17512 --- [research-service] [main] o.s.c.n.eureka.InstanceInfoFactory       : Setting initial instance status as: STARTING
+2026-04-21T09:06:08.205+05:30  INFO 17512 --- [research-service] [main] com.netflix.discovery.DiscoveryClient    : Initializing Eureka in region us-east-1
+2026-04-21T09:06:08.215+05:30  INFO 17512 --- [research-service] [main] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-04-21T09:06:08.232+05:30  INFO 17512 --- [research-service] [main] com.netflix.discovery.DiscoveryClient    : Disable delta property : false
+2026-04-21T09:06:08.232+05:30  INFO 17512 --- [research-service] [main] com.netflix.discovery.DiscoveryClient    : Single vip registry refresh property : null
+2026-04-21T09:06:08.232+05:30  INFO 17512 --- [research-service] [main] com.netflix.discovery.DiscoveryClient    : Force full registry fetch : false
+2026-04-21T09:06:08.232+05:30  INFO 17512 --- [research-service] [main] com.netflix.discovery.DiscoveryClient    : Application is null : false
+2026-04-21T09:06:08.233+05:30  INFO 17512 --- [research-service] [main] com.netflix.discovery.DiscoveryClient    : Registered Applications size is zero : true
+2026-04-21T09:06:08.233+05:30  INFO 17512 --- [research-service] [main] com.netflix.discovery.DiscoveryClient    : Application version is -1: true
+2026-04-21T09:06:08.233+05:30  INFO 17512 --- [research-service] [main] com.netflix.discovery.DiscoveryClient    : Getting all instance registry info from the eureka server
+2026-04-21T09:06:09.096+05:30  INFO 17512 --- [research-service] [main] com.netflix.discovery.DiscoveryClient    : The response status is 200
+2026-04-21T09:06:09.100+05:30  INFO 17512 --- [research-service] [main] com.netflix.discovery.DiscoveryClient    : Starting heartbeat executor: renew interval is: 30
+2026-04-21T09:06:09.105+05:30  INFO 17512 --- [research-service] [main] c.n.discovery.InstanceInfoReplicator     : InstanceInfoReplicator onDemand update allowed rate per min is 4
+2026-04-21T09:06:09.109+05:30  INFO 17512 --- [research-service] [main] com.netflix.discovery.DiscoveryClient    : Discovery Client initialized at timestamp 1776742569107 with initial instances count: 3
+2026-04-21T09:06:09.115+05:30  INFO 17512 --- [research-service] [main] o.s.c.n.e.s.EurekaServiceRegistry        : Registering application RESEARCH-SERVICE with eureka with status UP
+2026-04-21T09:06:09.116+05:30  INFO 17512 --- [research-service] [main] com.netflix.discovery.DiscoveryClient    : Saw local status change event StatusChangeEvent [timestamp=1776742569116, current=UP, previous=STARTING]
+2026-04-21T09:06:09.119+05:30  INFO 17512 --- [research-service] [DiscoveryClient-InstanceInfoReplicator-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_RESEARCH-SERVICE/LTIN718314.cts.com:research-service:7777: registering service...
+2026-04-21T09:06:09.169+05:30  INFO 17512 --- [research-service] [main] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 7777 (http) with context path '/'
+2026-04-21T09:06:09.172+05:30  INFO 17512 --- [research-service] [main] .s.c.n.e.s.EurekaAutoServiceRegistration : Updating port to 7777
+2026-04-21T09:06:09.205+05:30  INFO 17512 --- [research-service] [main] c.healthgov.ResearchServiceApplication   : Started ResearchServiceApplication in 15.888 seconds (process running for 17.604)
+2026-04-21T09:06:09.208+05:30  INFO 17512 --- [research-service] [DiscoveryClient-InstanceInfoReplicator-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_RESEARCH-SERVICE/LTIN718314.cts.com:research-service:7777 - registration status: 204
+2026-04-21T09:06:09.950+05:30  INFO 17512 --- [research-service] [RMI TCP Connection(8)-127.0.0.1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-04-21T09:06:09.950+05:30  INFO 17512 --- [research-service] [RMI TCP Connection(8)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-04-21T09:06:09.955+05:30  INFO 17512 --- [research-service] [RMI TCP Connection(8)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 4 ms
+2026-04-21T09:10:23.348+05:30  INFO 17512 --- [research-service] [http-nio-7777-exec-1] c.h.c.ResearchProjectController          : Fetching project by ID=1
+2026-04-21T09:10:24.668+05:30  INFO 17512 --- [research-service] [http-nio-7777-exec-3] c.h.c.ResearchProjectController          : Fetching project by ID=7
+2026-04-21T09:11:08.251+05:30  INFO 17512 --- [research-service] [AsyncResolver-bootstrap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-04-21T09:11:57.908+05:30  INFO 17512 --- [research-service] [http-nio-7777-exec-6] c.h.c.ResearchProjectController          : CREATE project request for researcherId=3
+2026-04-21T09:11:57.915+05:30  INFO 17512 --- [research-service] [http-nio-7777-exec-6] c.h.service.ResearchProjectServiceImpl   : Creating new research project for researcherId=3
+2026-04-21T09:11:59.192+05:30  INFO 17512 --- [research-service] [http-nio-7777-exec-6] c.h.service.ResearchProjectServiceImpl   : Compliance Create Event Triggred...
+2026-04-21T09:11:59.244+05:30  INFO 17512 --- [research-service] [http-nio-7777-exec-6] c.h.Listeners.ProjectComplianceListener  : Running Project Complinace Listener
+2026-04-21T09:12:01.704+05:30  INFO 17512 --- [research-service] [http-nio-7777-exec-7] c.h.c.ResearchProjectController          : Fetching project by ID=8
+2026-04-21T09:12:01.753+05:30  INFO 17512 --- [research-service] [http-nio-7777-exec-6] c.h.Listeners.ProjectComplianceListener  : Compliance created for projectId=8
+2026-04-21T09:12:59.823+05:30  INFO 17512 --- [research-service] [http-nio-7777-exec-9] c.h.c.ResearchProjectController          : Fetching project by ID=1
+2026-04-21T09:12:59.890+05:30  INFO 17512 --- [research-service] [http-nio-7777-exec-1] c.h.c.ResearchProjectController          : Fetching project by ID=7
+2026-04-21T09:12:59.945+05:30  INFO 17512 --- [research-service] [http-nio-7777-exec-3] c.h.c.ResearchProjectController          : Fetching project by ID=8
+2026-04-21T09:16:08.258+05:30  INFO 17512 --- [research-service] [AsyncResolver-bootstrap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-04-21T09:17:56.800+05:30  INFO 17512 --- [research-service] [http-nio-7777-exec-8] c.h.c.ProgramManagerReviewController     : PM decision received. projectId=8, decision=APPROVED
+2026-04-21T09:17:56.808+05:30  INFO 17512 --- [research-service] [http-nio-7777-exec-8] c.h.s.ProgramManagerReviewServiceImpl    : PM decision received: projectId=8, decision=APPROVED
+2026-04-21T09:17:56.817+05:30  INFO 17512 --- [research-service] [http-nio-7777-exec-8] c.h.s.ProgramManagerReviewServiceImpl    : Project found. Applying decision=APPROVED for projectId=8
+2026-04-21T09:17:56.907+05:30  INFO 17512 --- [research-service] [http-nio-7777-exec-8] c.h.s.ProgramManagerReviewServiceImpl    : Approving project: projectId=8
+2026-04-21T09:17:56.914+05:30  INFO 17512 --- [research-service] [http-nio-7777-exec-8] c.h.s.ProgramManagerReviewServiceImpl    : GrantApplication updated to APPROVED for projectId=8
+2026-04-21T09:17:56.989+05:30  INFO 17512 --- [research-service] [http-nio-7777-exec-8] c.h.s.ProgramManagerReviewServiceImpl    : No existing grant found. Creating new grant for projectId=8, amount=250000.0
+2026-04-21T09:17:57.014+05:30  INFO 17512 --- [research-service] [http-nio-7777-exec-8] c.h.s.ProgramManagerReviewServiceImpl    : Grant created successfully: projectId=8, amount=250000.0
+2026-04-21T09:17:57.014+05:30  INFO 17512 --- [research-service] [http-nio-7777-exec-8] c.h.s.ProgramManagerReviewServiceImpl    : Project decision applied successfully: projectId=8, finalStatus=APPROVED
+2026-04-21T09:17:57.063+05:30  INFO 17512 --- [research-service] [http-nio-7777-exec-8] c.h.Listeners.GrantComplianceListener    : Compliance is Creating for teh Grant
+2026-04-21T09:17:57.113+05:30  INFO 17512 --- [research-service] [http-nio-7777-exec-7] c.h.c.ResearchProjectController          : Checking if grant exists for grantId=3
+2026-04-21T09:17:57.219+05:30  INFO 17512 --- [research-service] [http-nio-7777-exec-8] c.h.Listeners.GrantComplianceListener    : Compliance created for Grant 3
+2026-04-21T09:18:08.360+05:30  INFO 17512 --- [research-service] [http-nio-7777-exec-9] c.h.c.ResearchProjectController          : Fetching project by ID=1
+2026-04-21T09:18:08.430+05:30  INFO 17512 --- [research-service] [http-nio-7777-exec-1] c.h.c.ResearchProjectController          : Fetching project by ID=7
+2026-04-21T09:18:08.487+05:30  INFO 17512 --- [research-service] [http-nio-7777-exec-3] c.h.c.ResearchProjectController          : Fetching project by ID=8
+2026-04-21T09:21:01.031+05:30  INFO 17512 --- [research-service] [RMI TCP Connection(26)-127.0.0.1] inMXBeanRegistrar$SpringApplicationAdmin : Application shutdown requested.
+2026-04-21T09:21:01.036+05:30  INFO 17512 --- [research-service] [RMI TCP Connection(26)-127.0.0.1] o.s.c.n.e.s.EurekaServiceRegistry        : Unregistering application RESEARCH-SERVICE with eureka with status DOWN
+2026-04-21T09:21:01.037+05:30  INFO 17512 --- [research-service] [RMI TCP Connection(26)-127.0.0.1] com.netflix.discovery.DiscoveryClient    : Saw local status change event StatusChangeEvent [timestamp=1776743461036, current=DOWN, previous=UP]
+2026-04-21T09:21:01.037+05:30  INFO 17512 --- [research-service] [DiscoveryClient-InstanceInfoReplicator-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_RESEARCH-SERVICE/LTIN718314.cts.com:research-service:7777: registering service...
+2026-04-21T09:21:01.057+05:30  INFO 17512 --- [research-service] [RMI TCP Connection(26)-127.0.0.1] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
+2026-04-21T09:21:01.094+05:30  INFO 17512 --- [research-service] [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete
+2026-04-21T09:21:01.096+05:30  INFO 17512 --- [research-service] [DiscoveryClient-InstanceInfoReplicator-%d] c.n.d.s.t.d.RedirectingEurekaHttpClient  : Request execution error. endpoint=DefaultEndpoint{ serviceUrl='http://localhost:8761/eureka/} exception=I/O error on POST request for "http://localhost:8761/eureka/apps/RESEARCH-SERVICE": Connect to http://localhost:8761 failed: Connection refused: getsockopt stacktrace=org.springframework.web.client.ResourceAccessException: I/O error on POST request for "http://localhost:8761/eureka/apps/RESEARCH-SERVICE": Connect to http://localhost:8761 failed: Connection refused: getsockopt
+	at org.springframework.web.client.DefaultRestClient$DefaultRequestBodyUriSpec.createResourceAccessException(DefaultRestClient.java:776)
+	at org.springframework.web.client.DefaultRestClient$DefaultRequestBodyUriSpec.exchangeInternal(DefaultRestClient.java:624)
+	at org.springframework.web.client.DefaultRestClient$DefaultRequestBodyUriSpec.exchange(DefaultRestClient.java:572)
+	at org.springframework.web.client.RestClient$RequestHeadersSpec.exchange(RestClient.java:747)
+	at org.springframework.web.client.DefaultRestClient$DefaultResponseSpec.executeAndExtract(DefaultRestClient.java:921)
+	at org.springframework.web.client.DefaultRestClient$DefaultResponseSpec.toBodilessEntity(DefaultRestClient.java:885)
+	at org.springframework.cloud.netflix.eureka.http.RestClientEurekaHttpClient.register(RestClientEurekaHttpClient.java:64)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$1.execute(EurekaHttpClientDecorator.java:59)
+	at com.netflix.discovery.shared.transport.decorator.RedirectingEurekaHttpClient.execute(RedirectingEurekaHttpClient.java:91)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.register(EurekaHttpClientDecorator.java:56)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$1.execute(EurekaHttpClientDecorator.java:59)
+	at com.netflix.discovery.shared.transport.decorator.RetryableEurekaHttpClient.execute(RetryableEurekaHttpClient.java:120)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.register(EurekaHttpClientDecorator.java:56)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$1.execute(EurekaHttpClientDecorator.java:59)
+	at com.netflix.discovery.shared.transport.decorator.SessionedEurekaHttpClient.execute(SessionedEurekaHttpClient.java:76)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.register(EurekaHttpClientDecorator.java:56)
+	at com.netflix.discovery.DiscoveryClient.register(DiscoveryClient.java:828)
+	at com.netflix.discovery.InstanceInfoReplicator.run(InstanceInfoReplicator.java:125)
+	at com.netflix.discovery.InstanceInfoReplicator$2.run(InstanceInfoReplicator.java:105)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:572)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:317)
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:304)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+Caused by: org.apache.hc.client5.http.HttpHostConnectException: Connect to http://localhost:8761 failed: Connection refused: getsockopt
+	at java.base/sun.nio.ch.Net.pollConnect(Native Method)
+	at java.base/sun.nio.ch.Net.pollConnectNow(Net.java:682)
+	at java.base/sun.nio.ch.NioSocketImpl.timedFinishConnect(NioSocketImpl.java:542)
+	at java.base/sun.nio.ch.NioSocketImpl.connect(NioSocketImpl.java:592)
+	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:327)
+	at java.base/java.net.Socket.connect(Socket.java:751)
+	at org.apache.hc.client5.http.impl.io.DefaultHttpClientConnectionOperator.connect(DefaultHttpClientConnectionOperator.java:226)
+	at org.apache.hc.client5.http.impl.io.PoolingHttpClientConnectionManager.connect(PoolingHttpClientConnectionManager.java:497)
+	at org.apache.hc.client5.http.impl.classic.InternalExecRuntime.connectEndpoint(InternalExecRuntime.java:164)
+	at org.apache.hc.client5.http.impl.classic.InternalExecRuntime.connectEndpoint(InternalExecRuntime.java:174)
+	at org.apache.hc.client5.http.impl.classic.ConnectExec.execute(ConnectExec.java:144)
+	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51)
+	at org.apache.hc.client5.http.impl.classic.ProtocolExec.execute(ProtocolExec.java:195)
+	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51)
+	at org.apache.hc.client5.http.impl.classic.ContentCompressionExec.execute(ContentCompressionExec.java:168)
+	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51)
+	at org.apache.hc.client5.http.impl.classic.HttpRequestRetryExec.execute(HttpRequestRetryExec.java:112)
+	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51)
+	at org.apache.hc.client5.http.impl.classic.RedirectExec.execute(RedirectExec.java:110)
+	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51)
+	at org.apache.hc.client5.http.impl.classic.InternalHttpClient.doExecute(InternalHttpClient.java:185)
+	at org.apache.hc.client5.http.impl.classic.CloseableHttpClient.execute(CloseableHttpClient.java:87)
+	at org.apache.hc.client5.http.impl.classic.CloseableHttpClient.execute(CloseableHttpClient.java:55)
+	at org.apache.hc.client5.http.classic.HttpClient.executeOpen(HttpClient.java:183)
+	at org.springframework.http.client.HttpComponentsClientHttpRequest.executeInternal(HttpComponentsClientHttpRequest.java:99)
+	at org.springframework.http.client.AbstractStreamingClientHttpRequest.executeInternal(AbstractStreamingClientHttpRequest.java:87)
+	at org.springframework.http.client.AbstractClientHttpRequest.execute(AbstractClientHttpRequest.java:80)
+	at org.springframework.http.client.AbstractBufferingClientHttpRequest.executeWithRequest(AbstractBufferingClientHttpRequest.java:89)
+	at org.springframework.http.client.InterceptingClientHttpRequest$EndOfChainRequestExecution.execute(InterceptingClientHttpRequest.java:102)
+	at org.springframework.cloud.netflix.eureka.http.RestClientTransportClientFactory.lambda$newClient$2(RestClientTransportClientFactory.java:98)
+	at org.springframework.http.client.ClientHttpRequestInterceptor.lambda$apply$0(ClientHttpRequestInterceptor.java:89)
+	at org.springframework.http.client.InterceptingClientHttpRequest.executeInternal(InterceptingClientHttpRequest.java:73)
+	at org.springframework.http.client.AbstractBufferingClientHttpRequest.executeInternal(AbstractBufferingClientHttpRequest.java:50)
+	at org.springframework.http.client.AbstractClientHttpRequest.execute(AbstractClientHttpRequest.java:80)
+	at org.springframework.web.client.DefaultRestClient$DefaultRequestBodyUriSpec.exchangeInternal(DefaultRestClient.java:614)
+	... 23 more
+
+2026-04-21T09:21:01.097+05:30  WARN 17512 --- [research-service] [DiscoveryClient-InstanceInfoReplicator-%d] c.n.d.s.t.d.RetryableEurekaHttpClient    : Request execution failed with message: I/O error on POST request for "http://localhost:8761/eureka/apps/RESEARCH-SERVICE": Connect to http://localhost:8761 failed: Connection refused: getsockopt
+2026-04-21T09:21:01.123+05:30  INFO 17512 --- [research-service] [RMI TCP Connection(26)-127.0.0.1] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-04-21T09:21:01.135+05:30  INFO 17512 --- [research-service] [RMI TCP Connection(26)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2026-04-21T09:21:01.152+05:30  INFO 17512 --- [research-service] [RMI TCP Connection(26)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2026-04-21T09:21:01.156+05:30  INFO 17512 --- [research-service] [RMI TCP Connection(26)-127.0.0.1] com.netflix.discovery.DiscoveryClient    : Shutting down DiscoveryClient ...
+2026-04-21T09:21:01.159+05:30  INFO 17512 --- [research-service] [DiscoveryClient-InstanceInfoReplicator-%d] c.n.d.s.t.d.RedirectingEurekaHttpClient  : Request execution error. endpoint=DefaultEndpoint{ serviceUrl='http://localhost:8761/eureka/}, exception=I/O error on POST request for "http://localhost:8761/eureka/apps/RESEARCH-SERVICE": Connect to http://localhost:8761 failed: Connection refused: getsockopt stacktrace=org.springframework.web.client.ResourceAccessException: I/O error on POST request for "http://localhost:8761/eureka/apps/RESEARCH-SERVICE": Connect to http://localhost:8761 failed: Connection refused: getsockopt
+	at org.springframework.web.client.DefaultRestClient$DefaultRequestBodyUriSpec.createResourceAccessException(DefaultRestClient.java:776)
+	at org.springframework.web.client.DefaultRestClient$DefaultRequestBodyUriSpec.exchangeInternal(DefaultRestClient.java:624)
+	at org.springframework.web.client.DefaultRestClient$DefaultRequestBodyUriSpec.exchange(DefaultRestClient.java:572)
+	at org.springframework.web.client.RestClient$RequestHeadersSpec.exchange(RestClient.java:747)
+	at org.springframework.web.client.DefaultRestClient$DefaultResponseSpec.executeAndExtract(DefaultRestClient.java:921)
+	at org.springframework.web.client.DefaultRestClient$DefaultResponseSpec.toBodilessEntity(DefaultRestClient.java:885)
+	at org.springframework.cloud.netflix.eureka.http.RestClientEurekaHttpClient.register(RestClientEurekaHttpClient.java:64)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$1.execute(EurekaHttpClientDecorator.java:59)
+	at com.netflix.discovery.shared.transport.decorator.RedirectingEurekaHttpClient.executeOnNewServer(RedirectingEurekaHttpClient.java:121)
+	at com.netflix.discovery.shared.transport.decorator.RedirectingEurekaHttpClient.execute(RedirectingEurekaHttpClient.java:80)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.register(EurekaHttpClientDecorator.java:56)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$1.execute(EurekaHttpClientDecorator.java:59)
+	at com.netflix.discovery.shared.transport.decorator.RetryableEurekaHttpClient.execute(RetryableEurekaHttpClient.java:120)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.register(EurekaHttpClientDecorator.java:56)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$1.execute(EurekaHttpClientDecorator.java:59)
+	at com.netflix.discovery.shared.transport.decorator.SessionedEurekaHttpClient.execute(SessionedEurekaHttpClient.java:76)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.register(EurekaHttpClientDecorator.java:56)
+	at com.netflix.discovery.DiscoveryClient.register(DiscoveryClient.java:828)
+	at com.netflix.discovery.InstanceInfoReplicator.run(InstanceInfoReplicator.java:125)
+	at com.netflix.discovery.InstanceInfoReplicator$2.run(InstanceInfoReplicator.java:105)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:572)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:317)
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:304)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+Caused by: org.apache.hc.client5.http.HttpHostConnectException: Connect to http://localhost:8761 failed: Connection refused: getsockopt
+	at java.base/sun.nio.ch.Net.pollConnect(Native Method)
+	at java.base/sun.nio.ch.Net.pollConnectNow(Net.java:682)
+	at java.base/sun.nio.ch.NioSocketImpl.timedFinishConnect(NioSocketImpl.java:542)
+	at java.base/sun.nio.ch.NioSocketImpl.connect(NioSocketImpl.java:592)
+	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:327)
+	at java.base/java.net.Socket.connect(Socket.java:751)
+	at org.apache.hc.client5.http.impl.io.DefaultHttpClientConnectionOperator.connect(DefaultHttpClientConnectionOperator.java:226)
+	at org.apache.hc.client5.http.impl.io.PoolingHttpClientConnectionManager.connect(PoolingHttpClientConnectionManager.java:497)
+	at org.apache.hc.client5.http.impl.classic.InternalExecRuntime.connectEndpoint(InternalExecRuntime.java:164)
+	at org.apache.hc.client5.http.impl.classic.InternalExecRuntime.connectEndpoint(InternalExecRuntime.java:174)
+	at org.apache.hc.client5.http.impl.classic.ConnectExec.execute(ConnectExec.java:144)
+	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51)
+	at org.apache.hc.client5.http.impl.classic.ProtocolExec.execute(ProtocolExec.java:195)
+	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51)
+	at org.apache.hc.client5.http.impl.classic.ContentCompressionExec.execute(ContentCompressionExec.java:168)
+	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51)
+	at org.apache.hc.client5.http.impl.classic.HttpRequestRetryExec.execute(HttpRequestRetryExec.java:112)
+	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51)
+	at org.apache.hc.client5.http.impl.classic.RedirectExec.execute(RedirectExec.java:110)
+	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51)
+	at org.apache.hc.client5.http.impl.classic.InternalHttpClient.doExecute(InternalHttpClient.java:185)
+	at org.apache.hc.client5.http.impl.classic.CloseableHttpClient.execute(CloseableHttpClient.java:87)
+	at org.apache.hc.client5.http.impl.classic.CloseableHttpClient.execute(CloseableHttpClient.java:55)
+	at org.apache.hc.client5.http.classic.HttpClient.executeOpen(HttpClient.java:183)
+	at org.springframework.http.client.HttpComponentsClientHttpRequest.executeInternal(HttpComponentsClientHttpRequest.java:99)
+	at org.springframework.http.client.AbstractStreamingClientHttpRequest.executeInternal(AbstractStreamingClientHttpRequest.java:87)
+	at org.springframework.http.client.AbstractClientHttpRequest.execute(AbstractClientHttpRequest.java:80)
+	at org.springframework.http.client.AbstractBufferingClientHttpRequest.executeWithRequest(AbstractBufferingClientHttpRequest.java:89)
+	at org.springframework.http.client.InterceptingClientHttpRequest$EndOfChainRequestExecution.execute(InterceptingClientHttpRequest.java:102)
+	at org.springframework.cloud.netflix.eureka.http.RestClientTransportClientFactory.lambda$newClient$2(RestClientTransportClientFactory.java:98)
+	at org.springframework.http.client.ClientHttpRequestInterceptor.lambda$apply$0(ClientHttpRequestInterceptor.java:89)
+	at org.springframework.http.client.InterceptingClientHttpRequest.executeInternal(InterceptingClientHttpRequest.java:73)
+	at org.springframework.http.client.AbstractBufferingClientHttpRequest.executeInternal(AbstractBufferingClientHttpRequest.java:50)
+	at org.springframework.http.client.AbstractClientHttpRequest.execute(AbstractClientHttpRequest.java:80)
+	at org.springframework.web.client.DefaultRestClient$DefaultRequestBodyUriSpec.exchangeInternal(DefaultRestClient.java:614)
+	... 24 more
+
+2026-04-21T09:21:01.160+05:30  WARN 17512 --- [research-service] [DiscoveryClient-InstanceInfoReplicator-%d] c.n.d.s.t.d.RetryableEurekaHttpClient    : Request execution failed with message: I/O error on POST request for "http://localhost:8761/eureka/apps/RESEARCH-SERVICE": Connect to http://localhost:8761 failed: Connection refused: getsockopt
+2026-04-21T09:21:01.160+05:30  WARN 17512 --- [research-service] [DiscoveryClient-InstanceInfoReplicator-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_RESEARCH-SERVICE/LTIN718314.cts.com:research-service:7777 - registration failed Cannot execute request on any known server
+
+com.netflix.discovery.shared.transport.TransportException: Cannot execute request on any known server
+	at com.netflix.discovery.shared.transport.decorator.RetryableEurekaHttpClient.execute(RetryableEurekaHttpClient.java:112) ~[eureka-client-2.0.5.jar:2.0.5]
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.register(EurekaHttpClientDecorator.java:56) ~[eureka-client-2.0.5.jar:2.0.5]
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$1.execute(EurekaHttpClientDecorator.java:59) ~[eureka-client-2.0.5.jar:2.0.5]
+	at com.netflix.discovery.shared.transport.decorator.SessionedEurekaHttpClient.execute(SessionedEurekaHttpClient.java:76) ~[eureka-client-2.0.5.jar:2.0.5]
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.register(EurekaHttpClientDecorator.java:56) ~[eureka-client-2.0.5.jar:2.0.5]
+	at com.netflix.discovery.DiscoveryClient.register(DiscoveryClient.java:828) ~[eureka-client-2.0.5.jar:2.0.5]
+	at com.netflix.discovery.InstanceInfoReplicator.run(InstanceInfoReplicator.java:125) ~[eureka-client-2.0.5.jar:2.0.5]
+	at com.netflix.discovery.InstanceInfoReplicator$2.run(InstanceInfoReplicator.java:105) ~[eureka-client-2.0.5.jar:2.0.5]
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:572) ~[na:na]
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:317) ~[na:na]
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:304) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642) ~[na:na]
+	at java.base/java.lang.Thread.run(Thread.java:1583) ~[na:na]
+
+2026-04-21T09:21:01.175+05:30  WARN 17512 --- [research-service] [DiscoveryClient-InstanceInfoReplicator-%d] c.n.discovery.InstanceInfoReplicator     : There was a problem with the instance info replicator
+
+com.netflix.discovery.shared.transport.TransportException: Cannot execute request on any known server
+	at com.netflix.discovery.shared.transport.decorator.RetryableEurekaHttpClient.execute(RetryableEurekaHttpClient.java:112) ~[eureka-client-2.0.5.jar:2.0.5]
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.register(EurekaHttpClientDecorator.java:56) ~[eureka-client-2.0.5.jar:2.0.5]
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$1.execute(EurekaHttpClientDecorator.java:59) ~[eureka-client-2.0.5.jar:2.0.5]
+	at com.netflix.discovery.shared.transport.decorator.SessionedEurekaHttpClient.execute(SessionedEurekaHttpClient.java:76) ~[eureka-client-2.0.5.jar:2.0.5]
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.register(EurekaHttpClientDecorator.java:56) ~[eureka-client-2.0.5.jar:2.0.5]
+	at com.netflix.discovery.DiscoveryClient.register(DiscoveryClient.java:828) ~[eureka-client-2.0.5.jar:2.0.5]
+	at com.netflix.discovery.InstanceInfoReplicator.run(InstanceInfoReplicator.java:125) ~[eureka-client-2.0.5.jar:2.0.5]
+	at com.netflix.discovery.InstanceInfoReplicator$2.run(InstanceInfoReplicator.java:105) ~[eureka-client-2.0.5.jar:2.0.5]
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:572) ~[na:na]
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:317) ~[na:na]
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:304) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642) ~[na:na]
+	at java.base/java.lang.Thread.run(Thread.java:1583) ~[na:na]
+
+2026-04-21T09:21:01.178+05:30  INFO 17512 --- [research-service] [RMI TCP Connection(26)-127.0.0.1] com.netflix.discovery.DiscoveryClient    : Unregistering ...
+2026-04-21T09:21:01.221+05:30  INFO 17512 --- [research-service] [RMI TCP Connection(26)-127.0.0.1] c.n.d.s.t.d.RedirectingEurekaHttpClient  : Request execution error. endpoint=DefaultEndpoint{ serviceUrl='http://localhost:8761/eureka/}, exception=I/O error on DELETE request for "http://localhost:8761/eureka/apps/RESEARCH-SERVICE/LTIN718314.cts.com:research-service:7777": Connect to http://localhost:8761 failed: Connection refused: getsockopt stacktrace=org.springframework.web.client.ResourceAccessException: I/O error on DELETE request for "http://localhost:8761/eureka/apps/RESEARCH-SERVICE/LTIN718314.cts.com:research-service:7777": Connect to http://localhost:8761 failed: Connection refused: getsockopt
+	at org.springframework.web.client.DefaultRestClient$DefaultRequestBodyUriSpec.createResourceAccessException(DefaultRestClient.java:776)
+	at org.springframework.web.client.DefaultRestClient$DefaultRequestBodyUriSpec.exchangeInternal(DefaultRestClient.java:624)
+	at org.springframework.web.client.DefaultRestClient$DefaultRequestBodyUriSpec.exchange(DefaultRestClient.java:572)
+	at org.springframework.web.client.RestClient$RequestHeadersSpec.exchange(RestClient.java:747)
+	at org.springframework.web.client.DefaultRestClient$DefaultResponseSpec.executeAndExtract(DefaultRestClient.java:921)
+	at org.springframework.web.client.DefaultRestClient$DefaultResponseSpec.toBodilessEntity(DefaultRestClient.java:885)
+	at org.springframework.cloud.netflix.eureka.http.RestClientEurekaHttpClient.cancel(RestClientEurekaHttpClient.java:73)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$2.execute(EurekaHttpClientDecorator.java:74)
+	at com.netflix.discovery.shared.transport.decorator.RedirectingEurekaHttpClient.executeOnNewServer(RedirectingEurekaHttpClient.java:121)
+	at com.netflix.discovery.shared.transport.decorator.RedirectingEurekaHttpClient.execute(RedirectingEurekaHttpClient.java:80)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.cancel(EurekaHttpClientDecorator.java:71)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$2.execute(EurekaHttpClientDecorator.java:74)
+	at com.netflix.discovery.shared.transport.decorator.RetryableEurekaHttpClient.execute(RetryableEurekaHttpClient.java:120)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.cancel(EurekaHttpClientDecorator.java:71)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$2.execute(EurekaHttpClientDecorator.java:74)
+	at com.netflix.discovery.shared.transport.decorator.SessionedEurekaHttpClient.execute(SessionedEurekaHttpClient.java:76)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.cancel(EurekaHttpClientDecorator.java:71)
+	at com.netflix.discovery.DiscoveryClient.unregister(DiscoveryClient.java:919)
+	at com.netflix.discovery.DiscoveryClient.shutdown(DiscoveryClient.java:900)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor$LifecycleMethod.invoke(InitDestroyAnnotationBeanPostProcessor.java:453)
+	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor$LifecycleMetadata.invokeDestroyMethods(InitDestroyAnnotationBeanPostProcessor.java:411)
+	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor.postProcessBeforeDestruction(InitDestroyAnnotationBeanPostProcessor.java:237)
+	at org.springframework.beans.factory.support.DisposableBeanAdapter.destroy(DisposableBeanAdapter.java:200)
+	at org.springframework.beans.factory.support.DisposableBeanAdapter.run(DisposableBeanAdapter.java:193)
+	at org.springframework.cloud.context.scope.GenericScope$BeanLifecycleWrapper.destroy(GenericScope.java:387)
+	at org.springframework.cloud.context.scope.GenericScope.destroy(GenericScope.java:134)
+	at org.springframework.beans.factory.support.DisposableBeanAdapter.destroy(DisposableBeanAdapter.java:209)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.destroyBean(DefaultSingletonBeanRegistry.java:795)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.destroySingleton(DefaultSingletonBeanRegistry.java:745)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.destroySingleton(DefaultListableBeanFactory.java:1500)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.destroySingletons(DefaultSingletonBeanRegistry.java:704)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.destroySingletons(DefaultListableBeanFactory.java:1493)
+	at org.springframework.context.support.AbstractApplicationContext.destroyBeans(AbstractApplicationContext.java:1246)
+	at org.springframework.context.support.AbstractApplicationContext.doClose(AbstractApplicationContext.java:1207)
+	at org.springframework.boot.web.server.servlet.context.ServletWebServerApplicationContext.doClose(ServletWebServerApplicationContext.java:176)
+	at org.springframework.context.support.AbstractApplicationContext.close(AbstractApplicationContext.java:1153)
+	at org.springframework.boot.admin.SpringApplicationAdminMXBeanRegistrar$SpringApplicationAdmin.shutdown(SpringApplicationAdminMXBeanRegistrar.java:151)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at sun.reflect.misc.Trampoline.invoke(MethodUtil.java:64)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/sun.reflect.misc.MethodUtil.invoke(MethodUtil.java:97)
+	at java.management/com.sun.jmx.mbeanserver.ConvertingMethod.invokeWithOpenReturn(ConvertingMethod.java:193)
+	at java.management/com.sun.jmx.mbeanserver.ConvertingMethod.invokeWithOpenReturn(ConvertingMethod.java:175)
+	at java.management/com.sun.jmx.mbeanserver.MXBeanIntrospector.invokeM2(MXBeanIntrospector.java:115)
+	at java.management/com.sun.jmx.mbeanserver.MXBeanIntrospector.invokeM2(MXBeanIntrospector.java:52)
+	at java.management/com.sun.jmx.mbeanserver.MBeanIntrospector.invokeM(MBeanIntrospector.java:236)
+	at java.management/com.sun.jmx.mbeanserver.PerInterface.invoke(PerInterface.java:138)
+	at java.management/com.sun.jmx.mbeanserver.MBeanSupport.invoke(MBeanSupport.java:252)
+	at java.management/com.sun.jmx.interceptor.DefaultMBeanServerInterceptor.invoke(DefaultMBeanServerInterceptor.java:803)
+	at java.management/com.sun.jmx.mbeanserver.JmxMBeanServer.invoke(JmxMBeanServer.java:802)
+	at java.management.rmi/javax.management.remote.rmi.RMIConnectionImpl.doOperation(RMIConnectionImpl.java:1472)
+	at java.management.rmi/javax.management.remote.rmi.RMIConnectionImpl$PrivilegedOperation.run(RMIConnectionImpl.java:1310)
+	at java.management.rmi/javax.management.remote.rmi.RMIConnectionImpl.doPrivilegedOperation(RMIConnectionImpl.java:1405)
+	at java.management.rmi/javax.management.remote.rmi.RMIConnectionImpl.invoke(RMIConnectionImpl.java:829)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.rmi/sun.rmi.server.UnicastServerRef.dispatch(UnicastServerRef.java:360)
+	at java.rmi/sun.rmi.transport.Transport$1.run(Transport.java:200)
+	at java.rmi/sun.rmi.transport.Transport$1.run(Transport.java:197)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:714)
+	at java.rmi/sun.rmi.transport.Transport.serviceCall(Transport.java:196)
+	at java.rmi/sun.rmi.transport.tcp.TCPTransport.handleMessages(TCPTransport.java:598)
+	at java.rmi/sun.rmi.transport.tcp.TCPTransport$ConnectionHandler.run0(TCPTransport.java:844)
+	at java.rmi/sun.rmi.transport.tcp.TCPTransport$ConnectionHandler.lambda$run$0(TCPTransport.java:721)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:400)
+	at java.rmi/sun.rmi.transport.tcp.TCPTransport$ConnectionHandler.run(TCPTransport.java:720)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+Caused by: org.apache.hc.client5.http.HttpHostConnectException: Connect to http://localhost:8761 failed: Connection refused: getsockopt
+	at java.base/sun.nio.ch.Net.pollConnect(Native Method)
+	at java.base/sun.nio.ch.Net.pollConnectNow(Net.java:682)
+	at java.base/sun.nio.ch.NioSocketImpl.timedFinishConnect(NioSocketImpl.java:542)
+	at java.base/sun.nio.ch.NioSocketImpl.connect(NioSocketImpl.java:592)
+	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:327)
+	at java.base/java.net.Socket.connect(Socket.java:751)
+	at org.apache.hc.client5.http.impl.io.DefaultHttpClientConnectionOperator.connect(DefaultHttpClientConnectionOperator.java:226)
+	at org.apache.hc.client5.http.impl.io.PoolingHttpClientConnectionManager.connect(PoolingHttpClientConnectionManager.java:497)
+	at org.apache.hc.client5.http.impl.classic.InternalExecRuntime.connectEndpoint(InternalExecRuntime.java:164)
+	at org.apache.hc.client5.http.impl.classic.InternalExecRuntime.connectEndpoint(InternalExecRuntime.java:174)
+	at org.apache.hc.client5.http.impl.classic.ConnectExec.execute(ConnectExec.java:144)
+	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51)
+	at org.apache.hc.client5.http.impl.classic.ProtocolExec.execute(ProtocolExec.java:195)
+	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51)
+	at org.apache.hc.client5.http.impl.classic.ContentCompressionExec.execute(ContentCompressionExec.java:168)
+	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51)
+	at org.apache.hc.client5.http.impl.classic.HttpRequestRetryExec.execute(HttpRequestRetryExec.java:112)
+	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51)
+	at org.apache.hc.client5.http.impl.classic.RedirectExec.execute(RedirectExec.java:110)
+	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51)
+	at org.apache.hc.client5.http.impl.classic.InternalHttpClient.doExecute(InternalHttpClient.java:185)
+	at org.apache.hc.client5.http.impl.classic.CloseableHttpClient.execute(CloseableHttpClient.java:87)
+	at org.apache.hc.client5.http.impl.classic.CloseableHttpClient.execute(CloseableHttpClient.java:55)
+	at org.apache.hc.client5.http.classic.HttpClient.executeOpen(HttpClient.java:183)
+	at org.springframework.http.client.HttpComponentsClientHttpRequest.executeInternal(HttpComponentsClientHttpRequest.java:99)
+	at org.springframework.http.client.AbstractStreamingClientHttpRequest.executeInternal(AbstractStreamingClientHttpRequest.java:87)
+	at org.springframework.http.client.AbstractClientHttpRequest.execute(AbstractClientHttpRequest.java:80)
+	at org.springframework.http.client.AbstractBufferingClientHttpRequest.executeWithRequest(AbstractBufferingClientHttpRequest.java:89)
+	at org.springframework.http.client.InterceptingClientHttpRequest$EndOfChainRequestExecution.execute(InterceptingClientHttpRequest.java:102)
+	at org.springframework.cloud.netflix.eureka.http.RestClientTransportClientFactory.lambda$newClient$2(RestClientTransportClientFactory.java:98)
+	at org.springframework.http.client.ClientHttpRequestInterceptor.lambda$apply$0(ClientHttpRequestInterceptor.java:89)
+	at org.springframework.http.client.InterceptingClientHttpRequest.executeInternal(InterceptingClientHttpRequest.java:73)
+	at org.springframework.http.client.AbstractBufferingClientHttpRequest.executeInternal(AbstractBufferingClientHttpRequest.java:50)
+	at org.springframework.http.client.AbstractClientHttpRequest.execute(AbstractClientHttpRequest.java:80)
+	at org.springframework.web.client.DefaultRestClient$DefaultRequestBodyUriSpec.exchangeInternal(DefaultRestClient.java:614)
+	... 71 more
+
+2026-04-21T09:21:01.223+05:30  WARN 17512 --- [research-service] [RMI TCP Connection(26)-127.0.0.1] c.n.d.s.t.d.RetryableEurekaHttpClient    : Request execution failed with message: I/O error on DELETE request for "http://localhost:8761/eureka/apps/RESEARCH-SERVICE/LTIN718314.cts.com:research-service:7777": Connect to http://localhost:8761 failed: Connection refused: getsockopt
+2026-04-21T09:21:01.223+05:30 ERROR 17512 --- [research-service] [RMI TCP Connection(26)-127.0.0.1] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_RESEARCH-SERVICE/LTIN718314.cts.com:research-service:7777 - de-registration failedCannot execute request on any known server
+
+com.netflix.discovery.shared.transport.TransportException: Cannot execute request on any known server
+	at com.netflix.discovery.shared.transport.decorator.RetryableEurekaHttpClient.execute(RetryableEurekaHttpClient.java:112) ~[eureka-client-2.0.5.jar:2.0.5]
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.cancel(EurekaHttpClientDecorator.java:71) ~[eureka-client-2.0.5.jar:2.0.5]
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$2.execute(EurekaHttpClientDecorator.java:74) ~[eureka-client-2.0.5.jar:2.0.5]
+	at com.netflix.discovery.shared.transport.decorator.SessionedEurekaHttpClient.execute(SessionedEurekaHttpClient.java:76) ~[eureka-client-2.0.5.jar:2.0.5]
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.cancel(EurekaHttpClientDecorator.java:71) ~[eureka-client-2.0.5.jar:2.0.5]
+	at com.netflix.discovery.DiscoveryClient.unregister(DiscoveryClient.java:919) ~[eureka-client-2.0.5.jar:2.0.5]
+	at com.netflix.discovery.DiscoveryClient.shutdown(DiscoveryClient.java:900) ~[eureka-client-2.0.5.jar:2.0.5]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[na:na]
+	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor$LifecycleMethod.invoke(InitDestroyAnnotationBeanPostProcessor.java:453) ~[spring-beans-7.0.6.jar:7.0.6]
+	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor$LifecycleMetadata.invokeDestroyMethods(InitDestroyAnnotationBeanPostProcessor.java:411) ~[spring-beans-7.0.6.jar:7.0.6]
+	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor.postProcessBeforeDestruction(InitDestroyAnnotationBeanPostProcessor.java:237) ~[spring-beans-7.0.6.jar:7.0.6]
+	at org.springframework.beans.factory.support.DisposableBeanAdapter.destroy(DisposableBeanAdapter.java:200) ~[spring-beans-7.0.6.jar:7.0.6]
+	at org.springframework.beans.factory.support.DisposableBeanAdapter.run(DisposableBeanAdapter.java:193) ~[spring-beans-7.0.6.jar:7.0.6]
+	at org.springframework.cloud.context.scope.GenericScope$BeanLifecycleWrapper.destroy(GenericScope.java:387) ~[spring-cloud-context-5.0.1.jar:5.0.1]
+	at org.springframework.cloud.context.scope.GenericScope.destroy(GenericScope.java:134) ~[spring-cloud-context-5.0.1.jar:5.0.1]
+	at org.springframework.beans.factory.support.DisposableBeanAdapter.destroy(DisposableBeanAdapter.java:209) ~[spring-beans-7.0.6.jar:7.0.6]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.destroyBean(DefaultSingletonBeanRegistry.java:795) ~[spring-beans-7.0.6.jar:7.0.6]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.destroySingleton(DefaultSingletonBeanRegistry.java:745) ~[spring-beans-7.0.6.jar:7.0.6]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.destroySingleton(DefaultListableBeanFactory.java:1500) ~[spring-beans-7.0.6.jar:7.0.6]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.destroySingletons(DefaultSingletonBeanRegistry.java:704) ~[spring-beans-7.0.6.jar:7.0.6]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.destroySingletons(DefaultListableBeanFactory.java:1493) ~[spring-beans-7.0.6.jar:7.0.6]
+	at org.springframework.context.support.AbstractApplicationContext.destroyBeans(AbstractApplicationContext.java:1246) ~[spring-context-7.0.6.jar:7.0.6]
+	at org.springframework.context.support.AbstractApplicationContext.doClose(AbstractApplicationContext.java:1207) ~[spring-context-7.0.6.jar:7.0.6]
+	at org.springframework.boot.web.server.servlet.context.ServletWebServerApplicationContext.doClose(ServletWebServerApplicationContext.java:176) ~[spring-boot-web-server-4.0.5.jar:4.0.5]
+	at org.springframework.context.support.AbstractApplicationContext.close(AbstractApplicationContext.java:1153) ~[spring-context-7.0.6.jar:7.0.6]
+	at org.springframework.boot.admin.SpringApplicationAdminMXBeanRegistrar$SpringApplicationAdmin.shutdown(SpringApplicationAdminMXBeanRegistrar.java:151) ~[spring-boot-4.0.5.jar:4.0.5]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[na:na]
+	at sun.reflect.misc.Trampoline.invoke(MethodUtil.java:64) ~[na:na]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[na:na]
+	at java.base/sun.reflect.misc.MethodUtil.invoke(MethodUtil.java:97) ~[na:na]
+	at java.management/com.sun.jmx.mbeanserver.ConvertingMethod.invokeWithOpenReturn(ConvertingMethod.java:193) ~[na:na]
+	at java.management/com.sun.jmx.mbeanserver.ConvertingMethod.invokeWithOpenReturn(ConvertingMethod.java:175) ~[na:na]
+	at java.management/com.sun.jmx.mbeanserver.MXBeanIntrospector.invokeM2(MXBeanIntrospector.java:115) ~[na:na]
+	at java.management/com.sun.jmx.mbeanserver.MXBeanIntrospector.invokeM2(MXBeanIntrospector.java:52) ~[na:na]
+	at java.management/com.sun.jmx.mbeanserver.MBeanIntrospector.invokeM(MBeanIntrospector.java:236) ~[na:na]
+	at java.management/com.sun.jmx.mbeanserver.PerInterface.invoke(PerInterface.java:138) ~[na:na]
+	at java.management/com.sun.jmx.mbeanserver.MBeanSupport.invoke(MBeanSupport.java:252) ~[na:na]
+	at java.management/com.sun.jmx.interceptor.DefaultMBeanServerInterceptor.invoke(DefaultMBeanServerInterceptor.java:803) ~[na:na]
+	at java.management/com.sun.jmx.mbeanserver.JmxMBeanServer.invoke(JmxMBeanServer.java:802) ~[na:na]
+	at java.management.rmi/javax.management.remote.rmi.RMIConnectionImpl.doOperation(RMIConnectionImpl.java:1472) ~[na:na]
+	at java.management.rmi/javax.management.remote.rmi.RMIConnectionImpl$PrivilegedOperation.run(RMIConnectionImpl.java:1310) ~[na:na]
+	at java.management.rmi/javax.management.remote.rmi.RMIConnectionImpl.doPrivilegedOperation(RMIConnectionImpl.java:1405) ~[na:na]
+	at java.management.rmi/javax.management.remote.rmi.RMIConnectionImpl.invoke(RMIConnectionImpl.java:829) ~[na:na]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[na:na]
+	at java.rmi/sun.rmi.server.UnicastServerRef.dispatch(UnicastServerRef.java:360) ~[na:na]
+	at java.rmi/sun.rmi.transport.Transport$1.run(Transport.java:200) ~[na:na]
+	at java.rmi/sun.rmi.transport.Transport$1.run(Transport.java:197) ~[na:na]
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:714) ~[na:na]
+	at java.rmi/sun.rmi.transport.Transport.serviceCall(Transport.java:196) ~[na:na]
+	at java.rmi/sun.rmi.transport.tcp.TCPTransport.handleMessages(TCPTransport.java:598) ~[na:na]
+	at java.rmi/sun.rmi.transport.tcp.TCPTransport$ConnectionHandler.run0(TCPTransport.java:844) ~[na:na]
+	at java.rmi/sun.rmi.transport.tcp.TCPTransport$ConnectionHandler.lambda$run$0(TCPTransport.java:721) ~[na:na]
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:400) ~[na:na]
+	at java.rmi/sun.rmi.transport.tcp.TCPTransport$ConnectionHandler.run(TCPTransport.java:720) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642) ~[na:na]
+	at java.base/java.lang.Thread.run(Thread.java:1583) ~[na:na]
+
+2026-04-21T09:21:01.226+05:30  INFO 17512 --- [research-service] [RMI TCP Connection(26)-127.0.0.1] com.netflix.discovery.DiscoveryClient    : Completed shut down of DiscoveryClient

@@ -6,11 +6,9 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.PastOrPresent;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
-@Getter
-@Setter
+@Data
 public class ComplianceUpdateRequest {
 
 	@NotBlank(message = "Compliance result is required and must be one of COMPLIANT, PARTIAL, NON_COMPLIANT")

@@ -3,23 +3,25 @@ package com.healthgov.services;
 import java.util.List;
 
 import com.healthgov.dtos.ComplianceCreateRequest;
+import com.healthgov.dtos.ComplianceResponseDTO;
 import com.healthgov.dtos.ComplianceUpdateRequest;
 import com.healthgov.enums.ComplianceType;
-import com.healthgov.models.ComplianceRecord;
 
 public interface ComplianceService {
 
-	List<ComplianceRecord> getAllComplianceRecords();
+	List<ComplianceResponseDTO> getAllComplianceRecords();
 
-	ComplianceRecord getOneByEntityIdAndType(ComplianceType type, Long entityId);
+	ComplianceResponseDTO getComplianceById(Long complianceId);
 
-	ComplianceRecord createRecord(ComplianceCreateRequest complianceRecord);
+	ComplianceResponseDTO getOneByEntityIdAndType(ComplianceType type, Long entityId);
 
-	ComplianceRecord updateExisting(ComplianceType type, Long entityId, ComplianceUpdateRequest dto);
+	ComplianceResponseDTO createRecord(ComplianceCreateRequest complianceRecord);
 
-	ComplianceRecord updateResultByEntityIdAndType(ComplianceType type, Long entityId, String result);
+	ComplianceResponseDTO updateExisting(ComplianceType type, Long entityId, ComplianceUpdateRequest dto);
 
-	ComplianceRecord updateNotesByEntityIdAndType(ComplianceType type, Long entityId, String notes);
+	ComplianceResponseDTO updateResultByEntityIdAndType(ComplianceType type, Long entityId, String result);
 
-	ComplianceRecord deleteById(Long Id);
+	ComplianceResponseDTO updateNotesByEntityIdAndType(ComplianceType type, Long entityId, String notes);
+
+	ComplianceResponseDTO deleteById(Long id);
 }

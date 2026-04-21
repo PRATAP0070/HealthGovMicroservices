@@ -92,7 +92,9 @@ public class ResearchProjectServiceImpl implements ResearchProjectService {
 		ga.setSubmittedDate(LocalDate.now());
 		ga.setStatus(GrantStatus.PENDING);
 		grantApplicationRepo.save(ga);
-
+		
+		
+		//Calling compliance Client  for Grant 
 		eventPublisher.publishEvent(new ProjectCreatedEvent(saved.getProjectId(), saved.getTitle()));
 		log.info("Compliance Create Event Triggred...");
 

@@ -21,6 +21,9 @@ import com.healthgov.external.ProgramFeignClient;
 import com.healthgov.external.dto.ProgramStatusResponse;
 import com.healthgov.model.Infrastructure;
 import com.healthgov.repository.InfrastructureRepository;
+import com.healthgov.repository.projection.StatusCountProjection;
+import com.healthgov.repository.projection.TypeCountProjection;
+import com.healthgov.repository.projection.TypeStatusCapacityProjection;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -175,9 +178,8 @@ public class InfrastructureServiceImpl implements InfrastructureService {
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public InfrastructureSummaryResponse getSummaryByProgramId(Long programId) {
-
-		log.info("Generating infrastructure summary for programId={}", programId);
 
 		InfrastructureSummaryResponse response = new InfrastructureSummaryResponse();
 		response.setProgramId(programId);
@@ -187,26 +189,19 @@ public class InfrastructureServiceImpl implements InfrastructureService {
 
 		// 2️ Count by status
 		response.setCountByStatus(infraRepo.countByStatus(programId).stream()
-				.collect(Collectors.toMap(row -> (InfrastructureStatus) row[0], row -> (Long) row[1])));
+				.collect(Collectors.toMap(StatusCountProjection::getStatus, StatusCountProjection::getCount)));
 
 		// 3️ Count by type
 		response.setCountByType(infraRepo.countByType(programId).stream()
-				.collect(Collectors.toMap(row -> (InfrastructureType) row[0], row -> (Long) row[1])));
+				.collect(Collectors.toMap(TypeCountProjection::getType, TypeCountProjection::getCount)));
 
 		// 4️ Type → Status → Capacity summary
 		Map<InfrastructureType, Map<InfrastructureStatus, StatusCapacitySummary>> typeStatusSummary = new HashMap<>();
 
-		List<Object[]> rows = infraRepo.aggregateByTypeAndStatus(programId);
+		for (TypeStatusCapacityProjection row : infraRepo.aggregateByTypeAndStatus(programId)) {
 
-		for (Object[] row : rows) {
-
-			InfrastructureType type = (InfrastructureType) row[0];
-			InfrastructureStatus status = (InfrastructureStatus) row[1];
-			long count = (Long) row[2];
-			long capacity = (Long) row[3];
-
-			typeStatusSummary.computeIfAbsent(type, t -> new HashMap<>()).put(status,
-					new StatusCapacitySummary(count, capacity));
+			typeStatusSummary.computeIfAbsent(row.getType(), t -> new HashMap<>()).put(row.getStatus(),
+					new StatusCapacitySummary(row.getCount(), row.getTotalCapacity()));
 		}
 
 		response.setTypeStatusSummary(typeStatusSummary);

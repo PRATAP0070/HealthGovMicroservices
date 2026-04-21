@@ -5,6 +5,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.healthgov.client.NotificationClient;
 import com.healthgov.dto.ForgetPasswordDto;
 //import com.healthgov.exception.ResourceNotFoundException;
 import com.healthgov.model.User;
@@ -13,6 +14,9 @@ import com.healthgov.repo.RegistrationLoginRepo;
 @Service
 public class ForgetPasswordImpl implements ForgetPasswordService {
 
+	@Autowired
+	private NotificationClient client;
+	
 	@Autowired
 	private RegistrationLoginRepo registrationRepo;
 
@@ -43,6 +47,8 @@ public class ForgetPasswordImpl implements ForgetPasswordService {
 
 		String otp = otpService.generateOtp(email);
 
+		client.otpSending(email, otp);
+		
 		// TODO: Send OTP via Email/SMS
 		System.out.println("✅ OTP for " + email + " = " + otp);
 

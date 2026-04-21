@@ -33,12 +33,11 @@ public class DocumentServiceImpl implements DocumentService {
     public String uploadDocument(Long citizenId, DocumentRequestDTO request) {
         log.info("Request to upload {} for Citizen ID: {}", request.getDocumentType(), citizenId);
         
-        // Fetch the actual Citizen object from the database
         Citizen citizen = citizenRepo.findById(citizenId)
                 .orElseThrow(() -> new CitizenNotFoundException(citizenId));
 
         CitizenDocument doc = new CitizenDocument();
-        doc.setCitizen(citizen); // Set the object, not just the ID
+        doc.setCitizen(citizen); 
         doc.setDocumentName(request.getDocumentName());
         
         try {
@@ -63,7 +62,6 @@ public class DocumentServiceImpl implements DocumentService {
         List<DocumentResponseDTO> filteredResults = new ArrayList<>();
 
         for (CitizenDocument doc : allDocuments) {
-            // Check through the Citizen object
             if (doc.getCitizen() != null && doc.getCitizen().getCitizenId().equals(citizenId)) {
                 filteredResults.add(mapToDTO(doc));
             }

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.healthgov.dto.ResourceCreateRequest;
 import com.healthgov.dto.ResourceResponse;
+import com.healthgov.dto.ResourceSummaryResponse;
 import com.healthgov.dto.ResourceUpdateRequest;
 import com.healthgov.enums.ResourceStatus;
 import com.healthgov.enums.ResourceType;
@@ -74,5 +75,10 @@ public class ResourceController {
 	public List<ResourceResponse> search(@RequestParam ResourceType type, @RequestParam ResourceStatus status) {
 		log.info("Searching resources with type={} and status={}", type, status);
 		return service.getResourcesByTypeAndStatus(type, status);
+	}
+	
+	@GetMapping("/program/{programId}/summary")
+	public ResourceSummaryResponse resourceSummary(@PathVariable Long programId) {
+	    return service.getResourceSummary(programId);
 	}
 }

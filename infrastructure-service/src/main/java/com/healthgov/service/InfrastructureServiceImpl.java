@@ -1,13 +1,18 @@
 package com.healthgov.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.healthgov.dto.InfrastructureCreateRequest;
 import com.healthgov.dto.InfrastructureResponse;
+import com.healthgov.dto.InfrastructureSummaryResponse;
 import com.healthgov.dto.InfrastructureUpdateRequest;
+import com.healthgov.dto.StatusCapacitySummary;
 import com.healthgov.enums.InfrastructureStatus;
 import com.healthgov.enums.InfrastructureType;
 import com.healthgov.enums.ProgramStatus;
@@ -16,6 +21,9 @@ import com.healthgov.external.ProgramFeignClient;
 import com.healthgov.external.dto.ProgramStatusResponse;
 import com.healthgov.model.Infrastructure;
 import com.healthgov.repository.InfrastructureRepository;
+import com.healthgov.repository.projection.StatusCountProjection;
+import com.healthgov.repository.projection.TypeCountProjection;
+import com.healthgov.repository.projection.TypeStatusCapacityProjection;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -167,6 +175,38 @@ public class InfrastructureServiceImpl implements InfrastructureService {
 		dto.setCapacity(e.getCapacity());
 		dto.setStatus(e.getStatus());
 		return dto;
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public InfrastructureSummaryResponse getSummaryByProgramId(Long programId) {
+
+		InfrastructureSummaryResponse response = new InfrastructureSummaryResponse();
+		response.setProgramId(programId);
+
+		// 1️ Total capacity
+		response.setTotalCapacity(infraRepo.sumCapacityByProgramId(programId));
+
+		// 2️ Count by status
+		response.setCountByStatus(infraRepo.countByStatus(programId).stream()
+				.collect(Collectors.toMap(StatusCountProjection::getStatus, StatusCountProjection::getCount)));
+
+		// 3️ Count by type
+		response.setCountByType(infraRepo.countByType(programId).stream()
+				.collect(Collectors.toMap(TypeCountProjection::getType, TypeCountProjection::getCount)));
+
+		// 4️ Type → Status → Capacity summary
+		Map<InfrastructureType, Map<InfrastructureStatus, StatusCapacitySummary>> typeStatusSummary = new HashMap<>();
+
+		for (TypeStatusCapacityProjection row : infraRepo.aggregateByTypeAndStatus(programId)) {
+
+			typeStatusSummary.computeIfAbsent(row.getType(), t -> new HashMap<>()).put(row.getStatus(),
+					new StatusCapacitySummary(row.getCount(), row.getTotalCapacity()));
+		}
+
+		response.setTypeStatusSummary(typeStatusSummary);
+
+		return response;
 	}
 
 }

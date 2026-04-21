@@ -6,12 +6,15 @@ import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-
+import com.healthgov.citizenFeignClient.InfrastructureClient;
+import com.healthgov.citizenFeignClient.ResourceClient;
 import com.healthgov.dto.HealthProgramDTO;
 import com.healthgov.dto.HealthProgramResponseDTO;
 import com.healthgov.dto.ProgramStatusResponse;
 import com.healthgov.exceptions.ProgramException;
+import com.healthgov.model.Enrollment;
 import com.healthgov.model.HealthProgram;
+import com.healthgov.repository.EnrollmentRepository;
 import com.healthgov.repository.HealthProgramRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -20,137 +23,150 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class HealthProgramServiceImpl implements HealthProgramService {
 
-    private final HealthProgramRepository repo;
-    
+	private final HealthProgramRepository repo;
+	private final EnrollmentRepository enrollRoll;
 
+	private final ResourceClient resourceClient;
 
-    /* -------------------- Read Operations -------------------- */
+	private final InfrastructureClient infraClient;
 
-    @Override
-    public List<HealthProgramResponseDTO> getAllPrograms() {
-        return repo.findAll()
-                .stream()
-                .map(this::map)
-                .toList();
-    }
+	/* -------------------- Read Operations -------------------- */
 
-    @Override
-    public HealthProgramResponseDTO getProgramById(Long id) {
-        HealthProgram program = repo.findById(id)
-                .orElseThrow(() ->
-                        new ProgramException("Program not found", HttpStatus.NOT_FOUND));
-        return map(program);
-    }
+	@Override
+	public List<HealthProgramResponseDTO> getAllPrograms() {
+		return repo.findAll().stream().map(this::map).toList();
+	}
 
-    /* -------------------- Create -------------------- */
+	@Override
+	public HealthProgramResponseDTO getProgramById(Long id) {
+		HealthProgram program = repo.findById(id)
+				.orElseThrow(() -> new ProgramException("Program not found", HttpStatus.NOT_FOUND));
+		return map(program);
+	}
 
-    @Override
-    public HealthProgramResponseDTO createProgram(HealthProgramDTO dto) {
-    	
-    	
-        validateDates(dto.getStartDate(), dto.getEndDate());
+	/* -------------------- Create -------------------- */
 
-        HealthProgram program = new HealthProgram();
-        program.setTitle(dto.getTitle());
-        program.setDescription(dto.getDescription());
-        program.setStartDate(dto.getStartDate());
-        program.setEndDate(dto.getEndDate());
-        program.setBudget(dto.getBudget());
-        program.setStatus(dto.getStatus());
+	@Override
+	public HealthProgramResponseDTO createProgram(HealthProgramDTO dto) {
 
-        return map(repo.save(program));
-    }
+		validateDates(dto.getStartDate(), dto.getEndDate());
 
-    /* -------------------- Update -------------------- */
+		HealthProgram program = new HealthProgram();
+		program.setTitle(dto.getTitle());
+		program.setDescription(dto.getDescription());
+		program.setStartDate(dto.getStartDate());
+		program.setEndDate(dto.getEndDate());
+		program.setBudget(dto.getBudget());
+		program.setStatus(dto.getStatus());
 
-    @Override
-    public HealthProgramResponseDTO updateProgram(Long id, HealthProgramDTO dto) {
+		return map(repo.save(program));
+	}
 
-        HealthProgram program = repo.findById(id)
-                .orElseThrow(() ->
-                        new ProgramException("Program not found", HttpStatus.NOT_FOUND));
+	/* -------------------- Update -------------------- */
 
-        validateDates(dto.getStartDate(), dto.getEndDate());
+	@Override
+	public HealthProgramResponseDTO updateProgram(Long id, HealthProgramDTO dto) {
 
-        program.setTitle(dto.getTitle());
-        program.setDescription(dto.getDescription());
-        program.setStartDate(dto.getStartDate());
-        program.setEndDate(dto.getEndDate());
-        program.setBudget(dto.getBudget());
-        program.setStatus(dto.getStatus());
+		HealthProgram program = repo.findById(id)
+				.orElseThrow(() -> new ProgramException("Program not found", HttpStatus.NOT_FOUND));
 
-        return map(repo.save(program));
-    }
+		validateDates(dto.getStartDate(), dto.getEndDate());
 
-    /* -------------------- Delete -------------------- */
+		program.setTitle(dto.getTitle());
+		program.setDescription(dto.getDescription());
+		program.setStartDate(dto.getStartDate());
+		program.setEndDate(dto.getEndDate());
+		program.setBudget(dto.getBudget());
+		program.setStatus(dto.getStatus());
 
-    @Override
-    public void deleteProgram(Long id) {
-        if (!repo.existsById(id)) {
-            throw new ProgramException("Program not found", HttpStatus.NOT_FOUND);
-        }
-        repo.deleteById(id);
-    }
+		return map(repo.save(program));
+	}
 
-    /* -------------------- Utility Methods -------------------- */
+	/* -------------------- Delete -------------------- */
 
-    @Override
-    public Boolean programExists(Long id) {
-        return repo.existsById(id);
-    }
+	@Override
+	public void deleteProgram(Long id) {
+		if (!repo.existsById(id)) {
+			throw new ProgramException("Program not found", HttpStatus.NOT_FOUND);
+		}
+		repo.deleteById(id);
+	}
 
-    @Override
-    public ProgramStatusResponse getProgramStatus(Long programId) {
+	/* -------------------- Utility Methods -------------------- */
 
-        HealthProgram program = repo.findById(programId)
-                .orElseThrow(() ->
-                        new ProgramException("Program not found", HttpStatus.NOT_FOUND));
+	@Override
+	public Boolean programExists(Long id) {
+		return repo.existsById(id);
+	}
 
-        return new ProgramStatusResponse(
-                program.getProgramId(),
-                program.getBudget(),
-                program.getStatus()
-        );
-    }
+	@Override
+	public ProgramStatusResponse getProgramStatus(Long programId) {
 
-    /* -------------------- Validation -------------------- */
+		HealthProgram program = repo.findById(programId)
+				.orElseThrow(() -> new ProgramException("Program not found", HttpStatus.NOT_FOUND));
 
-    private void validateDates(LocalDate startDate, LocalDate endDate) {
+		return new ProgramStatusResponse(program.getProgramId(), program.getBudget(), program.getStatus());
+	}
 
-        if (startDate == null || endDate == null) {
-            throw new ProgramException(
-                    "Start date and end date must not be null",
-                    HttpStatus.BAD_REQUEST);
-        }
+	/* -------------------- Validation -------------------- */
 
-        LocalDate today = LocalDate.now();
+	private void validateDates(LocalDate startDate, LocalDate endDate) {
 
-        if (startDate.isBefore(today)) {
-            throw new ProgramException(
-                    "Start date must be today or a future date",
-                    HttpStatus.BAD_REQUEST);
-        }
+		if (startDate == null || endDate == null) {
+			throw new ProgramException("Start date and end date must not be null", HttpStatus.BAD_REQUEST);
+		}
 
-        if (startDate.isAfter(endDate)) {
-            throw new ProgramException(
-                    "Start date must be before or equal to end date",
-                    HttpStatus.BAD_REQUEST);
-        }
-    }
+		LocalDate today = LocalDate.now();
 
-    /* -------------------- Mapping -------------------- */
+		if (startDate.isBefore(today)) {
+			throw new ProgramException("Start date must be today or a future date", HttpStatus.BAD_REQUEST);
+		}
 
-    private HealthProgramResponseDTO map(HealthProgram program) {
-        HealthProgramResponseDTO dto = new HealthProgramResponseDTO();
-        dto.setProgramId(program.getProgramId());
-        dto.setTitle(program.getTitle());
-        dto.setDescription(program.getDescription());
-        dto.setStartDate(program.getStartDate());
-        dto.setEndDate(program.getEndDate());
-        dto.setBudget(program.getBudget());
-        dto.setStatus(program.getStatus());
-        return dto;
-    }
-    
-    
+		if (startDate.isAfter(endDate)) {
+			throw new ProgramException("Start date must be before or equal to end date", HttpStatus.BAD_REQUEST);
+		}
+	}
+
+	/* -------------------- Mapping -------------------- */
+
+	private HealthProgramResponseDTO map(HealthProgram program) {
+		HealthProgramResponseDTO dto = new HealthProgramResponseDTO();
+		dto.setProgramId(program.getProgramId());
+		dto.setTitle(program.getTitle());
+		dto.setDescription(program.getDescription());
+		dto.setStartDate(program.getStartDate());
+		dto.setEndDate(program.getEndDate());
+		dto.setBudget(program.getBudget());
+		dto.setStatus(program.getStatus());
+
+		dto.setEnrollments(enrollRoll.findByProgramId(program.getProgramId()).stream()
+				.map(this::mapEnrollment).toList());
+
+		try {
+			dto.setResources(resourceClient.getResourcesByProgram(program.getProgramId()));
+		} catch (Exception e) {
+			dto.setResources(List.of()); // fail-safe
+		}
+
+		try {
+			dto.setInfrastructures(infraClient.getInfrastructureByProgram(program.getProgramId()));
+		} catch (Exception e) {
+			dto.setInfrastructures(List.of()); // fail-safe
+		}
+
+		return dto;
+	}
+	
+	private HealthProgramResponseDTO.EnrollmentDTO mapEnrollment(Enrollment e)
+	{
+		HealthProgramResponseDTO.EnrollmentDTO enroll=new HealthProgramResponseDTO.EnrollmentDTO();
+		
+		enroll.setCitizenId(e.getCitizenId());
+		enroll.setEnrolledDate(e.getDate());
+		enroll.setEnrollmentId(e.getEnrollmentId());
+		enroll.setStatus(e.getStatus());
+		
+		return  enroll;
+	}
+
 }

@@ -19,7 +19,6 @@ public class Enrollment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long enrollmentId;
-
     private Long citizenId;
     private Long programId;
     private LocalDate date;

@@ -1,19 +1,19 @@
-2026-04-20T09:13:46.861+05:30  INFO 5624 --- [research-service] [main] c.healthgov.ResearchServiceApplication   : Starting ResearchServiceApplication using Java 21.0.8 with PID 5624 (C:\Users\2481703\git\HealthGovMicroservices\research-service\target\classes started by 2481703 in C:\Users\2481703\git\HealthGovMicroservices\research-service)
-2026-04-20T09:13:46.870+05:30  INFO 5624 --- [research-service] [main] c.healthgov.ResearchServiceApplication   : No active profile set, falling back to 1 default profile: "default"
-2026-04-20T09:13:47.652+05:30  INFO 5624 --- [research-service] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2026-04-20T09:13:47.752+05:30  INFO 5624 --- [research-service] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 90 ms. Found 3 JPA repository interfaces.
-2026-04-20T09:13:47.997+05:30  INFO 5624 --- [research-service] [main] o.s.cloud.context.scope.GenericScope     : BeanFactory id=495de0c2-5bb5-3dc5-bbde-cb1e56273d76
-2026-04-20T09:13:48.249+05:30  INFO 5624 --- [research-service] [main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 7777 (http)
-2026-04-20T09:13:48.258+05:30  INFO 5624 --- [research-service] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
-2026-04-20T09:13:48.258+05:30  INFO 5624 --- [research-service] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.20]
-2026-04-20T09:13:48.305+05:30  INFO 5624 --- [research-service] [main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 1372 ms
-2026-04-20T09:13:48.562+05:30  INFO 5624 --- [research-service] [main] org.hibernate.orm.jpa                    : HHH008540: Processing PersistenceUnitInfo [name: default]
-2026-04-20T09:13:48.600+05:30  INFO 5624 --- [research-service] [main] org.hibernate.orm.core                   : HHH000001: Hibernate ORM core version 7.2.7.Final
-2026-04-20T09:13:48.913+05:30  INFO 5624 --- [research-service] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
-2026-04-20T09:13:48.935+05:30  INFO 5624 --- [research-service] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
-2026-04-20T09:13:49.148+05:30  INFO 5624 --- [research-service] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@6e80de85
-2026-04-20T09:13:49.149+05:30  INFO 5624 --- [research-service] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
-2026-04-20T09:13:49.224+05:30  INFO 5624 --- [research-service] [main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+2026-04-21T09:31:01.186+05:30  INFO 1068 --- [research-service] [main] c.healthgov.ResearchServiceApplication   : Starting ResearchServiceApplication using Java 21.0.8 with PID 1068 (C:\Users\2481703\git\HealthGovMicroservices\research-service\target\classes started by 2481703 in C:\Users\2481703\git\HealthGovMicroservices\research-service)
+2026-04-21T09:31:01.189+05:30  INFO 1068 --- [research-service] [main] c.healthgov.ResearchServiceApplication   : No active profile set, falling back to 1 default profile: "default"
+2026-04-21T09:31:02.091+05:30  INFO 1068 --- [research-service] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-04-21T09:31:02.193+05:30  INFO 1068 --- [research-service] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 94 ms. Found 3 JPA repository interfaces.
+2026-04-21T09:31:02.425+05:30  INFO 1068 --- [research-service] [main] o.s.cloud.context.scope.GenericScope     : BeanFactory id=87affe21-6549-35aa-9791-e9e20fb70c39
+2026-04-21T09:31:02.678+05:30  INFO 1068 --- [research-service] [main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 7777 (http)
+2026-04-21T09:31:02.691+05:30  INFO 1068 --- [research-service] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-04-21T09:31:02.691+05:30  INFO 1068 --- [research-service] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.20]
+2026-04-21T09:31:02.740+05:30  INFO 1068 --- [research-service] [main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 1491 ms
+2026-04-21T09:31:03.044+05:30  INFO 1068 --- [research-service] [main] org.hibernate.orm.jpa                    : HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-04-21T09:31:03.089+05:30  INFO 1068 --- [research-service] [main] org.hibernate.orm.core                   : HHH000001: Hibernate ORM core version 7.2.7.Final
+2026-04-21T09:31:03.580+05:30  INFO 1068 --- [research-service] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-04-21T09:31:03.608+05:30  INFO 1068 --- [research-service] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-04-21T09:31:03.889+05:30  INFO 1068 --- [research-service] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@2afe825a
+2026-04-21T09:31:03.890+05:30  INFO 1068 --- [research-service] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-04-21T09:31:03.977+05:30  INFO 1068 --- [research-service] [main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
 	Database JDBC URL [jdbc:mysql://localhost:3306/research_service_db]
 	Database driver: MySQL Connector/J
 	Database dialect: MySQLDialect
@@ -25,451 +25,116 @@
 	Pool: DataSourceConnectionProvider
 	Minimum pool size: undefined/unknown
 	Maximum pool size: undefined/unknown
-2026-04-20T09:13:49.908+05:30  INFO 5624 --- [research-service] [main] org.hibernate.orm.core                   : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-2026-04-20T09:13:49.998+05:30  INFO 5624 --- [research-service] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
-2026-04-20T09:13:50.071+05:30  INFO 5624 --- [research-service] [main] o.s.d.j.r.query.QueryEnhancerFactories   : Hibernate is in classpath; If applicable, HQL parser will be used.
-2026-04-20T09:13:50.272+05:30  WARN 5624 --- [research-service] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2026-04-20T09:13:50.344+05:30  INFO 5624 --- [research-service] [main] o.s.c.openfeign.FeignClientFactoryBean   : For 'auth-service' URL not provided. Will try picking an instance via load-balancing.
-2026-04-20T09:13:50.845+05:30  INFO 5624 --- [research-service] [main] DiscoveryClientOptionalArgsConfiguration : Eureka HTTP Client uses RestClient.
-2026-04-20T09:13:50.864+05:30  WARN 5624 --- [research-service] [main] iguration$LoadBalancerCaffeineWarnLogger : Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
-2026-04-20T09:13:50.877+05:30  INFO 5624 --- [research-service] [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 2 endpoints beneath base path '/actuator'
-2026-04-20T09:13:50.942+05:30  INFO 5624 --- [research-service] [main] o.s.c.n.eureka.InstanceInfoFactory       : Setting initial instance status as: STARTING
-2026-04-20T09:13:50.964+05:30  INFO 5624 --- [research-service] [main] com.netflix.discovery.DiscoveryClient    : Initializing Eureka in region us-east-1
-2026-04-20T09:13:50.967+05:30  INFO 5624 --- [research-service] [main] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
-2026-04-20T09:13:50.973+05:30  INFO 5624 --- [research-service] [main] com.netflix.discovery.DiscoveryClient    : Disable delta property : false
-2026-04-20T09:13:50.973+05:30  INFO 5624 --- [research-service] [main] com.netflix.discovery.DiscoveryClient    : Single vip registry refresh property : null
-2026-04-20T09:13:50.973+05:30  INFO 5624 --- [research-service] [main] com.netflix.discovery.DiscoveryClient    : Force full registry fetch : false
-2026-04-20T09:13:50.973+05:30  INFO 5624 --- [research-service] [main] com.netflix.discovery.DiscoveryClient    : Application is null : false
-2026-04-20T09:13:50.973+05:30  INFO 5624 --- [research-service] [main] com.netflix.discovery.DiscoveryClient    : Registered Applications size is zero : true
-2026-04-20T09:13:50.973+05:30  INFO 5624 --- [research-service] [main] com.netflix.discovery.DiscoveryClient    : Application version is -1: true
-2026-04-20T09:13:50.973+05:30  INFO 5624 --- [research-service] [main] com.netflix.discovery.DiscoveryClient    : Getting all instance registry info from the eureka server
-2026-04-20T09:13:51.257+05:30  INFO 5624 --- [research-service] [main] com.netflix.discovery.DiscoveryClient    : The response status is 200
-2026-04-20T09:13:51.260+05:30  INFO 5624 --- [research-service] [main] com.netflix.discovery.DiscoveryClient    : Starting heartbeat executor: renew interval is: 30
-2026-04-20T09:13:51.262+05:30  INFO 5624 --- [research-service] [main] c.n.discovery.InstanceInfoReplicator     : InstanceInfoReplicator onDemand update allowed rate per min is 4
-2026-04-20T09:13:51.264+05:30  INFO 5624 --- [research-service] [main] com.netflix.discovery.DiscoveryClient    : Discovery Client initialized at timestamp 1776656631263 with initial instances count: 1
-2026-04-20T09:13:51.268+05:30  INFO 5624 --- [research-service] [main] o.s.c.n.e.s.EurekaServiceRegistry        : Registering application RESEARCH-SERVICE with eureka with status UP
-2026-04-20T09:13:51.269+05:30  INFO 5624 --- [research-service] [main] com.netflix.discovery.DiscoveryClient    : Saw local status change event StatusChangeEvent [timestamp=1776656631269, current=UP, previous=STARTING]
-2026-04-20T09:13:51.271+05:30  INFO 5624 --- [research-service] [DiscoveryClient-InstanceInfoReplicator-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_RESEARCH-SERVICE/LTIN717597.cts.com:research-service:7777: registering service...
-2026-04-20T09:13:51.308+05:30  INFO 5624 --- [research-service] [main] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 7777 (http) with context path '/'
-2026-04-20T09:13:51.308+05:30  INFO 5624 --- [research-service] [main] .s.c.n.e.s.EurekaAutoServiceRegistration : Updating port to 7777
-2026-04-20T09:13:51.326+05:30  INFO 5624 --- [research-service] [main] c.healthgov.ResearchServiceApplication   : Started ResearchServiceApplication in 4.805 seconds (process running for 5.444)
-2026-04-20T09:13:51.334+05:30  INFO 5624 --- [research-service] [DiscoveryClient-InstanceInfoReplicator-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_RESEARCH-SERVICE/LTIN717597.cts.com:research-service:7777 - registration status: 204
-2026-04-20T09:13:51.628+05:30  INFO 5624 --- [research-service] [RMI TCP Connection(6)-127.0.0.1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
-2026-04-20T09:13:51.629+05:30  INFO 5624 --- [research-service] [RMI TCP Connection(6)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
-2026-04-20T09:13:51.632+05:30  INFO 5624 --- [research-service] [RMI TCP Connection(6)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
-2026-04-20T09:15:40.558+05:30  INFO 5624 --- [research-service] [http-nio-7777-exec-3] c.h.c.ResearchProjectController          : UPDATE project request for projectId=8
-2026-04-20T09:15:40.572+05:30  INFO 5624 --- [research-service] [http-nio-7777-exec-3] c.h.service.ResearchProjectServiceImpl   : Updating research project with projectId=8
-2026-04-20T09:16:13.286+05:30  INFO 5624 --- [research-service] [http-nio-7777-exec-2] c.h.c.ResearchProjectController          : Fetching project list. Status=REJECTED
-2026-04-20T09:17:06.475+05:30  INFO 5624 --- [research-service] [RMI TCP Connection(15)-127.0.0.1] inMXBeanRegistrar$SpringApplicationAdmin : Application shutdown requested.
-2026-04-20T09:17:06.477+05:30  INFO 5624 --- [research-service] [RMI TCP Connection(15)-127.0.0.1] o.s.c.n.e.s.EurekaServiceRegistry        : Unregistering application RESEARCH-SERVICE with eureka with status DOWN
-2026-04-20T09:17:06.477+05:30  INFO 5624 --- [research-service] [RMI TCP Connection(15)-127.0.0.1] com.netflix.discovery.DiscoveryClient    : Saw local status change event StatusChangeEvent [timestamp=1776656826477, current=DOWN, previous=UP]
-2026-04-20T09:17:06.477+05:30  INFO 5624 --- [research-service] [DiscoveryClient-InstanceInfoReplicator-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_RESEARCH-SERVICE/LTIN717597.cts.com:research-service:7777: registering service...
-2026-04-20T09:17:06.479+05:30  INFO 5624 --- [research-service] [RMI TCP Connection(15)-127.0.0.1] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
-2026-04-20T09:17:06.490+05:30  INFO 5624 --- [research-service] [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete
-2026-04-20T09:17:06.497+05:30  INFO 5624 --- [research-service] [DiscoveryClient-InstanceInfoReplicator-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_RESEARCH-SERVICE/LTIN717597.cts.com:research-service:7777 - registration status: 204
-2026-04-20T09:17:06.498+05:30  INFO 5624 --- [research-service] [RMI TCP Connection(15)-127.0.0.1] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
-2026-04-20T09:17:06.500+05:30  INFO 5624 --- [research-service] [RMI TCP Connection(15)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
-2026-04-20T09:17:06.505+05:30  INFO 5624 --- [research-service] [RMI TCP Connection(15)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
-2026-04-20T09:17:06.506+05:30  INFO 5624 --- [research-service] [RMI TCP Connection(15)-127.0.0.1] com.netflix.discovery.DiscoveryClient    : Shutting down DiscoveryClient ...
-2026-04-20T09:17:09.514+05:30  INFO 5624 --- [research-service] [RMI TCP Connection(15)-127.0.0.1] com.netflix.discovery.DiscoveryClient    : Unregistering ...
-2026-04-20T09:17:09.532+05:30  INFO 5624 --- [research-service] [RMI TCP Connection(15)-127.0.0.1] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_RESEARCH-SERVICE/LTIN717597.cts.com:research-service:7777 - deregister  status: 200
-2026-04-20T09:17:09.532+05:30  INFO 5624 --- [research-service] [RMI TCP Connection(15)-127.0.0.1] com.netflix.discovery.DiscoveryClient    : Completed shut down of DiscoveryClient
-2026-04-20T09:22:38.293+05:30  INFO 10280 --- [research-service] [main] c.healthgov.ResearchServiceApplication   : Starting ResearchServiceApplication using Java 21.0.8 with PID 10280 (C:\Users\2481703\git\HealthGovMicroservices\research-service\target\classes started by 2481703 in C:\Users\2481703\git\HealthGovMicroservices\research-service)
-2026-04-20T09:22:38.299+05:30  INFO 10280 --- [research-service] [main] c.healthgov.ResearchServiceApplication   : No active profile set, falling back to 1 default profile: "default"
-2026-04-20T09:22:40.759+05:30  INFO 10280 --- [research-service] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2026-04-20T09:22:40.990+05:30  INFO 10280 --- [research-service] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 212 ms. Found 3 JPA repository interfaces.
-2026-04-20T09:22:41.453+05:30  INFO 10280 --- [research-service] [main] o.s.cloud.context.scope.GenericScope     : BeanFactory id=495de0c2-5bb5-3dc5-bbde-cb1e56273d76
-2026-04-20T09:22:41.959+05:30  INFO 10280 --- [research-service] [main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 7777 (http)
-2026-04-20T09:22:41.977+05:30  INFO 10280 --- [research-service] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
-2026-04-20T09:22:41.977+05:30  INFO 10280 --- [research-service] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.20]
-2026-04-20T09:22:42.080+05:30  INFO 10280 --- [research-service] [main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 3702 ms
-2026-04-20T09:22:42.577+05:30  INFO 10280 --- [research-service] [main] org.hibernate.orm.jpa                    : HHH008540: Processing PersistenceUnitInfo [name: default]
-2026-04-20T09:22:42.644+05:30  INFO 10280 --- [research-service] [main] org.hibernate.orm.core                   : HHH000001: Hibernate ORM core version 7.2.7.Final
-2026-04-20T09:22:43.360+05:30  INFO 10280 --- [research-service] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
-2026-04-20T09:22:43.403+05:30  INFO 10280 --- [research-service] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
-2026-04-20T09:22:43.840+05:30  INFO 10280 --- [research-service] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@57466fb7
-2026-04-20T09:22:43.843+05:30  INFO 10280 --- [research-service] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
-2026-04-20T09:22:43.997+05:30  INFO 10280 --- [research-service] [main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
-	Database JDBC URL [jdbc:mysql://localhost:3306/research_service_db]
-	Database driver: MySQL Connector/J
-	Database dialect: MySQLDialect
-	Database version: 8.0.44
-	Default catalog/schema: research_service_db/undefined
-	Autocommit mode: undefined/unknown
-	Isolation level: REPEATABLE_READ [default REPEATABLE_READ]
-	JDBC fetch size: none
-	Pool: DataSourceConnectionProvider
-	Minimum pool size: undefined/unknown
-	Maximum pool size: undefined/unknown
-2026-04-20T09:22:45.471+05:30  INFO 10280 --- [research-service] [main] org.hibernate.orm.core                   : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-2026-04-20T09:22:45.629+05:30  INFO 10280 --- [research-service] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
-2026-04-20T09:22:45.743+05:30  INFO 10280 --- [research-service] [main] o.s.d.j.r.query.QueryEnhancerFactories   : Hibernate is in classpath; If applicable, HQL parser will be used.
-2026-04-20T09:22:46.146+05:30  WARN 10280 --- [research-service] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2026-04-20T09:22:46.280+05:30  INFO 10280 --- [research-service] [main] o.s.c.openfeign.FeignClientFactoryBean   : For 'auth-service' URL not provided. Will try picking an instance via load-balancing.
-2026-04-20T09:22:47.316+05:30  INFO 10280 --- [research-service] [main] DiscoveryClientOptionalArgsConfiguration : Eureka HTTP Client uses RestClient.
-2026-04-20T09:22:47.357+05:30  WARN 10280 --- [research-service] [main] iguration$LoadBalancerCaffeineWarnLogger : Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
-2026-04-20T09:22:47.378+05:30  INFO 10280 --- [research-service] [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 2 endpoints beneath base path '/actuator'
-2026-04-20T09:22:47.493+05:30  INFO 10280 --- [research-service] [main] o.s.c.n.eureka.InstanceInfoFactory       : Setting initial instance status as: STARTING
-2026-04-20T09:22:47.526+05:30  INFO 10280 --- [research-service] [main] com.netflix.discovery.DiscoveryClient    : Initializing Eureka in region us-east-1
-2026-04-20T09:22:47.532+05:30  INFO 10280 --- [research-service] [main] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
-2026-04-20T09:22:47.545+05:30  INFO 10280 --- [research-service] [main] com.netflix.discovery.DiscoveryClient    : Disable delta property : false
-2026-04-20T09:22:47.545+05:30  INFO 10280 --- [research-service] [main] com.netflix.discovery.DiscoveryClient    : Single vip registry refresh property : null
-2026-04-20T09:22:47.545+05:30  INFO 10280 --- [research-service] [main] com.netflix.discovery.DiscoveryClient    : Force full registry fetch : false
-2026-04-20T09:22:47.546+05:30  INFO 10280 --- [research-service] [main] com.netflix.discovery.DiscoveryClient    : Application is null : false
-2026-04-20T09:22:47.546+05:30  INFO 10280 --- [research-service] [main] com.netflix.discovery.DiscoveryClient    : Registered Applications size is zero : true
-2026-04-20T09:22:47.546+05:30  INFO 10280 --- [research-service] [main] com.netflix.discovery.DiscoveryClient    : Application version is -1: true
-2026-04-20T09:22:47.546+05:30  INFO 10280 --- [research-service] [main] com.netflix.discovery.DiscoveryClient    : Getting all instance registry info from the eureka server
-2026-04-20T09:22:48.047+05:30  INFO 10280 --- [research-service] [main] com.netflix.discovery.DiscoveryClient    : The response status is 200
-2026-04-20T09:22:48.050+05:30  INFO 10280 --- [research-service] [main] com.netflix.discovery.DiscoveryClient    : Starting heartbeat executor: renew interval is: 30
-2026-04-20T09:22:48.053+05:30  INFO 10280 --- [research-service] [main] c.n.discovery.InstanceInfoReplicator     : InstanceInfoReplicator onDemand update allowed rate per min is 4
-2026-04-20T09:22:48.057+05:30  INFO 10280 --- [research-service] [main] com.netflix.discovery.DiscoveryClient    : Discovery Client initialized at timestamp 1776657168055 with initial instances count: 1
-2026-04-20T09:22:48.063+05:30  INFO 10280 --- [research-service] [main] o.s.c.n.e.s.EurekaServiceRegistry        : Registering application RESEARCH-SERVICE with eureka with status UP
-2026-04-20T09:22:48.065+05:30  INFO 10280 --- [research-service] [main] com.netflix.discovery.DiscoveryClient    : Saw local status change event StatusChangeEvent [timestamp=1776657168065, current=UP, previous=STARTING]
-2026-04-20T09:22:48.068+05:30  INFO 10280 --- [research-service] [DiscoveryClient-InstanceInfoReplicator-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_RESEARCH-SERVICE/LTIN717597.cts.com:research-service:7777: registering service...
-2026-04-20T09:22:48.101+05:30  INFO 10280 --- [research-service] [main] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 7777 (http) with context path '/'
-2026-04-20T09:22:48.102+05:30  INFO 10280 --- [research-service] [main] .s.c.n.e.s.EurekaAutoServiceRegistration : Updating port to 7777
-2026-04-20T09:22:48.127+05:30  INFO 10280 --- [research-service] [main] c.healthgov.ResearchServiceApplication   : Started ResearchServiceApplication in 10.65 seconds (process running for 11.974)
-2026-04-20T09:22:48.131+05:30  INFO 10280 --- [research-service] [DiscoveryClient-InstanceInfoReplicator-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_RESEARCH-SERVICE/LTIN717597.cts.com:research-service:7777 - registration status: 204
-2026-04-20T09:22:48.607+05:30  INFO 10280 --- [research-service] [RMI TCP Connection(6)-127.0.0.1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
-2026-04-20T09:22:48.608+05:30  INFO 10280 --- [research-service] [RMI TCP Connection(6)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
-2026-04-20T09:22:48.610+05:30  INFO 10280 --- [research-service] [RMI TCP Connection(6)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
-2026-04-20T09:27:47.555+05:30  INFO 10280 --- [research-service] [AsyncResolver-bootstrap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
-2026-04-20T09:29:27.142+05:30  INFO 10280 --- [research-service] [http-nio-7777-exec-1] c.h.c.ResearchProjectController          : Fetching project list. Status=null
-2026-04-20T09:29:38.206+05:30  INFO 10280 --- [research-service] [http-nio-7777-exec-2] c.h.c.ResearchProjectController          : CREATE project request for researcherId=3
-2026-04-20T09:29:38.212+05:30  INFO 10280 --- [research-service] [http-nio-7777-exec-2] c.h.service.ResearchProjectServiceImpl   : Creating new research project for researcherId=3
-2026-04-20T09:30:14.296+05:30  INFO 10280 --- [research-service] [http-nio-7777-exec-3] c.h.c.ResearchProjectController          : CREATE project request for researcherId=3
-2026-04-20T09:30:14.300+05:30  INFO 10280 --- [research-service] [http-nio-7777-exec-3] c.h.service.ResearchProjectServiceImpl   : Creating new research project for researcherId=3
-2026-04-20T09:30:24.534+05:30  INFO 10280 --- [research-service] [http-nio-7777-exec-4] c.h.c.ResearchProjectController          : CREATE project request for researcherId=3
-2026-04-20T09:30:24.539+05:30  INFO 10280 --- [research-service] [http-nio-7777-exec-4] c.h.service.ResearchProjectServiceImpl   : Creating new research project for researcherId=3
-2026-04-20T09:30:32.624+05:30  INFO 10280 --- [research-service] [http-nio-7777-exec-5] c.h.c.ResearchProjectController          : CREATE project request for researcherId=3
-2026-04-20T09:30:32.624+05:30  INFO 10280 --- [research-service] [http-nio-7777-exec-5] c.h.service.ResearchProjectServiceImpl   : Creating new research project for researcherId=3
-2026-04-20T09:30:52.690+05:30  INFO 10280 --- [research-service] [http-nio-7777-exec-7] c.h.c.ResearchProjectController          : UPDATE project request for projectId=8
-2026-04-20T09:30:52.690+05:30  INFO 10280 --- [research-service] [http-nio-7777-exec-7] c.h.service.ResearchProjectServiceImpl   : Updating research project with projectId=8
-2026-04-20T09:31:08.453+05:30  INFO 10280 --- [research-service] [http-nio-7777-exec-8] c.h.c.ResearchProjectController          : UPDATE project request for projectId=11
-2026-04-20T09:31:08.453+05:30  INFO 10280 --- [research-service] [http-nio-7777-exec-8] c.h.service.ResearchProjectServiceImpl   : Updating research project with projectId=11
-2026-04-20T09:32:47.572+05:30  INFO 10280 --- [research-service] [AsyncResolver-bootstrap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
-2026-04-20T09:33:23.467+05:30  INFO 10280 --- [research-service] [http-nio-7777-exec-2] c.h.c.ProgramManagerReviewController     : Fetching PENDING projects for Program Manager
-2026-04-20T09:33:23.480+05:30  INFO 10280 --- [research-service] [http-nio-7777-exec-2] c.h.s.ProgramManagerReviewServiceImpl    : Fetching ALL PENDING projects for PM dashboard.
-2026-04-20T09:33:24.944+05:30  INFO 10280 --- [research-service] [http-nio-7777-exec-2] c.h.s.ProgramManagerReviewServiceImpl    : Total pending projects found: 4
-2026-04-20T09:33:33.620+05:30  INFO 10280 --- [research-service] [http-nio-7777-exec-3] c.h.c.ProgramManagerReviewController     : Fetching projects by status=rejected
-2026-04-20T09:33:33.629+05:30  INFO 10280 --- [research-service] [http-nio-7777-exec-3] c.h.s.ProgramManagerReviewServiceImpl    : Fetching projects with status=rejected
-2026-04-20T09:33:33.653+05:30  INFO 10280 --- [research-service] [http-nio-7777-exec-3] c.h.s.ProgramManagerReviewServiceImpl    : Projects found with status rejected: 2
-2026-04-20T09:33:54.811+05:30  INFO 10280 --- [research-service] [http-nio-7777-exec-4] c.h.c.ProgramManagerReviewController     : Fetching project details for projectId=8
-2026-04-20T09:33:54.817+05:30  INFO 10280 --- [research-service] [http-nio-7777-exec-4] c.h.s.ProgramManagerReviewServiceImpl    : Fetching project for PM review: projectId=8
-2026-04-20T09:33:54.829+05:30  INFO 10280 --- [research-service] [http-nio-7777-exec-4] c.h.s.ProgramManagerReviewServiceImpl    : Project fetched successfully: projectId=8
-2026-04-20T09:34:30.079+05:30  INFO 10280 --- [research-service] [http-nio-7777-exec-5] c.h.c.ProgramManagerReviewController     : PM decision received. projectId=11, decision=APPROVED
-2026-04-20T09:34:30.087+05:30  INFO 10280 --- [research-service] [http-nio-7777-exec-5] c.h.s.ProgramManagerReviewServiceImpl    : PM decision received: projectId=11, decision=APPROVED
-2026-04-20T09:34:30.095+05:30  INFO 10280 --- [research-service] [http-nio-7777-exec-5] c.h.s.ProgramManagerReviewServiceImpl    : Project found. Applying decision=APPROVED for projectId=11
-2026-04-20T09:34:30.169+05:30  INFO 10280 --- [research-service] [http-nio-7777-exec-5] c.h.s.ProgramManagerReviewServiceImpl    : Approving project: projectId=11
-2026-04-20T09:34:30.169+05:30  INFO 10280 --- [research-service] [http-nio-7777-exec-5] c.h.s.ProgramManagerReviewServiceImpl    : GrantApplication updated to APPROVED for projectId=11
-2026-04-20T09:34:30.263+05:30  INFO 10280 --- [research-service] [http-nio-7777-exec-5] c.h.s.ProgramManagerReviewServiceImpl    : No existing grant found. Creating new grant for projectId=11, amount=7000.0
-2026-04-20T09:34:30.276+05:30  INFO 10280 --- [research-service] [http-nio-7777-exec-5] c.h.s.ProgramManagerReviewServiceImpl    : Grant created successfully: projectId=11, amount=7000.0
-2026-04-20T09:34:30.276+05:30  INFO 10280 --- [research-service] [http-nio-7777-exec-5] c.h.s.ProgramManagerReviewServiceImpl    : Project decision applied successfully: projectId=11, finalStatus=APPROVED
-2026-04-20T09:36:11.885+05:30  INFO 10280 --- [research-service] [http-nio-7777-exec-9] c.h.c.ResearchProjectController          : UPDATE project request for projectId=11
-2026-04-20T09:36:11.890+05:30  INFO 10280 --- [research-service] [http-nio-7777-exec-9] c.h.service.ResearchProjectServiceImpl   : Updating research project with projectId=11
-2026-04-20T09:36:21.973+05:30  INFO 10280 --- [research-service] [http-nio-7777-exec-10] c.h.c.ResearchProjectController          : UPDATE project request for projectId=12
-2026-04-20T09:36:21.975+05:30  INFO 10280 --- [research-service] [http-nio-7777-exec-10] c.h.service.ResearchProjectServiceImpl   : Updating research project with projectId=12
-2026-04-20T09:36:48.422+05:30  INFO 10280 --- [research-service] [http-nio-7777-exec-1] c.h.c.ResearchProjectController          : UPDATE project request for projectId=12
-2026-04-20T09:36:48.422+05:30  INFO 10280 --- [research-service] [http-nio-7777-exec-1] c.h.service.ResearchProjectServiceImpl   : Updating research project with projectId=12
-2026-04-20T09:37:47.494+05:30  INFO 10280 --- [research-service] [http-nio-7777-exec-2] c.h.c.ResearchProjectController          : Fetching project list. Status=REJECTED
-2026-04-20T09:37:47.574+05:30  INFO 10280 --- [research-service] [AsyncResolver-bootstrap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
-2026-04-20T09:38:28.264+05:30  INFO 10280 --- [research-service] [http-nio-7777-exec-3] c.h.c.ResearchProjectController          : Fetching project list. Status=REJECTED
-2026-04-20T09:38:49.419+05:30  INFO 10280 --- [research-service] [http-nio-7777-exec-9] c.h.c.ResearchProjectController          : Fetching project list. Status=null
-2026-04-20T09:38:56.591+05:30  INFO 10280 --- [research-service] [http-nio-7777-exec-8] c.h.c.ResearchProjectController          : Fetching project list. Status=REJECTED
-2026-04-20T09:39:12.941+05:30  INFO 10280 --- [research-service] [RMI TCP Connection(29)-127.0.0.1] inMXBeanRegistrar$SpringApplicationAdmin : Application shutdown requested.
-2026-04-20T09:39:12.943+05:30  INFO 10280 --- [research-service] [RMI TCP Connection(29)-127.0.0.1] o.s.c.n.e.s.EurekaServiceRegistry        : Unregistering application RESEARCH-SERVICE with eureka with status DOWN
-2026-04-20T09:39:12.944+05:30  INFO 10280 --- [research-service] [RMI TCP Connection(29)-127.0.0.1] com.netflix.discovery.DiscoveryClient    : Saw local status change event StatusChangeEvent [timestamp=1776658152944, current=DOWN, previous=UP]
-2026-04-20T09:39:12.945+05:30  INFO 10280 --- [research-service] [DiscoveryClient-InstanceInfoReplicator-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_RESEARCH-SERVICE/LTIN717597.cts.com:research-service:7777: registering service...
-2026-04-20T09:39:12.953+05:30  INFO 10280 --- [research-service] [RMI TCP Connection(29)-127.0.0.1] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
-2026-04-20T09:39:12.965+05:30  INFO 10280 --- [research-service] [DiscoveryClient-InstanceInfoReplicator-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_RESEARCH-SERVICE/LTIN717597.cts.com:research-service:7777 - registration status: 204
-2026-04-20T09:39:12.984+05:30  INFO 10280 --- [research-service] [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete
-2026-04-20T09:39:13.003+05:30  INFO 10280 --- [research-service] [RMI TCP Connection(29)-127.0.0.1] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
-2026-04-20T09:39:13.006+05:30  INFO 10280 --- [research-service] [RMI TCP Connection(29)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
-2026-04-20T09:39:13.017+05:30  INFO 10280 --- [research-service] [RMI TCP Connection(29)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
-2026-04-20T09:39:13.019+05:30  INFO 10280 --- [research-service] [RMI TCP Connection(29)-127.0.0.1] com.netflix.discovery.DiscoveryClient    : Shutting down DiscoveryClient ...
-2026-04-20T09:39:16.031+05:30  INFO 10280 --- [research-service] [RMI TCP Connection(29)-127.0.0.1] com.netflix.discovery.DiscoveryClient    : Unregistering ...
-2026-04-20T09:39:16.052+05:30  INFO 10280 --- [research-service] [RMI TCP Connection(29)-127.0.0.1] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_RESEARCH-SERVICE/LTIN717597.cts.com:research-service:7777 - deregister  status: 200
-2026-04-20T09:39:16.054+05:30  INFO 10280 --- [research-service] [RMI TCP Connection(29)-127.0.0.1] com.netflix.discovery.DiscoveryClient    : Completed shut down of DiscoveryClient
-2026-04-20T09:51:21.723+05:30  INFO 6656 --- [research-service] [main] c.healthgov.ResearchServiceApplication   : Starting ResearchServiceApplication using Java 21.0.8 with PID 6656 (C:\Users\2481703\git\HealthGovMicroservices\research-service\target\classes started by 2481703 in C:\Users\2481703\git\HealthGovMicroservices\research-service)
-2026-04-20T09:51:21.729+05:30  INFO 6656 --- [research-service] [main] c.healthgov.ResearchServiceApplication   : No active profile set, falling back to 1 default profile: "default"
-2026-04-20T09:51:22.902+05:30  INFO 6656 --- [research-service] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2026-04-20T09:51:23.032+05:30  INFO 6656 --- [research-service] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 121 ms. Found 3 JPA repository interfaces.
-2026-04-20T09:51:23.355+05:30  INFO 6656 --- [research-service] [main] o.s.cloud.context.scope.GenericScope     : BeanFactory id=495de0c2-5bb5-3dc5-bbde-cb1e56273d76
-2026-04-20T09:51:23.657+05:30  INFO 6656 --- [research-service] [main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 7777 (http)
-2026-04-20T09:51:23.667+05:30  INFO 6656 --- [research-service] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
-2026-04-20T09:51:23.667+05:30  INFO 6656 --- [research-service] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.20]
-2026-04-20T09:51:23.722+05:30  INFO 6656 --- [research-service] [main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 1920 ms
-2026-04-20T09:51:24.085+05:30  INFO 6656 --- [research-service] [main] org.hibernate.orm.jpa                    : HHH008540: Processing PersistenceUnitInfo [name: default]
-2026-04-20T09:51:24.144+05:30  INFO 6656 --- [research-service] [main] org.hibernate.orm.core                   : HHH000001: Hibernate ORM core version 7.2.7.Final
-2026-04-20T09:51:24.620+05:30  INFO 6656 --- [research-service] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
-2026-04-20T09:51:24.649+05:30  INFO 6656 --- [research-service] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
-2026-04-20T09:51:24.941+05:30  INFO 6656 --- [research-service] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@16f15a4
-2026-04-20T09:51:24.943+05:30  INFO 6656 --- [research-service] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
-2026-04-20T09:51:25.035+05:30  INFO 6656 --- [research-service] [main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
-	Database JDBC URL [jdbc:mysql://localhost:3306/research_service_db]
-	Database driver: MySQL Connector/J
-	Database dialect: MySQLDialect
-	Database version: 8.0.44
-	Default catalog/schema: research_service_db/undefined
-	Autocommit mode: undefined/unknown
-	Isolation level: REPEATABLE_READ [default REPEATABLE_READ]
-	JDBC fetch size: none
-	Pool: DataSourceConnectionProvider
-	Minimum pool size: undefined/unknown
-	Maximum pool size: undefined/unknown
-2026-04-20T09:51:25.847+05:30  INFO 6656 --- [research-service] [main] org.hibernate.orm.core                   : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-2026-04-20T09:51:25.919+05:30  INFO 6656 --- [research-service] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
-2026-04-20T09:51:25.985+05:30  INFO 6656 --- [research-service] [main] o.s.d.j.r.query.QueryEnhancerFactories   : Hibernate is in classpath; If applicable, HQL parser will be used.
-2026-04-20T09:51:26.211+05:30  WARN 6656 --- [research-service] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2026-04-20T09:51:26.284+05:30  INFO 6656 --- [research-service] [main] o.s.c.openfeign.FeignClientFactoryBean   : For 'auth-service' URL not provided. Will try picking an instance via load-balancing.
-2026-04-20T09:51:26.766+05:30  INFO 6656 --- [research-service] [main] DiscoveryClientOptionalArgsConfiguration : Eureka HTTP Client uses RestClient.
-2026-04-20T09:51:26.786+05:30  WARN 6656 --- [research-service] [main] iguration$LoadBalancerCaffeineWarnLogger : Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
-2026-04-20T09:51:26.795+05:30  INFO 6656 --- [research-service] [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 2 endpoints beneath base path '/actuator'
-2026-04-20T09:51:26.858+05:30  INFO 6656 --- [research-service] [main] o.s.c.n.eureka.InstanceInfoFactory       : Setting initial instance status as: STARTING
-2026-04-20T09:51:26.875+05:30  INFO 6656 --- [research-service] [main] com.netflix.discovery.DiscoveryClient    : Initializing Eureka in region us-east-1
-2026-04-20T09:51:26.877+05:30  INFO 6656 --- [research-service] [main] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
-2026-04-20T09:51:26.883+05:30  INFO 6656 --- [research-service] [main] com.netflix.discovery.DiscoveryClient    : Disable delta property : false
-2026-04-20T09:51:26.883+05:30  INFO 6656 --- [research-service] [main] com.netflix.discovery.DiscoveryClient    : Single vip registry refresh property : null
-2026-04-20T09:51:26.883+05:30  INFO 6656 --- [research-service] [main] com.netflix.discovery.DiscoveryClient    : Force full registry fetch : false
-2026-04-20T09:51:26.883+05:30  INFO 6656 --- [research-service] [main] com.netflix.discovery.DiscoveryClient    : Application is null : false
-2026-04-20T09:51:26.883+05:30  INFO 6656 --- [research-service] [main] com.netflix.discovery.DiscoveryClient    : Registered Applications size is zero : true
-2026-04-20T09:51:26.884+05:30  INFO 6656 --- [research-service] [main] com.netflix.discovery.DiscoveryClient    : Application version is -1: true
-2026-04-20T09:51:26.884+05:30  INFO 6656 --- [research-service] [main] com.netflix.discovery.DiscoveryClient    : Getting all instance registry info from the eureka server
-2026-04-20T09:51:27.150+05:30  INFO 6656 --- [research-service] [main] com.netflix.discovery.DiscoveryClient    : The response status is 200
-2026-04-20T09:51:27.151+05:30  INFO 6656 --- [research-service] [main] com.netflix.discovery.DiscoveryClient    : Starting heartbeat executor: renew interval is: 30
-2026-04-20T09:51:27.152+05:30  INFO 6656 --- [research-service] [main] c.n.discovery.InstanceInfoReplicator     : InstanceInfoReplicator onDemand update allowed rate per min is 4
-2026-04-20T09:51:27.153+05:30  INFO 6656 --- [research-service] [main] com.netflix.discovery.DiscoveryClient    : Discovery Client initialized at timestamp 1776658887153 with initial instances count: 0
-2026-04-20T09:51:27.157+05:30  INFO 6656 --- [research-service] [main] o.s.c.n.e.s.EurekaServiceRegistry        : Registering application RESEARCH-SERVICE with eureka with status UP
-2026-04-20T09:51:27.157+05:30  INFO 6656 --- [research-service] [main] com.netflix.discovery.DiscoveryClient    : Saw local status change event StatusChangeEvent [timestamp=1776658887157, current=UP, previous=STARTING]
-2026-04-20T09:51:27.161+05:30  INFO 6656 --- [research-service] [DiscoveryClient-InstanceInfoReplicator-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_RESEARCH-SERVICE/LTIN717597.cts.com:research-service:7777: registering service...
-2026-04-20T09:51:27.179+05:30  INFO 6656 --- [research-service] [main] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 7777 (http) with context path '/'
-2026-04-20T09:51:27.180+05:30  INFO 6656 --- [research-service] [main] .s.c.n.e.s.EurekaAutoServiceRegistration : Updating port to 7777
-2026-04-20T09:51:27.191+05:30  INFO 6656 --- [research-service] [main] c.healthgov.ResearchServiceApplication   : Started ResearchServiceApplication in 5.915 seconds (process running for 6.835)
-2026-04-20T09:51:27.198+05:30  INFO 6656 --- [research-service] [DiscoveryClient-InstanceInfoReplicator-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_RESEARCH-SERVICE/LTIN717597.cts.com:research-service:7777 - registration status: 204
-2026-04-20T09:51:27.700+05:30  INFO 6656 --- [research-service] [RMI TCP Connection(7)-127.0.0.1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
-2026-04-20T09:51:27.700+05:30  INFO 6656 --- [research-service] [RMI TCP Connection(7)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
-2026-04-20T09:51:27.701+05:30  INFO 6656 --- [research-service] [RMI TCP Connection(7)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
-2026-04-20T09:51:57.155+05:30  INFO 6656 --- [research-service] [DiscoveryClient-CacheRefreshExecutor-%d] com.netflix.discovery.DiscoveryClient    : Disable delta property : false
-2026-04-20T09:51:57.156+05:30  INFO 6656 --- [research-service] [DiscoveryClient-CacheRefreshExecutor-%d] com.netflix.discovery.DiscoveryClient    : Single vip registry refresh property : null
-2026-04-20T09:51:57.156+05:30  INFO 6656 --- [research-service] [DiscoveryClient-CacheRefreshExecutor-%d] com.netflix.discovery.DiscoveryClient    : Force full registry fetch : false
-2026-04-20T09:51:57.156+05:30  INFO 6656 --- [research-service] [DiscoveryClient-CacheRefreshExecutor-%d] com.netflix.discovery.DiscoveryClient    : Application is null : false
-2026-04-20T09:51:57.156+05:30  INFO 6656 --- [research-service] [DiscoveryClient-CacheRefreshExecutor-%d] com.netflix.discovery.DiscoveryClient    : Registered Applications size is zero : true
-2026-04-20T09:51:57.156+05:30  INFO 6656 --- [research-service] [DiscoveryClient-CacheRefreshExecutor-%d] com.netflix.discovery.DiscoveryClient    : Application version is -1: false
-2026-04-20T09:51:57.156+05:30  INFO 6656 --- [research-service] [DiscoveryClient-CacheRefreshExecutor-%d] com.netflix.discovery.DiscoveryClient    : Getting all instance registry info from the eureka server
-2026-04-20T09:51:57.191+05:30  INFO 6656 --- [research-service] [DiscoveryClient-CacheRefreshExecutor-%d] com.netflix.discovery.DiscoveryClient    : The response status is 200
-2026-04-20T09:52:20.528+05:30  INFO 6656 --- [research-service] [http-nio-7777-exec-2] c.h.c.ResearchProjectController          : Fetching project by ID=26
-2026-04-20T09:54:04.579+05:30  INFO 6656 --- [research-service] [RMI TCP Connection(13)-127.0.0.1] inMXBeanRegistrar$SpringApplicationAdmin : Application shutdown requested.
-2026-04-20T09:54:04.580+05:30  INFO 6656 --- [research-service] [RMI TCP Connection(13)-127.0.0.1] o.s.c.n.e.s.EurekaServiceRegistry        : Unregistering application RESEARCH-SERVICE with eureka with status DOWN
-2026-04-20T09:54:04.581+05:30  INFO 6656 --- [research-service] [RMI TCP Connection(13)-127.0.0.1] com.netflix.discovery.DiscoveryClient    : Saw local status change event StatusChangeEvent [timestamp=1776659044581, current=DOWN, previous=UP]
-2026-04-20T09:54:04.581+05:30  INFO 6656 --- [research-service] [DiscoveryClient-InstanceInfoReplicator-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_RESEARCH-SERVICE/LTIN717597.cts.com:research-service:7777: registering service...
-2026-04-20T09:54:04.584+05:30  INFO 6656 --- [research-service] [RMI TCP Connection(13)-127.0.0.1] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
-2026-04-20T09:54:04.589+05:30  INFO 6656 --- [research-service] [DiscoveryClient-InstanceInfoReplicator-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_RESEARCH-SERVICE/LTIN717597.cts.com:research-service:7777 - registration status: 204
-2026-04-20T09:54:04.592+05:30  INFO 6656 --- [research-service] [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete
-2026-04-20T09:54:04.601+05:30  INFO 6656 --- [research-service] [RMI TCP Connection(13)-127.0.0.1] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
-2026-04-20T09:54:04.603+05:30  INFO 6656 --- [research-service] [RMI TCP Connection(13)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
-2026-04-20T09:54:04.610+05:30  INFO 6656 --- [research-service] [RMI TCP Connection(13)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
-2026-04-20T09:54:04.610+05:30  INFO 6656 --- [research-service] [RMI TCP Connection(13)-127.0.0.1] com.netflix.discovery.DiscoveryClient    : Shutting down DiscoveryClient ...
-2026-04-20T09:54:07.624+05:30  INFO 6656 --- [research-service] [RMI TCP Connection(13)-127.0.0.1] com.netflix.discovery.DiscoveryClient    : Unregistering ...
-2026-04-20T09:54:07.642+05:30  INFO 6656 --- [research-service] [RMI TCP Connection(13)-127.0.0.1] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_RESEARCH-SERVICE/LTIN717597.cts.com:research-service:7777 - deregister  status: 200
-2026-04-20T09:54:07.643+05:30  INFO 6656 --- [research-service] [RMI TCP Connection(13)-127.0.0.1] com.netflix.discovery.DiscoveryClient    : Completed shut down of DiscoveryClient
-2026-04-20T10:38:02.699+05:30  INFO 10516 --- [research-service] [main] c.healthgov.ResearchServiceApplication   : Starting ResearchServiceApplication using Java 21.0.8 with PID 10516 (C:\Users\2481703\git\HealthGovMicroservices\research-service\target\classes started by 2481703 in C:\Users\2481703\git\HealthGovMicroservices\research-service)
-2026-04-20T10:38:02.703+05:30  INFO 10516 --- [research-service] [main] c.healthgov.ResearchServiceApplication   : No active profile set, falling back to 1 default profile: "default"
-2026-04-20T10:38:03.964+05:30  INFO 10516 --- [research-service] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2026-04-20T10:38:04.061+05:30  INFO 10516 --- [research-service] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 92 ms. Found 3 JPA repository interfaces.
-2026-04-20T10:38:04.275+05:30  INFO 10516 --- [research-service] [main] o.s.cloud.context.scope.GenericScope     : BeanFactory id=927062d1-c5ab-314d-a9ca-1a88eb4dfc54
-2026-04-20T10:38:04.516+05:30  INFO 10516 --- [research-service] [main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 7777 (http)
-2026-04-20T10:38:04.524+05:30  INFO 10516 --- [research-service] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
-2026-04-20T10:38:04.527+05:30  INFO 10516 --- [research-service] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.20]
-2026-04-20T10:38:04.575+05:30  INFO 10516 --- [research-service] [main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 1820 ms
-2026-04-20T10:38:04.837+05:30  INFO 10516 --- [research-service] [main] org.hibernate.orm.jpa                    : HHH008540: Processing PersistenceUnitInfo [name: default]
-2026-04-20T10:38:04.879+05:30  INFO 10516 --- [research-service] [main] org.hibernate.orm.core                   : HHH000001: Hibernate ORM core version 7.2.7.Final
-2026-04-20T10:38:05.206+05:30  INFO 10516 --- [research-service] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
-2026-04-20T10:38:05.227+05:30  INFO 10516 --- [research-service] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
-2026-04-20T10:38:05.453+05:30  INFO 10516 --- [research-service] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@426bf2f2
-2026-04-20T10:38:05.455+05:30  INFO 10516 --- [research-service] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
-2026-04-20T10:38:05.536+05:30  INFO 10516 --- [research-service] [main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
-	Database JDBC URL [jdbc:mysql://localhost:3306/research_service_db]
-	Database driver: MySQL Connector/J
-	Database dialect: MySQLDialect
-	Database version: 8.0.44
-	Default catalog/schema: research_service_db/undefined
-	Autocommit mode: undefined/unknown
-	Isolation level: REPEATABLE_READ [default REPEATABLE_READ]
-	JDBC fetch size: none
-	Pool: DataSourceConnectionProvider
-	Minimum pool size: undefined/unknown
-	Maximum pool size: undefined/unknown
-2026-04-20T10:38:06.269+05:30  INFO 10516 --- [research-service] [main] org.hibernate.orm.core                   : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-2026-04-20T10:38:06.346+05:30  INFO 10516 --- [research-service] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
-2026-04-20T10:38:06.402+05:30  INFO 10516 --- [research-service] [main] o.s.d.j.r.query.QueryEnhancerFactories   : Hibernate is in classpath; If applicable, HQL parser will be used.
-2026-04-20T10:38:06.597+05:30  WARN 10516 --- [research-service] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2026-04-20T10:38:06.658+05:30  INFO 10516 --- [research-service] [main] o.s.c.openfeign.FeignClientFactoryBean   : For 'auth-service' URL not provided. Will try picking an instance via load-balancing.
-2026-04-20T10:38:07.141+05:30  INFO 10516 --- [research-service] [main] DiscoveryClientOptionalArgsConfiguration : Eureka HTTP Client uses RestClient.
-2026-04-20T10:38:07.161+05:30  WARN 10516 --- [research-service] [main] iguration$LoadBalancerCaffeineWarnLogger : Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
-2026-04-20T10:38:07.171+05:30  INFO 10516 --- [research-service] [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 2 endpoints beneath base path '/actuator'
-2026-04-20T10:38:07.230+05:30  INFO 10516 --- [research-service] [main] o.s.c.n.eureka.InstanceInfoFactory       : Setting initial instance status as: STARTING
-2026-04-20T10:38:07.246+05:30  INFO 10516 --- [research-service] [main] com.netflix.discovery.DiscoveryClient    : Initializing Eureka in region us-east-1
-2026-04-20T10:38:07.249+05:30  INFO 10516 --- [research-service] [main] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
-2026-04-20T10:38:07.255+05:30  INFO 10516 --- [research-service] [main] com.netflix.discovery.DiscoveryClient    : Disable delta property : false
-2026-04-20T10:38:07.255+05:30  INFO 10516 --- [research-service] [main] com.netflix.discovery.DiscoveryClient    : Single vip registry refresh property : null
-2026-04-20T10:38:07.255+05:30  INFO 10516 --- [research-service] [main] com.netflix.discovery.DiscoveryClient    : Force full registry fetch : false
-2026-04-20T10:38:07.255+05:30  INFO 10516 --- [research-service] [main] com.netflix.discovery.DiscoveryClient    : Application is null : false
-2026-04-20T10:38:07.255+05:30  INFO 10516 --- [research-service] [main] com.netflix.discovery.DiscoveryClient    : Registered Applications size is zero : true
-2026-04-20T10:38:07.255+05:30  INFO 10516 --- [research-service] [main] com.netflix.discovery.DiscoveryClient    : Application version is -1: true
-2026-04-20T10:38:07.255+05:30  INFO 10516 --- [research-service] [main] com.netflix.discovery.DiscoveryClient    : Getting all instance registry info from the eureka server
-2026-04-20T10:38:07.502+05:30  INFO 10516 --- [research-service] [main] com.netflix.discovery.DiscoveryClient    : The response status is 200
-2026-04-20T10:38:07.504+05:30  INFO 10516 --- [research-service] [main] com.netflix.discovery.DiscoveryClient    : Starting heartbeat executor: renew interval is: 30
-2026-04-20T10:38:07.506+05:30  INFO 10516 --- [research-service] [main] c.n.discovery.InstanceInfoReplicator     : InstanceInfoReplicator onDemand update allowed rate per min is 4
-2026-04-20T10:38:07.508+05:30  INFO 10516 --- [research-service] [main] com.netflix.discovery.DiscoveryClient    : Discovery Client initialized at timestamp 1776661687507 with initial instances count: 1
-2026-04-20T10:38:07.511+05:30  INFO 10516 --- [research-service] [main] o.s.c.n.e.s.EurekaServiceRegistry        : Registering application RESEARCH-SERVICE with eureka with status UP
-2026-04-20T10:38:07.511+05:30  INFO 10516 --- [research-service] [main] com.netflix.discovery.DiscoveryClient    : Saw local status change event StatusChangeEvent [timestamp=1776661687511, current=UP, previous=STARTING]
-2026-04-20T10:38:07.515+05:30  INFO 10516 --- [research-service] [DiscoveryClient-InstanceInfoReplicator-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_RESEARCH-SERVICE/LTIN717597.cts.com:research-service:7777: registering service...
-2026-04-20T10:38:07.535+05:30  INFO 10516 --- [research-service] [main] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 7777 (http) with context path '/'
-2026-04-20T10:38:07.536+05:30  INFO 10516 --- [research-service] [main] .s.c.n.e.s.EurekaAutoServiceRegistration : Updating port to 7777
-2026-04-20T10:38:07.548+05:30  INFO 10516 --- [research-service] [main] c.healthgov.ResearchServiceApplication   : Started ResearchServiceApplication in 5.216 seconds (process running for 6.097)
-2026-04-20T10:38:07.557+05:30  INFO 10516 --- [research-service] [DiscoveryClient-InstanceInfoReplicator-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_RESEARCH-SERVICE/LTIN717597.cts.com:research-service:7777 - registration status: 204
-2026-04-20T10:38:07.769+05:30  INFO 10516 --- [research-service] [RMI TCP Connection(5)-127.0.0.1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
-2026-04-20T10:38:07.770+05:30  INFO 10516 --- [research-service] [RMI TCP Connection(5)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
-2026-04-20T10:38:07.771+05:30  INFO 10516 --- [research-service] [RMI TCP Connection(5)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
-2026-04-20T10:39:05.329+05:30  INFO 10516 --- [research-service] [http-nio-7777-exec-1] c.h.c.ResearchProjectController          : Fetching project list. Status=null
-2026-04-20T10:39:37.820+05:30  INFO 10516 --- [research-service] [http-nio-7777-exec-2] c.h.c.ResearchProjectController          : CREATE project request for researcherId=3
-2026-04-20T10:39:37.822+05:30  INFO 10516 --- [research-service] [http-nio-7777-exec-2] c.h.service.ResearchProjectServiceImpl   : Creating new research project for researcherId=3
-2026-04-20T10:40:42.247+05:30  INFO 10516 --- [research-service] [http-nio-7777-exec-10] c.h.c.ResearchProjectController          : UPDATE project request for projectId=15
-2026-04-20T10:40:42.250+05:30  INFO 10516 --- [research-service] [http-nio-7777-exec-10] c.h.service.ResearchProjectServiceImpl   : Updating research project with projectId=15
-2026-04-20T10:41:34.025+05:30  WARN 10516 --- [research-service] [http-nio-7777-exec-9] c.h.c.ResearchProjectController          : DELETE project request for projectId=15
-2026-04-20T10:41:39.071+05:30  INFO 10516 --- [research-service] [http-nio-7777-exec-7] c.h.c.ResearchProjectController          : Fetching project list. Status=REJECTED
-2026-04-20T10:41:43.954+05:30  INFO 10516 --- [research-service] [http-nio-7777-exec-8] c.h.c.ResearchProjectController          : Fetching project list. Status=REJECTED
-2026-04-20T10:41:53.606+05:30  INFO 10516 --- [research-service] [http-nio-7777-exec-1] c.h.c.ResearchProjectController          : Fetching project by ID=26
-2026-04-20T10:43:07.267+05:30  INFO 10516 --- [research-service] [AsyncResolver-bootstrap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
-2026-04-20T11:01:31.692+05:30  WARN 10516 --- [research-service] [HikariPool-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=15m26s34ms652µs799ns).
-2026-04-20T11:12:31.506+05:30  WARN 10516 --- [research-service] [HikariPool-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=10m59s814ms57µs401ns).
-2026-04-20T11:13:51.038+05:30  INFO 10516 --- [research-service] [AsyncResolver-bootstrap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
-2026-04-20T11:18:51.050+05:30  INFO 10516 --- [research-service] [AsyncResolver-bootstrap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
-2026-04-20T11:23:51.052+05:30  INFO 10516 --- [research-service] [AsyncResolver-bootstrap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
-2026-04-20T11:24:55.393+05:30  INFO 10516 --- [research-service] [http-nio-7777-exec-10] c.h.c.ProgramManagerReviewController     : Fetching PENDING projects for Program Manager
-2026-04-20T11:24:55.397+05:30  INFO 10516 --- [research-service] [http-nio-7777-exec-10] c.h.s.ProgramManagerReviewServiceImpl    : Fetching ALL PENDING projects for PM dashboard.
-2026-04-20T11:24:55.422+05:30  INFO 10516 --- [research-service] [http-nio-7777-exec-10] c.h.s.ProgramManagerReviewServiceImpl    : Total pending projects found: 3
-2026-04-20T11:28:51.061+05:30  INFO 10516 --- [research-service] [AsyncResolver-bootstrap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
-2026-04-20T11:34:08.720+05:30  INFO 10516 --- [research-service] [AsyncResolver-bootstrap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
-2026-04-20T11:35:23.984+05:30  INFO 10516 --- [research-service] [http-nio-7777-exec-7] c.h.c.ResearchProjectController          : Checking if grant exists for grantId=1
-2026-04-20T11:35:31.361+05:30  INFO 10516 --- [research-service] [http-nio-7777-exec-8] c.h.c.ResearchProjectController          : Fetching grant by grantId=2
-2026-04-20T11:38:44.472+05:30  INFO 10516 --- [research-service] [http-nio-7777-exec-3] c.h.c.ResearchProjectController          : Checking if grant exists for grantId=0
-2026-04-20T11:39:08.732+05:30  INFO 10516 --- [research-service] [AsyncResolver-bootstrap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
-2026-04-20T11:44:08.739+05:30  INFO 10516 --- [research-service] [AsyncResolver-bootstrap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
-2026-04-20T11:47:29.416+05:30  INFO 10516 --- [research-service] [RMI TCP Connection(60)-127.0.0.1] inMXBeanRegistrar$SpringApplicationAdmin : Application shutdown requested.
-2026-04-20T11:47:29.420+05:30  INFO 10516 --- [research-service] [RMI TCP Connection(60)-127.0.0.1] o.s.c.n.e.s.EurekaServiceRegistry        : Unregistering application RESEARCH-SERVICE with eureka with status DOWN
-2026-04-20T11:47:29.420+05:30  INFO 10516 --- [research-service] [RMI TCP Connection(60)-127.0.0.1] com.netflix.discovery.DiscoveryClient    : Saw local status change event StatusChangeEvent [timestamp=1776665849420, current=DOWN, previous=UP]
-2026-04-20T11:47:29.420+05:30  INFO 10516 --- [research-service] [DiscoveryClient-InstanceInfoReplicator-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_RESEARCH-SERVICE/LTIN717597.cts.com:research-service:7777: registering service...
-2026-04-20T11:47:29.428+05:30  INFO 10516 --- [research-service] [RMI TCP Connection(60)-127.0.0.1] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
-2026-04-20T11:47:29.437+05:30  INFO 10516 --- [research-service] [DiscoveryClient-InstanceInfoReplicator-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_RESEARCH-SERVICE/LTIN717597.cts.com:research-service:7777 - registration status: 204
-2026-04-20T11:47:29.441+05:30  INFO 10516 --- [research-service] [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete
-2026-04-20T11:47:29.454+05:30  INFO 10516 --- [research-service] [RMI TCP Connection(60)-127.0.0.1] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
-2026-04-20T11:47:29.458+05:30  INFO 10516 --- [research-service] [RMI TCP Connection(60)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
-2026-04-20T11:47:29.462+05:30  INFO 10516 --- [research-service] [RMI TCP Connection(60)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
-2026-04-20T11:47:29.463+05:30  INFO 10516 --- [research-service] [RMI TCP Connection(60)-127.0.0.1] com.netflix.discovery.DiscoveryClient    : Shutting down DiscoveryClient ...
-2026-04-20T11:47:32.478+05:30  INFO 10516 --- [research-service] [RMI TCP Connection(60)-127.0.0.1] com.netflix.discovery.DiscoveryClient    : Unregistering ...
-2026-04-20T11:47:32.500+05:30  INFO 10516 --- [research-service] [RMI TCP Connection(60)-127.0.0.1] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_RESEARCH-SERVICE/LTIN717597.cts.com:research-service:7777 - deregister  status: 200
-2026-04-20T11:47:32.500+05:30  INFO 10516 --- [research-service] [RMI TCP Connection(60)-127.0.0.1] com.netflix.discovery.DiscoveryClient    : Completed shut down of DiscoveryClient
-2026-04-20T11:47:41.017+05:30  INFO 20424 --- [research-service] [main] c.healthgov.ResearchServiceApplication   : Starting ResearchServiceApplication using Java 21.0.8 with PID 20424 (C:\Users\2481703\git\HealthGovMicroservices\research-service\target\classes started by 2481703 in C:\Users\2481703\git\HealthGovMicroservices\research-service)
-2026-04-20T11:47:41.019+05:30  INFO 20424 --- [research-service] [main] c.healthgov.ResearchServiceApplication   : No active profile set, falling back to 1 default profile: "default"
-2026-04-20T11:47:42.301+05:30  INFO 20424 --- [research-service] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2026-04-20T11:47:42.408+05:30  INFO 20424 --- [research-service] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 96 ms. Found 3 JPA repository interfaces.
-2026-04-20T11:47:42.653+05:30  INFO 20424 --- [research-service] [main] o.s.cloud.context.scope.GenericScope     : BeanFactory id=927062d1-c5ab-314d-a9ca-1a88eb4dfc54
-2026-04-20T11:47:42.939+05:30  INFO 20424 --- [research-service] [main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 7777 (http)
-2026-04-20T11:47:42.950+05:30  INFO 20424 --- [research-service] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
-2026-04-20T11:47:42.952+05:30  INFO 20424 --- [research-service] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.20]
-2026-04-20T11:47:43.010+05:30  INFO 20424 --- [research-service] [main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 1943 ms
-2026-04-20T11:47:43.306+05:30  INFO 20424 --- [research-service] [main] org.hibernate.orm.jpa                    : HHH008540: Processing PersistenceUnitInfo [name: default]
-2026-04-20T11:47:43.369+05:30  INFO 20424 --- [research-service] [main] org.hibernate.orm.core                   : HHH000001: Hibernate ORM core version 7.2.7.Final
-2026-04-20T11:47:43.739+05:30  INFO 20424 --- [research-service] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
-2026-04-20T11:47:43.771+05:30  INFO 20424 --- [research-service] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
-2026-04-20T11:47:44.155+05:30  INFO 20424 --- [research-service] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@426bf2f2
-2026-04-20T11:47:44.158+05:30  INFO 20424 --- [research-service] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
-2026-04-20T11:47:44.254+05:30  INFO 20424 --- [research-service] [main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
-	Database JDBC URL [jdbc:mysql://localhost:3306/research_service_db]
-	Database driver: MySQL Connector/J
-	Database dialect: MySQLDialect
-	Database version: 8.0.44
-	Default catalog/schema: research_service_db/undefined
-	Autocommit mode: undefined/unknown
-	Isolation level: REPEATABLE_READ [default REPEATABLE_READ]
-	JDBC fetch size: none
-	Pool: DataSourceConnectionProvider
-	Minimum pool size: undefined/unknown
-	Maximum pool size: undefined/unknown
-2026-04-20T11:47:45.057+05:30  INFO 20424 --- [research-service] [main] org.hibernate.orm.core                   : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-2026-04-20T11:47:45.146+05:30  INFO 20424 --- [research-service] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
-2026-04-20T11:47:45.314+05:30  INFO 20424 --- [research-service] [main] o.s.d.j.r.query.QueryEnhancerFactories   : Hibernate is in classpath; If applicable, HQL parser will be used.
-2026-04-20T11:47:45.597+05:30  WARN 20424 --- [research-service] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2026-04-20T11:47:45.658+05:30  INFO 20424 --- [research-service] [main] o.s.c.openfeign.FeignClientFactoryBean   : For 'auth-service' URL not provided. Will try picking an instance via load-balancing.
-2026-04-20T11:47:46.262+05:30  INFO 20424 --- [research-service] [main] DiscoveryClientOptionalArgsConfiguration : Eureka HTTP Client uses RestClient.
-2026-04-20T11:47:46.283+05:30  WARN 20424 --- [research-service] [main] iguration$LoadBalancerCaffeineWarnLogger : Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
-2026-04-20T11:47:46.292+05:30  INFO 20424 --- [research-service] [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 2 endpoints beneath base path '/actuator'
-2026-04-20T11:47:46.345+05:30  INFO 20424 --- [research-service] [main] o.s.c.n.eureka.InstanceInfoFactory       : Setting initial instance status as: STARTING
-2026-04-20T11:47:46.361+05:30  INFO 20424 --- [research-service] [main] com.netflix.discovery.DiscoveryClient    : Initializing Eureka in region us-east-1
-2026-04-20T11:47:46.363+05:30  INFO 20424 --- [research-service] [main] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
-2026-04-20T11:47:46.371+05:30  INFO 20424 --- [research-service] [main] com.netflix.discovery.DiscoveryClient    : Disable delta property : false
-2026-04-20T11:47:46.371+05:30  INFO 20424 --- [research-service] [main] com.netflix.discovery.DiscoveryClient    : Single vip registry refresh property : null
-2026-04-20T11:47:46.372+05:30  INFO 20424 --- [research-service] [main] com.netflix.discovery.DiscoveryClient    : Force full registry fetch : false
-2026-04-20T11:47:46.372+05:30  INFO 20424 --- [research-service] [main] com.netflix.discovery.DiscoveryClient    : Application is null : false
-2026-04-20T11:47:46.372+05:30  INFO 20424 --- [research-service] [main] com.netflix.discovery.DiscoveryClient    : Registered Applications size is zero : true
-2026-04-20T11:47:46.372+05:30  INFO 20424 --- [research-service] [main] com.netflix.discovery.DiscoveryClient    : Application version is -1: true
-2026-04-20T11:47:46.372+05:30  INFO 20424 --- [research-service] [main] com.netflix.discovery.DiscoveryClient    : Getting all instance registry info from the eureka server
-2026-04-20T11:47:46.650+05:30  INFO 20424 --- [research-service] [main] com.netflix.discovery.DiscoveryClient    : The response status is 200
-2026-04-20T11:47:46.651+05:30  INFO 20424 --- [research-service] [main] com.netflix.discovery.DiscoveryClient    : Starting heartbeat executor: renew interval is: 30
-2026-04-20T11:47:46.652+05:30  INFO 20424 --- [research-service] [main] c.n.discovery.InstanceInfoReplicator     : InstanceInfoReplicator onDemand update allowed rate per min is 4
-2026-04-20T11:47:46.654+05:30  INFO 20424 --- [research-service] [main] com.netflix.discovery.DiscoveryClient    : Discovery Client initialized at timestamp 1776665866653 with initial instances count: 3
-2026-04-20T11:47:46.656+05:30  INFO 20424 --- [research-service] [main] o.s.c.n.e.s.EurekaServiceRegistry        : Registering application RESEARCH-SERVICE with eureka with status UP
-2026-04-20T11:47:46.656+05:30  INFO 20424 --- [research-service] [main] com.netflix.discovery.DiscoveryClient    : Saw local status change event StatusChangeEvent [timestamp=1776665866656, current=UP, previous=STARTING]
-2026-04-20T11:47:46.658+05:30  INFO 20424 --- [research-service] [DiscoveryClient-InstanceInfoReplicator-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_RESEARCH-SERVICE/LTIN717597.cts.com:research-service:7777: registering service...
-2026-04-20T11:47:46.703+05:30  INFO 20424 --- [research-service] [main] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 7777 (http) with context path '/'
-2026-04-20T11:47:46.705+05:30  INFO 20424 --- [research-service] [main] .s.c.n.e.s.EurekaAutoServiceRegistration : Updating port to 7777
-2026-04-20T11:47:46.724+05:30  INFO 20424 --- [research-service] [main] c.healthgov.ResearchServiceApplication   : Started ResearchServiceApplication in 6.05 seconds (process running for 6.902)
-2026-04-20T11:47:46.727+05:30  INFO 20424 --- [research-service] [DiscoveryClient-InstanceInfoReplicator-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_RESEARCH-SERVICE/LTIN717597.cts.com:research-service:7777 - registration status: 204
-2026-04-20T11:47:47.139+05:30  INFO 20424 --- [research-service] [RMI TCP Connection(9)-127.0.0.1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
-2026-04-20T11:47:47.139+05:30  INFO 20424 --- [research-service] [RMI TCP Connection(9)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
-2026-04-20T11:47:47.140+05:30  INFO 20424 --- [research-service] [RMI TCP Connection(9)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
-2026-04-20T11:49:31.634+05:30  INFO 20424 --- [research-service] [http-nio-7777-exec-4] c.h.c.ResearchProjectController          : Fetching project list. Status=null
-2026-04-20T11:51:12.774+05:30  INFO 20424 --- [research-service] [http-nio-7777-exec-6] c.h.c.ResearchProjectController          : CREATE project request for researcherId=3
-2026-04-20T11:51:12.776+05:30  INFO 20424 --- [research-service] [http-nio-7777-exec-6] c.h.service.ResearchProjectServiceImpl   : Creating new research project for researcherId=3
-2026-04-20T11:51:23.529+05:30  INFO 20424 --- [research-service] [http-nio-7777-exec-7] c.h.c.ResearchProjectController          : UPDATE project request for projectId=16
-2026-04-20T11:51:23.529+05:30  INFO 20424 --- [research-service] [http-nio-7777-exec-7] c.h.service.ResearchProjectServiceImpl   : Updating research project with projectId=16
-2026-04-20T11:51:38.499+05:30  INFO 20424 --- [research-service] [http-nio-7777-exec-8] c.h.c.ResearchProjectController          : Fetching project list. Status=REJECTED
-2026-04-20T11:51:44.457+05:30  INFO 20424 --- [research-service] [http-nio-7777-exec-9] c.h.c.ResearchProjectController          : Fetching project by ID=26
-2026-04-20T11:51:50.069+05:30  INFO 20424 --- [research-service] [http-nio-7777-exec-10] c.h.c.ResearchProjectController          : Fetching project by ID=2
-2026-04-20T11:52:03.057+05:30  INFO 20424 --- [research-service] [http-nio-7777-exec-2] c.h.c.ResearchProjectController          : Fetching project by ID=9
-2026-04-20T11:52:08.812+05:30  INFO 20424 --- [research-service] [http-nio-7777-exec-4] c.h.c.ResearchProjectController          : Fetching project by ID=8
-2026-04-20T11:52:36.795+05:30  INFO 20424 --- [research-service] [http-nio-7777-exec-7] c.h.c.ResearchProjectController          : Checking if grant exists for grantId=0
-2026-04-20T11:52:46.375+05:30  INFO 20424 --- [research-service] [AsyncResolver-bootstrap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
-2026-04-20T11:53:10.466+05:30  INFO 20424 --- [research-service] [http-nio-7777-exec-9] c.h.c.ResearchProjectController          : Checking if grant exists for grantId=0
-2026-04-20T11:53:39.947+05:30  INFO 20424 --- [research-service] [http-nio-7777-exec-10] c.h.c.ProgramManagerReviewController     : Fetching PENDING projects for Program Manager
-2026-04-20T11:53:39.949+05:30  INFO 20424 --- [research-service] [http-nio-7777-exec-10] c.h.s.ProgramManagerReviewServiceImpl    : Fetching ALL PENDING projects for PM dashboard.
-2026-04-20T11:53:39.955+05:30  INFO 20424 --- [research-service] [http-nio-7777-exec-10] c.h.s.ProgramManagerReviewServiceImpl    : Total pending projects found: 4
-2026-04-20T11:53:47.116+05:30  INFO 20424 --- [research-service] [http-nio-7777-exec-1] c.h.c.ProgramManagerReviewController     : Fetching projects by status=rejected
-2026-04-20T11:53:47.119+05:30  INFO 20424 --- [research-service] [http-nio-7777-exec-1] c.h.s.ProgramManagerReviewServiceImpl    : Fetching projects with status=rejected
-2026-04-20T11:53:47.123+05:30  INFO 20424 --- [research-service] [http-nio-7777-exec-1] c.h.s.ProgramManagerReviewServiceImpl    : Projects found with status rejected: 2
-2026-04-20T11:53:58.497+05:30  INFO 20424 --- [research-service] [http-nio-7777-exec-2] c.h.c.ProgramManagerReviewController     : Fetching project details for projectId=8
-2026-04-20T11:53:58.499+05:30  INFO 20424 --- [research-service] [http-nio-7777-exec-2] c.h.s.ProgramManagerReviewServiceImpl    : Fetching project for PM review: projectId=8
-2026-04-20T11:53:58.501+05:30  INFO 20424 --- [research-service] [http-nio-7777-exec-2] c.h.s.ProgramManagerReviewServiceImpl    : Project fetched successfully: projectId=8
-2026-04-20T11:54:15.247+05:30  INFO 20424 --- [research-service] [http-nio-7777-exec-4] c.h.c.ProgramManagerReviewController     : PM decision received. projectId=16, decision=APPROVED
-2026-04-20T11:54:15.251+05:30  INFO 20424 --- [research-service] [http-nio-7777-exec-4] c.h.s.ProgramManagerReviewServiceImpl    : PM decision received: projectId=16, decision=APPROVED
-2026-04-20T11:54:15.254+05:30  INFO 20424 --- [research-service] [http-nio-7777-exec-4] c.h.s.ProgramManagerReviewServiceImpl    : Project found. Applying decision=APPROVED for projectId=16
-2026-04-20T11:54:15.272+05:30  INFO 20424 --- [research-service] [http-nio-7777-exec-4] c.h.s.ProgramManagerReviewServiceImpl    : Approving project: projectId=16
-2026-04-20T11:54:15.273+05:30  INFO 20424 --- [research-service] [http-nio-7777-exec-4] c.h.s.ProgramManagerReviewServiceImpl    : GrantApplication updated to APPROVED for projectId=16
-2026-04-20T11:54:15.303+05:30  INFO 20424 --- [research-service] [http-nio-7777-exec-4] c.h.s.ProgramManagerReviewServiceImpl    : No existing grant found. Creating new grant for projectId=16, amount=7000.0
-2026-04-20T11:54:15.307+05:30  INFO 20424 --- [research-service] [http-nio-7777-exec-4] c.h.s.ProgramManagerReviewServiceImpl    : Grant created successfully: projectId=16, amount=7000.0
-2026-04-20T11:54:15.308+05:30  INFO 20424 --- [research-service] [http-nio-7777-exec-4] c.h.s.ProgramManagerReviewServiceImpl    : Project decision applied successfully: projectId=16, finalStatus=APPROVED
-2026-04-20T11:54:57.911+05:30  INFO 20424 --- [research-service] [RMI TCP Connection(20)-127.0.0.1] inMXBeanRegistrar$SpringApplicationAdmin : Application shutdown requested.
-2026-04-20T11:54:57.912+05:30  INFO 20424 --- [research-service] [RMI TCP Connection(20)-127.0.0.1] o.s.c.n.e.s.EurekaServiceRegistry        : Unregistering application RESEARCH-SERVICE with eureka with status DOWN
-2026-04-20T11:54:57.912+05:30  INFO 20424 --- [research-service] [RMI TCP Connection(20)-127.0.0.1] com.netflix.discovery.DiscoveryClient    : Saw local status change event StatusChangeEvent [timestamp=1776666297912, current=DOWN, previous=UP]
-2026-04-20T11:54:57.913+05:30  INFO 20424 --- [research-service] [DiscoveryClient-InstanceInfoReplicator-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_RESEARCH-SERVICE/LTIN717597.cts.com:research-service:7777: registering service...
-2026-04-20T11:54:57.914+05:30  INFO 20424 --- [research-service] [RMI TCP Connection(20)-127.0.0.1] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
-2026-04-20T11:54:57.920+05:30  INFO 20424 --- [research-service] [DiscoveryClient-InstanceInfoReplicator-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_RESEARCH-SERVICE/LTIN717597.cts.com:research-service:7777 - registration status: 204
-2026-04-20T11:54:57.923+05:30  INFO 20424 --- [research-service] [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete
-2026-04-20T11:54:57.929+05:30  INFO 20424 --- [research-service] [RMI TCP Connection(20)-127.0.0.1] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
-2026-04-20T11:54:57.931+05:30  INFO 20424 --- [research-service] [RMI TCP Connection(20)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
-2026-04-20T11:54:57.937+05:30  INFO 20424 --- [research-service] [RMI TCP Connection(20)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
-2026-04-20T11:54:57.937+05:30  INFO 20424 --- [research-service] [RMI TCP Connection(20)-127.0.0.1] com.netflix.discovery.DiscoveryClient    : Shutting down DiscoveryClient ...
-2026-04-20T11:55:00.951+05:30  INFO 20424 --- [research-service] [RMI TCP Connection(20)-127.0.0.1] com.netflix.discovery.DiscoveryClient    : Unregistering ...
-2026-04-20T11:55:00.968+05:30  INFO 20424 --- [research-service] [RMI TCP Connection(20)-127.0.0.1] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_RESEARCH-SERVICE/LTIN717597.cts.com:research-service:7777 - deregister  status: 200
-2026-04-20T11:55:00.968+05:30  INFO 20424 --- [research-service] [RMI TCP Connection(20)-127.0.0.1] com.netflix.discovery.DiscoveryClient    : Completed shut down of DiscoveryClient
+2026-04-21T09:31:04.824+05:30  INFO 1068 --- [research-service] [main] org.hibernate.orm.core                   : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-04-21T09:31:04.906+05:30  INFO 1068 --- [research-service] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-04-21T09:31:04.989+05:30  INFO 1068 --- [research-service] [main] o.s.d.j.r.query.QueryEnhancerFactories   : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-04-21T09:31:05.265+05:30  WARN 1068 --- [research-service] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-04-21T09:31:05.339+05:30  INFO 1068 --- [research-service] [main] o.s.c.openfeign.FeignClientFactoryBean   : For 'auth-service' URL not provided. Will try picking an instance via load-balancing.
+2026-04-21T09:31:05.399+05:30  INFO 1068 --- [research-service] [main] o.s.c.openfeign.FeignClientFactoryBean   : For 'compliance-audit-service' URL not provided. Will try picking an instance via load-balancing.
+2026-04-21T09:31:05.944+05:30  INFO 1068 --- [research-service] [main] DiscoveryClientOptionalArgsConfiguration : Eureka HTTP Client uses RestClient.
+2026-04-21T09:31:05.968+05:30  WARN 1068 --- [research-service] [main] iguration$LoadBalancerCaffeineWarnLogger : Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2026-04-21T09:31:05.982+05:30  INFO 1068 --- [research-service] [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 2 endpoints beneath base path '/actuator'
+2026-04-21T09:31:06.052+05:30  INFO 1068 --- [research-service] [main] o.s.c.n.eureka.InstanceInfoFactory       : Setting initial instance status as: STARTING
+2026-04-21T09:31:06.078+05:30  INFO 1068 --- [research-service] [main] com.netflix.discovery.DiscoveryClient    : Initializing Eureka in region us-east-1
+2026-04-21T09:31:06.083+05:30  INFO 1068 --- [research-service] [main] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-04-21T09:31:06.093+05:30  INFO 1068 --- [research-service] [main] com.netflix.discovery.DiscoveryClient    : Disable delta property : false
+2026-04-21T09:31:06.093+05:30  INFO 1068 --- [research-service] [main] com.netflix.discovery.DiscoveryClient    : Single vip registry refresh property : null
+2026-04-21T09:31:06.093+05:30  INFO 1068 --- [research-service] [main] com.netflix.discovery.DiscoveryClient    : Force full registry fetch : false
+2026-04-21T09:31:06.093+05:30  INFO 1068 --- [research-service] [main] com.netflix.discovery.DiscoveryClient    : Application is null : false
+2026-04-21T09:31:06.093+05:30  INFO 1068 --- [research-service] [main] com.netflix.discovery.DiscoveryClient    : Registered Applications size is zero : true
+2026-04-21T09:31:06.093+05:30  INFO 1068 --- [research-service] [main] com.netflix.discovery.DiscoveryClient    : Application version is -1: true
+2026-04-21T09:31:06.093+05:30  INFO 1068 --- [research-service] [main] com.netflix.discovery.DiscoveryClient    : Getting all instance registry info from the eureka server
+2026-04-21T09:31:06.420+05:30  INFO 1068 --- [research-service] [main] com.netflix.discovery.DiscoveryClient    : The response status is 200
+2026-04-21T09:31:06.423+05:30  INFO 1068 --- [research-service] [main] com.netflix.discovery.DiscoveryClient    : Starting heartbeat executor: renew interval is: 30
+2026-04-21T09:31:06.425+05:30  INFO 1068 --- [research-service] [main] c.n.discovery.InstanceInfoReplicator     : InstanceInfoReplicator onDemand update allowed rate per min is 4
+2026-04-21T09:31:06.426+05:30  INFO 1068 --- [research-service] [main] com.netflix.discovery.DiscoveryClient    : Discovery Client initialized at timestamp 1776744066426 with initial instances count: 2
+2026-04-21T09:31:06.430+05:30  INFO 1068 --- [research-service] [main] o.s.c.n.e.s.EurekaServiceRegistry        : Registering application RESEARCH-SERVICE with eureka with status UP
+2026-04-21T09:31:06.430+05:30  INFO 1068 --- [research-service] [main] com.netflix.discovery.DiscoveryClient    : Saw local status change event StatusChangeEvent [timestamp=1776744066430, current=UP, previous=STARTING]
+2026-04-21T09:31:06.432+05:30  INFO 1068 --- [research-service] [DiscoveryClient-InstanceInfoReplicator-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_RESEARCH-SERVICE/LTIN717597.cts.com:research-service:7777: registering service...
+2026-04-21T09:31:06.457+05:30  INFO 1068 --- [research-service] [main] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 7777 (http) with context path '/'
+2026-04-21T09:31:06.458+05:30  INFO 1068 --- [research-service] [main] .s.c.n.e.s.EurekaAutoServiceRegistration : Updating port to 7777
+2026-04-21T09:31:06.480+05:30  INFO 1068 --- [research-service] [main] c.healthgov.ResearchServiceApplication   : Started ResearchServiceApplication in 5.67 seconds (process running for 6.417)
+2026-04-21T09:31:06.490+05:30  INFO 1068 --- [research-service] [DiscoveryClient-InstanceInfoReplicator-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_RESEARCH-SERVICE/LTIN717597.cts.com:research-service:7777 - registration status: 204
+2026-04-21T09:31:06.924+05:30  INFO 1068 --- [research-service] [RMI TCP Connection(6)-127.0.0.1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-04-21T09:31:06.924+05:30  INFO 1068 --- [research-service] [RMI TCP Connection(6)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-04-21T09:31:06.925+05:30  INFO 1068 --- [research-service] [RMI TCP Connection(6)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2026-04-21T09:34:22.699+05:30  INFO 1068 --- [research-service] [http-nio-7777-exec-1] c.h.c.ResearchProjectController          : Fetching project list. Status=null
+2026-04-21T09:36:06.097+05:30  INFO 1068 --- [research-service] [AsyncResolver-bootstrap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-04-21T09:37:24.717+05:30  INFO 1068 --- [research-service] [http-nio-7777-exec-4] c.h.c.ResearchProjectController          : CREATE project request for researcherId=3
+2026-04-21T09:37:24.717+05:30  INFO 1068 --- [research-service] [http-nio-7777-exec-4] c.h.service.ResearchProjectServiceImpl   : Creating new research project for researcherId=3
+2026-04-21T09:38:11.747+05:30  INFO 1068 --- [research-service] [http-nio-7777-exec-7] c.h.c.ResearchProjectController          : CREATE project request for researcherId=1
+2026-04-21T09:38:11.747+05:30  INFO 1068 --- [research-service] [http-nio-7777-exec-7] c.h.service.ResearchProjectServiceImpl   : Creating new research project for researcherId=1
+2026-04-21T09:38:17.636+05:30  INFO 1068 --- [research-service] [http-nio-7777-exec-9] c.h.c.ResearchProjectController          : CREATE project request for researcherId=3
+2026-04-21T09:38:17.640+05:30  INFO 1068 --- [research-service] [http-nio-7777-exec-9] c.h.service.ResearchProjectServiceImpl   : Creating new research project for researcherId=3
+2026-04-21T09:38:17.714+05:30  INFO 1068 --- [research-service] [http-nio-7777-exec-9] c.h.service.ResearchProjectServiceImpl   : Compliance Create Event Triggred...
+2026-04-21T09:38:17.723+05:30  INFO 1068 --- [research-service] [http-nio-7777-exec-9] c.h.Listeners.ProjectComplianceListener  : Running Project Complinace Listener
+2026-04-21T09:38:19.003+05:30  INFO 1068 --- [research-service] [http-nio-7777-exec-1] c.h.c.ResearchProjectController          : Fetching project by ID=17
+2026-04-21T09:38:19.069+05:30  INFO 1068 --- [research-service] [http-nio-7777-exec-9] c.h.Listeners.ProjectComplianceListener  : Compliance created for projectId=17
+2026-04-21T09:38:28.408+05:30  INFO 1068 --- [research-service] [http-nio-7777-exec-3] c.h.c.ResearchProjectController          : Fetching project list. Status=REJECTED
+2026-04-21T09:38:34.438+05:30  INFO 1068 --- [research-service] [http-nio-7777-exec-4] c.h.c.ResearchProjectController          : Fetching project by ID=8
+2026-04-21T09:38:53.396+05:30  INFO 1068 --- [research-service] [http-nio-7777-exec-8] c.h.c.ResearchProjectController          : Checking if grant exists for grantId=0
+2026-04-21T09:41:06.105+05:30  INFO 1068 --- [research-service] [AsyncResolver-bootstrap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-04-21T09:44:03.641+05:30  INFO 1068 --- [research-service] [http-nio-7777-exec-9] c.h.c.ProgramManagerReviewController     : Fetching PENDING projects for Program Manager
+2026-04-21T09:44:03.642+05:30  INFO 1068 --- [research-service] [http-nio-7777-exec-9] c.h.s.ProgramManagerReviewServiceImpl    : Fetching ALL PENDING projects for PM dashboard.
+2026-04-21T09:44:03.651+05:30  INFO 1068 --- [research-service] [http-nio-7777-exec-9] c.h.s.ProgramManagerReviewServiceImpl    : Total pending projects found: 4
+2026-04-21T09:44:15.423+05:30  INFO 1068 --- [research-service] [http-nio-7777-exec-2] c.h.c.ProgramManagerReviewController     : Fetching projects by status=rejected
+2026-04-21T09:44:15.425+05:30  INFO 1068 --- [research-service] [http-nio-7777-exec-2] c.h.s.ProgramManagerReviewServiceImpl    : Fetching projects with status=rejected
+2026-04-21T09:44:15.429+05:30  INFO 1068 --- [research-service] [http-nio-7777-exec-2] c.h.s.ProgramManagerReviewServiceImpl    : Projects found with status rejected: 2
+2026-04-21T09:44:26.662+05:30  INFO 1068 --- [research-service] [http-nio-7777-exec-3] c.h.c.ProgramManagerReviewController     : Fetching project details for projectId=8
+2026-04-21T09:44:26.664+05:30  INFO 1068 --- [research-service] [http-nio-7777-exec-3] c.h.s.ProgramManagerReviewServiceImpl    : Fetching project for PM review: projectId=8
+2026-04-21T09:44:26.666+05:30  INFO 1068 --- [research-service] [http-nio-7777-exec-3] c.h.s.ProgramManagerReviewServiceImpl    : Project fetched successfully: projectId=8
+2026-04-21T09:45:31.501+05:30  INFO 1068 --- [research-service] [http-nio-7777-exec-6] c.h.c.ProgramManagerReviewController     : PM decision received. projectId=14, decision=REJECTED
+2026-04-21T09:45:31.504+05:30  INFO 1068 --- [research-service] [http-nio-7777-exec-6] c.h.s.ProgramManagerReviewServiceImpl    : PM decision received: projectId=14, decision=REJECTED
+2026-04-21T09:45:31.506+05:30  INFO 1068 --- [research-service] [http-nio-7777-exec-6] c.h.s.ProgramManagerReviewServiceImpl    : Project found. Applying decision=REJECTED for projectId=14
+2026-04-21T09:45:31.528+05:30  WARN 1068 --- [research-service] [http-nio-7777-exec-6] c.h.s.ProgramManagerReviewServiceImpl    : Rejecting project: projectId=14
+2026-04-21T09:45:31.531+05:30  INFO 1068 --- [research-service] [http-nio-7777-exec-6] c.h.s.ProgramManagerReviewServiceImpl    : Project rejected: projectId=14, reason=not required
+2026-04-21T09:45:31.532+05:30  INFO 1068 --- [research-service] [http-nio-7777-exec-6] c.h.s.ProgramManagerReviewServiceImpl    : Project decision applied successfully: projectId=14, finalStatus=REJECTED
+2026-04-21T09:46:06.109+05:30  INFO 1068 --- [research-service] [AsyncResolver-bootstrap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-04-21T09:48:28.850+05:30  INFO 1068 --- [research-service] [http-nio-7777-exec-7] c.h.c.ResearchProjectController          : Fetching project list. Status=REJECTED
+2026-04-21T09:49:13.091+05:30  INFO 1068 --- [research-service] [http-nio-7777-exec-10] c.h.c.ResearchProjectController          : UPDATE project request for projectId=14
+2026-04-21T09:49:13.092+05:30  INFO 1068 --- [research-service] [http-nio-7777-exec-10] c.h.service.ResearchProjectServiceImpl   : Updating research project with projectId=14
+2026-04-21T09:50:00.650+05:30  INFO 1068 --- [research-service] [http-nio-7777-exec-1] c.h.c.ProgramManagerReviewController     : Fetching PENDING projects for Program Manager
+2026-04-21T09:50:00.653+05:30  INFO 1068 --- [research-service] [http-nio-7777-exec-1] c.h.s.ProgramManagerReviewServiceImpl    : Fetching ALL PENDING projects for PM dashboard.
+2026-04-21T09:50:00.663+05:30  INFO 1068 --- [research-service] [http-nio-7777-exec-1] c.h.s.ProgramManagerReviewServiceImpl    : Total pending projects found: 4
+2026-04-21T09:50:15.360+05:30  INFO 1068 --- [research-service] [http-nio-7777-exec-2] c.h.c.ProgramManagerReviewController     : Fetching projects by status=rejected
+2026-04-21T09:50:15.362+05:30  INFO 1068 --- [research-service] [http-nio-7777-exec-2] c.h.s.ProgramManagerReviewServiceImpl    : Fetching projects with status=rejected
+2026-04-21T09:50:15.365+05:30  INFO 1068 --- [research-service] [http-nio-7777-exec-2] c.h.s.ProgramManagerReviewServiceImpl    : Projects found with status rejected: 2
+2026-04-21T09:50:29.114+05:30  INFO 1068 --- [research-service] [http-nio-7777-exec-3] c.h.c.ProgramManagerReviewController     : Fetching project details for projectId=14
+2026-04-21T09:50:29.115+05:30  INFO 1068 --- [research-service] [http-nio-7777-exec-3] c.h.s.ProgramManagerReviewServiceImpl    : Fetching project for PM review: projectId=14
+2026-04-21T09:50:29.118+05:30  INFO 1068 --- [research-service] [http-nio-7777-exec-3] c.h.s.ProgramManagerReviewServiceImpl    : Project fetched successfully: projectId=14
+2026-04-21T09:50:55.870+05:30  INFO 1068 --- [research-service] [http-nio-7777-exec-4] c.h.c.ProgramManagerReviewController     : PM decision received. projectId=14, decision=APPROVED
+2026-04-21T09:50:55.872+05:30  INFO 1068 --- [research-service] [http-nio-7777-exec-4] c.h.s.ProgramManagerReviewServiceImpl    : PM decision received: projectId=14, decision=APPROVED
+2026-04-21T09:50:55.873+05:30  INFO 1068 --- [research-service] [http-nio-7777-exec-4] c.h.s.ProgramManagerReviewServiceImpl    : Project found. Applying decision=APPROVED for projectId=14
+2026-04-21T09:50:55.875+05:30  INFO 1068 --- [research-service] [http-nio-7777-exec-4] c.h.s.ProgramManagerReviewServiceImpl    : Approving project: projectId=14
+2026-04-21T09:50:55.876+05:30  INFO 1068 --- [research-service] [http-nio-7777-exec-4] c.h.s.ProgramManagerReviewServiceImpl    : GrantApplication updated to APPROVED for projectId=14
+2026-04-21T09:50:55.894+05:30  INFO 1068 --- [research-service] [http-nio-7777-exec-4] c.h.s.ProgramManagerReviewServiceImpl    : No existing grant found. Creating new grant for projectId=14, amount=55555.0
+2026-04-21T09:50:55.900+05:30  INFO 1068 --- [research-service] [http-nio-7777-exec-4] c.h.s.ProgramManagerReviewServiceImpl    : Grant created successfully: projectId=14, amount=55555.0
+2026-04-21T09:50:55.900+05:30  INFO 1068 --- [research-service] [http-nio-7777-exec-4] c.h.s.ProgramManagerReviewServiceImpl    : Project decision applied successfully: projectId=14, finalStatus=APPROVED
+2026-04-21T09:50:55.908+05:30  INFO 1068 --- [research-service] [http-nio-7777-exec-4] c.h.Listeners.GrantComplianceListener    : Compliance is Creating for teh Grant
+2026-04-21T09:50:55.925+05:30  INFO 1068 --- [research-service] [http-nio-7777-exec-6] c.h.c.ResearchProjectController          : Checking if grant exists for grantId=8
+2026-04-21T09:50:55.959+05:30  INFO 1068 --- [research-service] [http-nio-7777-exec-4] c.h.Listeners.GrantComplianceListener    : Compliance created for Grant 8
+2026-04-21T09:51:06.124+05:30  INFO 1068 --- [research-service] [AsyncResolver-bootstrap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-04-21T09:51:20.930+05:30  WARN 1068 --- [research-service] [http-nio-7777-exec-8] c.h.c.ResearchProjectController          : DELETE project request for projectId=1
+2026-04-21T09:51:43.574+05:30  WARN 1068 --- [research-service] [http-nio-7777-exec-7] c.h.c.ResearchProjectController          : DELETE project request for projectId=13
+2026-04-21T09:52:12.215+05:30  WARN 1068 --- [research-service] [http-nio-7777-exec-1] c.h.c.ResearchProjectController          : DELETE project request for projectId=13
+2026-04-21T09:56:06.137+05:30  INFO 1068 --- [research-service] [AsyncResolver-bootstrap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-04-21T10:01:06.150+05:30  INFO 1068 --- [research-service] [AsyncResolver-bootstrap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-04-21T10:02:22.964+05:30  WARN 1068 --- [research-service] [HikariPool-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=48s509ms195µs500ns).
+2026-04-21T10:06:26.154+05:30  INFO 1068 --- [research-service] [AsyncResolver-bootstrap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-04-21T10:11:26.161+05:30  INFO 1068 --- [research-service] [AsyncResolver-bootstrap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-04-21T10:22:19.095+05:30  WARN 1068 --- [research-service] [HikariPool-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=9m55s980ms295µs).
+2026-04-21T10:26:04.124+05:30  INFO 1068 --- [research-service] [AsyncResolver-bootstrap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-04-21T10:28:38.788+05:30  INFO 1068 --- [research-service] [RMI TCP Connection(63)-127.0.0.1] inMXBeanRegistrar$SpringApplicationAdmin : Application shutdown requested.
+2026-04-21T10:28:38.789+05:30  INFO 1068 --- [research-service] [RMI TCP Connection(63)-127.0.0.1] o.s.c.n.e.s.EurekaServiceRegistry        : Unregistering application RESEARCH-SERVICE with eureka with status DOWN
+2026-04-21T10:28:38.789+05:30  INFO 1068 --- [research-service] [RMI TCP Connection(63)-127.0.0.1] com.netflix.discovery.DiscoveryClient    : Saw local status change event StatusChangeEvent [timestamp=1776747518789, current=DOWN, previous=UP]
+2026-04-21T10:28:38.789+05:30  INFO 1068 --- [research-service] [DiscoveryClient-InstanceInfoReplicator-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_RESEARCH-SERVICE/LTIN717597.cts.com:research-service:7777: registering service...
+2026-04-21T10:28:38.795+05:30  INFO 1068 --- [research-service] [RMI TCP Connection(63)-127.0.0.1] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
+2026-04-21T10:28:38.805+05:30  INFO 1068 --- [research-service] [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete
+2026-04-21T10:28:38.812+05:30  INFO 1068 --- [research-service] [DiscoveryClient-InstanceInfoReplicator-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_RESEARCH-SERVICE/LTIN717597.cts.com:research-service:7777 - registration status: 204
+2026-04-21T10:28:38.818+05:30  INFO 1068 --- [research-service] [RMI TCP Connection(63)-127.0.0.1] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-04-21T10:28:38.821+05:30  INFO 1068 --- [research-service] [RMI TCP Connection(63)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2026-04-21T10:28:38.825+05:30  INFO 1068 --- [research-service] [RMI TCP Connection(63)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2026-04-21T10:28:38.826+05:30  INFO 1068 --- [research-service] [RMI TCP Connection(63)-127.0.0.1] com.netflix.discovery.DiscoveryClient    : Shutting down DiscoveryClient ...
+2026-04-21T10:28:41.827+05:30  INFO 1068 --- [research-service] [RMI TCP Connection(63)-127.0.0.1] com.netflix.discovery.DiscoveryClient    : Unregistering ...
+2026-04-21T10:28:41.832+05:30  INFO 1068 --- [research-service] [RMI TCP Connection(63)-127.0.0.1] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_RESEARCH-SERVICE/LTIN717597.cts.com:research-service:7777 - deregister  status: 200
+2026-04-21T10:28:41.832+05:30  INFO 1068 --- [research-service] [RMI TCP Connection(63)-127.0.0.1] com.netflix.discovery.DiscoveryClient    : Completed shut down of DiscoveryClient

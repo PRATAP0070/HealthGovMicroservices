@@ -27,8 +27,7 @@ public class Citizen {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long citizenId;
-    
-    // --- Added this field to link with Auth Service ---
+
     private Long userId; 
 
     private String name;

@@ -23,9 +23,13 @@ import lombok.Data;
 @Table(name = "citizen")
 @Data
 public class Citizen {
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long citizenId;
+
+    private Long userId; 
+
     private String name;
     private LocalDate dob;
 

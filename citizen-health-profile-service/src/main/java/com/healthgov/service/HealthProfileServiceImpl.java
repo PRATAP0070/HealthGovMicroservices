@@ -42,7 +42,7 @@ public class HealthProfileServiceImpl implements HealthProfileService {
         profile.setMedicalHistoryJson(input.getMedicalHistoryJson());
         profile.setAllergies(input.getAllergies());
         
-        profile.setStatus(HealthProfileStatus.INACTIVE); 
+        profile.setStatus(HealthProfileStatus.ACTIVE); 
 
         HealthProfile saved = profileRepo.save(profile);
         return mapToDTO(saved);
@@ -84,7 +84,6 @@ public class HealthProfileServiceImpl implements HealthProfileService {
         HealthProfileResponseDTO dto = new HealthProfileResponseDTO();
         dto.setProfileId(hp.getProfileId());
         
-        // Safely fetching the ID from the associated Citizen object
         if (hp.getCitizen() != null) {
             dto.setCitizenId(hp.getCitizen().getCitizenId()); 
         }

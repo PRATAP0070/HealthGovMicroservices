@@ -15,9 +15,11 @@ import com.healthgov.model.Enrollment;
 import com.healthgov.repository.EnrollmentRepository;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class EnrollmentServiceImpl implements EnrollmentService { // Added implements
 
 	@Autowired
@@ -30,6 +32,7 @@ public class EnrollmentServiceImpl implements EnrollmentService { // Added imple
 		
 		CitizenResponseDTO citizenResponseDTO = citizenClient.getById(dto.getCitizenId());
 		
+		log.info("Data Recieved from Citizen Clinet {}",citizenResponseDTO);
 		if(citizenResponseDTO == null) {
 			throw new Exception("Citizen not exist");
 		}

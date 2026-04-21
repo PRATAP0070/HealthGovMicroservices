@@ -9,7 +9,11 @@ public interface NotificationService {
 
     NotificationDTO sendNotification(CreateNotificationRequest request);
 
+    List<NotificationDTO> getAllNotifications();
+
     List<NotificationDTO> getUserNotifications(Long userId);
 
     void markAsRead(Long notificationId);
+
+    void deleteNotification(Long id);
 }

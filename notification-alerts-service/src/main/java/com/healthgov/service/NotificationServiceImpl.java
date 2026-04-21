@@ -1,99 +1,146 @@
 package com.healthgov.service;
 
-import com.healthgov.client.UserClient;
-import com.healthgov.dto.CreateNotificationRequest;
-import com.healthgov.dto.NotificationDTO;
-import com.healthgov.dto.UserDTO;
-import com.healthgov.enums.NotificationCategory;
-import com.healthgov.model.Notification;
-import com.healthgov.repository.NotificationRepository;
-import org.springframework.stereotype.Service;
-
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.stereotype.Service;
+
+import com.healthgov.client.UserClient;
+import com.healthgov.dto.CreateNotificationRequest;
+import com.healthgov.dto.NotificationDTO;
+import com.healthgov.dto.UserDTO;
+import com.healthgov.enums.NotificationStatus;
+import com.healthgov.exception.BadRequestException;
+import com.healthgov.exception.NotFoundException;
+import com.healthgov.model.Notification;
+import com.healthgov.repository.NotificationRepository;
+
+import lombok.extern.slf4j.Slf4j;
+
 @Service
+@Slf4j
 public class NotificationServiceImpl implements NotificationService {
 
-    private final NotificationRepository notificationRepository;
-    private final EmailService emailService;
-    private final UserClient userClient;
+	private final NotificationRepository notificationRepository;
+	private final EmailService emailService;
+	private final UserClient userClient;
 
-    public NotificationServiceImpl(NotificationRepository notificationRepository,
-                                   EmailService emailService,
-                                   UserClient userClient) {
-        this.notificationRepository = notificationRepository;
-        this.emailService = emailService;
-        this.userClient = userClient;
-    }
+	public NotificationServiceImpl(NotificationRepository notificationRepository, EmailService emailService,
+			UserClient userClient) {
+		this.notificationRepository = notificationRepository;
+		this.emailService = emailService;
+		this.userClient = userClient;
+	}
 
-    @Override
-    public NotificationDTO sendNotification(CreateNotificationRequest request) {
+	// ================= SEND NOTIFICATION =================
+	@Override
+	public NotificationDTO sendNotification(CreateNotificationRequest request) {
 
-        // ✅ Fetch user via Feign
-        UserDTO user = userClient.getUserById(request.getUserId());
+		// ===== FEIGN CALL (MATCHES FRIEND) =====
+		UserDTO user = userClient.getUserById(request.getUserId());
+		
+		log.info("User Client Data : {}",user);
+		String email = user.getEmail();
 
-        Notification notification = new Notification();
-        notification.setUserId(user.getUserId());
-        notification.setUserEmail(user.getEmail());
-        notification.setEntityId(request.getEntityId());
-        notification.setMessage(request.getMessage());
-        notification.setCategory(
-                NotificationCategory.valueOf(request.getCategory().toUpperCase())
-        );
-        notification.setStatus("UNREAD");
-        notification.setCreatedDate(LocalDateTime.now());
+		// ===== MESSAGE LOGIC (CATEGORY-BASED, LIKE FRIEND) =====
+		String message;
 
-        // ✅ SAVE TO DB (YOU WERE MISSING THIS)
-        Notification saved = notificationRepository.save(notification);
+		switch (request.getCategory()) {
 
-        // ✅ Send email (safe)
-        emailService.sendSimpleEmail(
-                user.getEmail(),
-                "New Notification",
-                request.getMessage()
-        );
+		case PROJECT:
+			message = "Project-related notification.";
+			break;
 
-        // ✅ MANUAL MAPPING (NO map() METHOD)
-        NotificationDTO dto = new NotificationDTO();
-        dto.setNotificationId(saved.getNotificationId());
-        dto.setUserId(saved.getUserId());
-        dto.setEntityId(saved.getEntityId());
-        dto.setMessage(saved.getMessage());
-        dto.setCategory(saved.getCategory());
-        dto.setStatus(saved.getStatus());
-        dto.setCreatedDate(saved.getCreatedDate());
+		case COMPLIANCE:
+			message = "Compliance-related notification.";
+			break;
 
-        return dto;
-    }
+		case GRANT:
+			message = "Grant-related update.";
+			break;
 
-    @Override
-    public List<NotificationDTO> getUserNotifications(Long userId) {
+		case PROGRAM:
+			message = "Program update notification.";
+			break;
 
-        return notificationRepository.findByUserId(userId)
-                .stream()
-                .map(n -> {
-                    NotificationDTO dto = new NotificationDTO();
-                    dto.setNotificationId(n.getNotificationId());
-                    dto.setUserId(n.getUserId());
-                    dto.setEntityId(n.getEntityId());
-                    dto.setMessage(n.getMessage());
-                    dto.setCategory(n.getCategory());
-                    dto.setStatus(n.getStatus());
-                    dto.setCreatedDate(n.getCreatedDate());
-                    return dto;
-                })
-                .collect(Collectors.toList());
-    }
+		case GENERAL:
+			if (request.getMessage() == null || request.getMessage().isEmpty()) {
+				throw new BadRequestException("Message is required for GENERAL category");
+			}
+			message = request.getMessage();
+			break;
 
-    @Override
-    public void markAsRead(Long notificationId) {
+		default:
+			message = "Notification";
+		}
 
-        Notification notification = notificationRepository.findById(notificationId)
-                .orElseThrow(() -> new RuntimeException("Notification not found"));
+		// ===== SAVE NOTIFICATION =====
+		Notification notification = new Notification();
+		notification.setUserId(user.getUserId()); // ✅ MATCH USER-SERVICE RESPONSE
+		notification.setEntityId(request.getEntityId());
+		notification.setCategory(request.getCategory()); // ✅ ENUM DIRECTLY
+		notification.setMessage(message);
+		notification.setStatus(NotificationStatus.SENT); // ✅ ENUM STATUS
+		notification.setCreatedDate(LocalDateTime.now());
 
-        notification.setStatus("READ");
-        notificationRepository.save(notification);
-    }
+		Notification saved = notificationRepository.save(notification);
+
+		// ===== EMAIL (USING YOUR EmailService) =====
+		emailService.sendSimpleEmail(email, "HealthGov Notification", message + "\n\nRegards,\nHealthGov Team");
+
+		// ===== MAP TO DTO =====
+		return mapToDTO(saved);
+	}
+
+	// ================= GET ALL NOTIFICATIONS =================
+	@Override
+	public List<NotificationDTO> getAllNotifications() {
+
+		return notificationRepository.findAll().stream().map(this::mapToDTO).collect(Collectors.toList());
+	}
+
+	// ================= GET BY USER =================
+	@Override
+	public List<NotificationDTO> getUserNotifications(Long userId) {
+
+		return notificationRepository.findByUserId(userId).stream().map(this::mapToDTO).collect(Collectors.toList());
+	}
+
+	// ================= MARK AS READ =================
+	@Override
+	public void markAsRead(Long id) {
+
+		Notification notification = notificationRepository.findById(id)
+				.orElseThrow(() -> new NotFoundException("Notification not found"));
+
+		notification.setStatus(NotificationStatus.READ);
+		notificationRepository.save(notification);
+	}
+
+	// ================= DELETE =================
+	@Override
+	public void deleteNotification(Long id) {
+
+		if (!notificationRepository.existsById(id)) {
+			throw new NotFoundException("Notification not found");
+		}
+
+		notificationRepository.deleteById(id);
+	}
+
+	// ================= COMMON ENTITY → DTO MAPPER =================
+	private NotificationDTO mapToDTO(Notification n) {
+
+		NotificationDTO dto = new NotificationDTO();
+		dto.setNotificationId(n.getId());
+		dto.setUserId(n.getUserId());
+		dto.setEntityId(n.getEntityId());
+		dto.setMessage(n.getMessage());
+		dto.setCategory(n.getCategory());
+		dto.setStatus(n.getStatus().name());
+		dto.setCreatedDate(n.getCreatedDate());
+
+		return dto;
+	}
 }

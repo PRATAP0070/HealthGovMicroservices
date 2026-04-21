@@ -29,4 +29,17 @@ public class EmailServiceImpl implements EmailService {
 			System.out.println("Email failed: " + e.getMessage());
 		}
 	}
+
+	// ✅ OTP MAIL
+	@Async
+	@Override
+	public void sendOtpEmail(String email, String otp) {
+
+		String subject = "HealthGov OTP Verification";
+		String body = "Your OTP for verification is: " + otp + "\n\nThis OTP is valid for 5 minutes."
+				+ "\n\nRegards,\nHealthGov Team";
+
+		sendSimpleEmail(email, subject, body);
+	}
+
 }

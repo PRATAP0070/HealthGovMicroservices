@@ -11,7 +11,7 @@ import com.healthgov.dto.HealthProgramResponseDTO;
 @FeignClient(name = "infrastructure-service")
 public interface InfrastructureClient {
 
-    @GetMapping("/api/infrastructures/program/{programId}")
+    @GetMapping("/infrastructures/program/{programId}")
     List<HealthProgramResponseDTO.InfrastructureDTO>
         getInfrastructureByProgram(@PathVariable Long programId);
 }

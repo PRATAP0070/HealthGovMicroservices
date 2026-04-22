@@ -1,6 +1,5 @@
 package com.healthgov.services;
 
-import java.time.LocalDate;
 import java.util.EnumSet;
 
 import org.springframework.stereotype.Service;
@@ -101,7 +100,7 @@ public class ComplianceUtil {
 
 		} catch (Exception e) {
 			log.error("[ENTITY-FETCH-FAILED] type={} entityId={}", type, entityId, e);
-			return null;
+			return "micro Service is Down";
 		}
 	}
 }

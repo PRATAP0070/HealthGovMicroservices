@@ -9,6 +9,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -123,4 +124,11 @@ public class UserAPI {
 	public List<UserReqDTO> getAllCitizens() {
 		return service.listOfCitizen();
 	}
+	
+	@DeleteMapping("/deleteUserByAdmin/{userId}")
+	public ResponseEntity<String> deleteUserByAdmin(@PathVariable Long userId){
+		String deletedUser = registrationService.deleteUserByAdmin(userId);
+		return  new ResponseEntity<>(deletedUser, HttpStatus.NO_CONTENT);
+	}
+	
 }

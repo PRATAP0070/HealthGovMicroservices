@@ -6,9 +6,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import com.healthgov.dto.OtpNotificationDto;
 
-@FeignClient(name = "notification-service")
+@FeignClient(name = "notification-alerts-service",url = "http://localhost:1111")
 public interface NotificationClient {
 
-    @PostMapping("/notifications/send-otp")
+    @PostMapping("/api/notifications/sendOtp")
     void sendOtp(@RequestBody OtpNotificationDto dto);
+    
+    @PostMapping
+    void sendRegistrationMessage(@RequestBody String email);
 }

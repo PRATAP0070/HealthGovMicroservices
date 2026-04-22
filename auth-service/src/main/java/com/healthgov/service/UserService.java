@@ -50,5 +50,11 @@ public class UserService {
 			return dto;
 		}).collect(Collectors.toList());
 	}
+	
+	public Long getUserIdByEmail(String email)
+	{
+		User user=repo.findByEmail(email);
+		return user.getUserId();
+	}
 
 }

@@ -4,13 +4,17 @@ import java.util.EnumSet;
 
 import org.springframework.stereotype.Service;
 
+import com.healthgov.dtos.UserResponseDto;
 import com.healthgov.enums.ComplianceResult;
 import com.healthgov.enums.ComplianceType;
+import com.healthgov.enums.Role;
 import com.healthgov.exceptions.ComplianceRequestException;
 import com.healthgov.exceptions.ResourceNotFoundException;
 import com.healthgov.feignclients.ProgramClient;
 import com.healthgov.feignclients.ProjectClient;
+import com.healthgov.feignclients.UserClient;
 
+import feign.FeignException;
 import feign.FeignException.FeignClientException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,6 +25,7 @@ import lombok.extern.slf4j.Slf4j;
 public class ComplianceUtil {
 	private final ProgramClient programClient;
 	private final ProjectClient projectClient;
+	private final UserClient userClient;
 
 	public ComplianceResult parseResultOrThrow(String result) {
 		log.info("Validating the compliance result based on the enums");
@@ -70,6 +75,43 @@ public class ComplianceUtil {
 			throw new ResourceNotFoundException("Target not found: " + type + " id=" + entityId);
 		}
 	}
+	
+
+	public UserResponseDto validateComplianceOfficer(Long officerId) {
+
+        if (officerId == null) {
+            throw new ComplianceRequestException("Officer ID is required");
+        }
+
+        try {
+            UserResponseDto user = userClient.getUserById(officerId);
+            log.info("Response from User Service for officerId={}: {}", officerId, user);
+
+            if (user == null || user.getRole() == null) {
+                throw new ComplianceRequestException(
+                        "Invalid user data returned for officerId=" + officerId
+                );
+            }
+
+            if (!Role.COMPLIANCE.equals(user.getRole())) {
+                throw new ComplianceRequestException(
+                        "User with ID=" + user.getUserId() +
+                        " (" + user.getName() + ") is not a Compliance Officer"
+                );
+            }
+
+            return user;
+
+        } catch (FeignException.NotFound e) {
+            throw new ComplianceRequestException(
+                    "Officer not found with ID=" + officerId
+            );
+        } catch (FeignException e) {
+            throw new ComplianceRequestException(
+                    "Unable to validate compliance officer. User service unavailable."
+            );
+        }
+    }
 
 	public Object fetchEntityDetails(ComplianceType type, Long entityId) {
 

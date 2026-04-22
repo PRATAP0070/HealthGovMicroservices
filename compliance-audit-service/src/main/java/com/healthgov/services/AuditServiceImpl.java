@@ -2,7 +2,6 @@ package com.healthgov.services;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,8 +16,6 @@ import com.healthgov.enums.AuditStatus;
 import com.healthgov.enums.Role;
 import com.healthgov.exceptions.AuditRequestException;
 import com.healthgov.exceptions.ResourceNotFoundException;
-import com.healthgov.feignclients.ProgramClient;
-import com.healthgov.feignclients.ProjectClient;
 import com.healthgov.feignclients.UserClient;
 import com.healthgov.models.Audit;
 import com.healthgov.repository.AuditRepository;
@@ -33,11 +30,8 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class AuditServiceImpl implements AuditService {
 
-	private static final Set<String> ALLOWED_SCOPE_TYPES = Set.of("PROGRAM", "PROJECT", "GRANT");
-
 	private final AuditRepository auditRepo;
-	private final ProgramClient programClient;
-	private final ProjectClient projectClient;
+	private final AuditUtil auditUtil;
 	private final UserClient userClient;
 
 	private static final Logger log = LoggerFactory.getLogger(AuditServiceImpl.class);
@@ -56,8 +50,6 @@ public class AuditServiceImpl implements AuditService {
 			throw new AuditRequestException("Compliance officer ID is required.");
 		}
 
-		Boolean isCompliance;
-
 		try {
 			UserResponseDto user = userClient.getUserById(officerId);
 			log.info("Response from the User-Client {}", user);
@@ -66,7 +58,7 @@ public class AuditServiceImpl implements AuditService {
 				throw new AuditRequestException("Invalid user data returned for officerId=" + officerId);
 			}
 
-			// ✅ SAFE comparison
+			//User Role comparison
 			if (!user.getRole().equals(Role.COMPLIANCE)) {
 				throw new AuditRequestException(
 						"User with ID: " + user.getUserId() + " : " + user.getName() + " is not a Compliance Officer");
@@ -77,7 +69,8 @@ public class AuditServiceImpl implements AuditService {
 		}
 
 		String scope = request.getScope().trim();
-		validateAndEnsureScopeTargetExists(scope);
+		auditUtil.validateAndEnsureScopeTargetExists(scope);
+		
 
 		LocalDate date = (request.getDate() != null) ? request.getDate() : LocalDate.now();
 
@@ -183,64 +176,6 @@ public class AuditServiceImpl implements AuditService {
 		} catch (IllegalArgumentException ex) {
 			throw new AuditRequestException(
 					"Invalid status. Allowed: SCHEDULED, IN_REVIEW, COMPLETED, FOLLOW_UP_REQUIRED.");
-		}
-	}
-
-	private void validateAndEnsureScopeTargetExists(String scope) {
-
-		String[] parts = scope.split(":", 2);
-		if (parts.length != 2) {
-			throw new AuditRequestException("Invalid scope format. Use PROGRAM:<id>, PROJECT:<id>, or GRANT:<id>.");
-		}
-
-		String type = parts[0].trim().toUpperCase();
-		String idPart = parts[1].trim();
-
-		if (!ALLOWED_SCOPE_TYPES.contains(type)) {
-			throw new AuditRequestException("Invalid scope type. Allowed: PROGRAM, PROJECT, GRANT.");
-		}
-
-		long id;
-		try {
-			id = Long.parseLong(idPart);
-		} catch (NumberFormatException ex) {
-			throw new AuditRequestException("Invalid scope id. Use numeric id. Example: PROGRAM:4");
-		}
-
-		Boolean exists;
-		try {
-
-			switch (type) {
-
-			case "PROGRAM" -> {
-				log.debug("Calling ProgramClient.programExists(id={})", id);
-				exists = programClient.programExists(id);
-				log.debug("ProgramClient response for id {}: {}", id, exists);
-			}
-
-			case "PROJECT" -> {
-				log.debug("Calling ProjectClient.projectExists(id={})", id);
-				exists = projectClient.projectExists(id);
-				log.debug("ProjectClient response for id {}: {}", id, exists);
-			}
-
-			case "GRANT" -> {
-				log.debug("Calling ProjectClient.grantExists(id={})", id);
-				exists = projectClient.grantExists(id);
-				log.debug("Grant existence response for id {}: {}", id, exists);
-			}
-
-			default -> {
-				log.error("Unexpected scope type encountered: {}", type);
-				exists = false;
-			}
-			}
-		} catch (FeignClientException e) {
-			throw new AuditRequestException("Unable to validate scope. Dependent service unavailable.");
-		}
-
-		if (exists == null || !exists) {
-			throw new ResourceNotFoundException("Scope target not found: " + type + " id=" + id);
 		}
 	}
 

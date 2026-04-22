@@ -27,6 +27,7 @@ public class UserService {
 				.orElseThrow(() -> new UsernameNotFoundException("User not Found with id " + userId));
 
 		UserReqDTO reqDTO = new UserReqDTO();
+		reqDTO.setUserId(user.getUserId());
 		reqDTO.setName(user.getName());
 		reqDTO.setEmail(user.getEmail());
 		reqDTO.setRole(user.getRole());

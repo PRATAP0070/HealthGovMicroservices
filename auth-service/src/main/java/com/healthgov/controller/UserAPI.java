@@ -9,12 +9,14 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.healthgov.config.JwtTokenUtil;
@@ -25,6 +27,7 @@ import com.healthgov.dto.UserDTO;
 import com.healthgov.dto.UserReqDTO;
 import com.healthgov.enums.Role;
 import com.healthgov.exception.AuthenticationFailedException;
+import com.healthgov.model.User;
 import com.healthgov.service.AuditLogService;
 import com.healthgov.service.ForgetPasswordService;
 import com.healthgov.service.LoginServiceImpl;
@@ -40,13 +43,13 @@ public class UserAPI {
 
 	@Autowired
 	private AuditLogService auditLogService;
-	
+
 	@Autowired
 	private ForgetPasswordService forgetPasswordService;
-	
+
 	@Autowired
 	private AuthenticationManager authenticationManager;
-	
+
 	@Autowired
 	private UserService service;
 
@@ -55,7 +58,7 @@ public class UserAPI {
 
 	@Autowired
 	private LoginServiceImpl loginServiceImpl;
-	
+
 	@Autowired
 	private RegistrationService registrationService;
 
@@ -80,14 +83,12 @@ public class UserAPI {
 		log.info("After authentication");
 		final UserDetails userDetails = loginServiceImpl.loadUserByUsername(loginDto.getEmail());
 		log.info("After userdetails");
-		String role = userDetails.getAuthorities()
-		        .stream()
-		        .findFirst()
-		        .orElseThrow(() -> new RuntimeException("Role not found"))
-		        .getAuthority()
-		        .replace("ROLE_", "");
+		String role = userDetails.getAuthorities().stream().findFirst()
+				.orElseThrow(() -> new RuntimeException("Role not found")).getAuthority().replace("ROLE_", "");
 
-		final String token = jwtTokenUtil.generateToken(userDetails, Role.valueOf(role));
+		
+		
+		final String token = jwtTokenUtil.generateToken(userDetails, Role.valueOf(role),service.getUserIdByEmail(loginDto.getEmail()));
 
 		log.info("After token generated");
 		auditLogService.createAuditLog(loginServiceImpl.getUserById(loginDto.getEmail()), "login", "Profile");
@@ -102,20 +103,32 @@ public class UserAPI {
 			throw new AuthenticationFailedException("INVALID_CREDENTIALS", e);
 		}
 	}
-	
+
 	@GetMapping("/getUserById/{userId}")
 	public UserReqDTO getUserById(@PathVariable Long userId) {
 		UserReqDTO userDto = service.getUserDetailsById(userId);
 		return userDto;
 	}
-	
+
+	@PostMapping("/forgotPassword/otp")
+	public ResponseEntity<String> generateOtp(@RequestParam String email) {
+		return ResponseEntity.ok(forgetPasswordService.generateOtp(email));
+	}
+
 	@PutMapping("/forgotPassword")
 	public ResponseEntity<String> forgotPassword(@RequestBody ForgetPasswordDto dto) {
 		return new ResponseEntity<>(forgetPasswordService.resetPassword(dto), HttpStatus.CREATED);
 	}
-	
+
 	@GetMapping("/getAllCitizens")
-	public List<UserReqDTO> getAllCitizens(){
+	public List<UserReqDTO> getAllCitizens() {
 		return service.listOfCitizen();
 	}
+	
+	@DeleteMapping("/deleteUserByAdmin/{userId}")
+	public ResponseEntity<String> deleteUserByAdmin(@PathVariable Long userId){
+		String deletedUser = registrationService.deleteUserByAdmin(userId);
+		return  new ResponseEntity<>(deletedUser, HttpStatus.NO_CONTENT);
+	}
+	
 }

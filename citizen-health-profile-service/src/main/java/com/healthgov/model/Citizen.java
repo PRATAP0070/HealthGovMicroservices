@@ -8,6 +8,7 @@ import com.healthgov.enums.Gender;
 import com.healthgov.enums.RegistrationStatus;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -23,9 +24,13 @@ import lombok.Data;
 @Table(name = "citizen")
 @Data
 public class Citizen {
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long citizenId;
+
+    private Long userId; 
+
     private String name;
     private LocalDate dob;
 
@@ -36,6 +41,7 @@ public class Citizen {
     private String contactInfo;
 
     @Enumerated(EnumType.STRING)
+    @Column(length = 20)
     private RegistrationStatus status;
 
     @OneToOne(mappedBy = "citizen", cascade = CascadeType.ALL, orphanRemoval = true)

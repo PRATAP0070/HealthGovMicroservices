@@ -75,4 +75,5 @@ public class ResourceController {
 		log.info("Searching resources with type={} and status={}", type, status);
 		return service.getResourcesByTypeAndStatus(type, status);
 	}
+	
 }

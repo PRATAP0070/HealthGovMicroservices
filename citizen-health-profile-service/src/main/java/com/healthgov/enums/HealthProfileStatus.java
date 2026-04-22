@@ -1,6 +1,8 @@
 package com.healthgov.enums;
 
 public enum HealthProfileStatus {
+	INACTIVE,
     ACTIVE,
-    INACTIVE
+    HEALTHY,
+    UNHEALTY
 }

@@ -84,7 +84,6 @@ public class HealthProfileServiceImpl implements HealthProfileService {
         HealthProfileResponseDTO dto = new HealthProfileResponseDTO();
         dto.setProfileId(hp.getProfileId());
         
-        // Safely fetching the ID from the associated Citizen object
         if (hp.getCitizen() != null) {
             dto.setCitizenId(hp.getCitizen().getCitizenId()); 
         }

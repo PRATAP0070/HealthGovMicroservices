@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.healthgov.dtos.ComplianceCreateRequest;
 import com.healthgov.dtos.ComplianceResponseDTO;
 import com.healthgov.dtos.ComplianceUpdateRequest;
+import com.healthgov.dtos.OfficerComplianceUpdateRequest;
 import com.healthgov.enums.ComplianceType;
 import com.healthgov.services.ComplianceService;
 
@@ -94,6 +95,21 @@ public class ComplianceController {
 
 		log.info("PATCH /api/v1/compliance-records/{}/{}/notes", type, entityId);
 		return ResponseEntity.ok(complianceService.updateNotesByEntityIdAndType(type, entityId, notes));
+	}
+	
+	// OFFICER UPDATE: result + notes (by type & entityId)
+	@PatchMapping("/{type}/{entityId}/officer-update")
+	public ResponseEntity<ComplianceResponseDTO> officerUpdate(
+	        @PathVariable ComplianceType type,
+	        @PathVariable Long entityId,
+	        @Valid @RequestBody OfficerComplianceUpdateRequest request) {
+
+	    log.info(
+	        "PATCH /api/v1/compliance-records/{}/{}/officer-update result={} officerId={}",
+	        type, entityId, request.getResult(), request.getOfficerId()
+	    );
+
+	    return ResponseEntity.ok(complianceService.updateByOfficer(type, entityId, request));
 	}
 
 	//Delete compliance Record

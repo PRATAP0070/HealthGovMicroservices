@@ -3,6 +3,7 @@ package com.healthgov.service;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,54 +28,44 @@ import lombok.extern.slf4j.Slf4j;
 public class DocumentServiceImpl implements DocumentService {
 
     private final DocumentRepository documentRepo;
-    private final CitizenRepository citizenRepo; 
+    private final CitizenRepository citizenRepo;
 
     @Override
     public String uploadDocument(Long citizenId, DocumentRequestDTO request) {
-        log.info("Request to upload {} for Citizen ID: {}", request.getDocumentType(), citizenId);
-        
-        // Fetch the actual Citizen object from the database
+        log.info("Attempting to upload {} for Citizen ID: {}", request.getDocumentType(), citizenId);
+
         Citizen citizen = citizenRepo.findById(citizenId)
-                .orElseThrow(() -> new CitizenNotFoundException(citizenId));
+                .orElseThrow(() -> new CitizenNotFoundException("Citizen not found with ID: " + citizenId));
 
         CitizenDocument doc = new CitizenDocument();
-        doc.setCitizen(citizen); // Set the object, not just the ID
+        doc.setCitizen(citizen);
         doc.setDocumentName(request.getDocumentName());
-        
-        try {
-            doc.setDocType(DocumentType.valueOf(request.getDocumentType().trim().toUpperCase()));
-        } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException("Invalid document type. Use IDPROOF or HEALTHCARD.");
-        }
-        
         doc.setFileURI(request.getFileUrl());
         doc.setUploadedDate(LocalDateTime.now());
-        doc.setVerificationStatus(VerificationStatus.PENDING); 
+        doc.setVerificationStatus(VerificationStatus.PENDING);
+
+        try {
+            doc.setDocType(DocumentType.valueOf(request.getDocumentType().trim().toUpperCase()));
+        } catch (IllegalArgumentException | NullPointerException e) {
+            throw new IllegalArgumentException("Invalid document type. Use IDPROOF or HEALTHCARD.");
+        }
 
         documentRepo.save(doc);
-        log.info("Successfully saved document '{}' for Citizen {}", request.getDocumentName(), citizenId);
         return "Document uploaded successfully.";
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<DocumentResponseDTO> getCitizenDocuments(Long citizenId) {
         log.info("Fetching documents for Citizen ID: {}", citizenId);
-        List<CitizenDocument> allDocuments = documentRepo.findAll();
-        List<DocumentResponseDTO> filteredResults = new ArrayList<>();
-
-        for (CitizenDocument doc : allDocuments) {
-            // Check through the Citizen object
-            if (doc.getCitizen() != null && doc.getCitizen().getCitizenId().equals(citizenId)) {
-                filteredResults.add(mapToDTO(doc));
-            }
-        }
-        return filteredResults;
+        return documentRepo.findAll().stream()
+                .filter(doc -> doc.getCitizen() != null && doc.getCitizen().getCitizenId().equals(citizenId))
+                .map(this::mapToDTO)
+                .collect(Collectors.toList());
     }
 
     @Override
     public String updateDocument(Long citizenId, Long documentId, DocumentRequestDTO request) {
-        log.info("Updating Document ID: {} for Citizen: {}", documentId, citizenId);
-
         CitizenDocument doc = documentRepo.findById(documentId)
                 .orElseThrow(() -> new RuntimeException("Document not found."));
 
@@ -83,16 +74,15 @@ public class DocumentServiceImpl implements DocumentService {
         }
 
         doc.setDocumentName(request.getDocumentName());
-        
-        try {
-            doc.setDocType(DocumentType.valueOf(request.getDocumentType().trim().toUpperCase()));
-        } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException("Invalid document type. Use IDPROOF or HEALTHCARD.");
-        }
-        
         doc.setFileURI(request.getFileUrl());
         doc.setUploadedDate(LocalDateTime.now());
         doc.setVerificationStatus(VerificationStatus.PENDING);
+
+        try {
+            doc.setDocType(DocumentType.valueOf(request.getDocumentType().trim().toUpperCase()));
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException("Invalid document type.");
+        }
 
         documentRepo.save(doc);
         return "Document updated successfully.";
@@ -100,31 +90,29 @@ public class DocumentServiceImpl implements DocumentService {
 
     @Override
     public String verifyDocument(Long documentId, String status) {
-        log.info("Request to verify Document ID: {} with status: {}", documentId, status);
-        
         CitizenDocument doc = documentRepo.findById(documentId)
                 .orElseThrow(() -> new RuntimeException("Document ID " + documentId + " not found."));
 
         try {
             doc.setVerificationStatus(VerificationStatus.valueOf(status.trim().toUpperCase()));
         } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException("Invalid verification status. Please use a valid VerificationStatus.");
+            throw new IllegalArgumentException("Invalid status. Use PENDING, VERIFIED, REJECTED, or EXPIRED.");
         }
 
         documentRepo.save(doc);
-        log.info("Document ID: {} verification status updated to {}", documentId, status);
         return "Document verification status updated to " + status;
     }
 
     private DocumentResponseDTO mapToDTO(CitizenDocument d) {
+        // Null-safe mapping to prevent 500 errors during GET requests
         return new DocumentResponseDTO(
-                d.getDocumentId(), 
-                d.getDocumentName(), 
-                d.getDocType().name(),
-                d.getFileURI(), 
-                d.getUploadedDate(), 
-                d.getCitizen().getCitizenId(), 
-                d.getVerificationStatus() != null ? d.getVerificationStatus().name() : "PENDING"
+                d.getDocumentId(),
+                d.getDocumentName(),
+                (d.getDocType() != null) ? d.getDocType().name() : null,
+                d.getFileURI(),
+                d.getUploadedDate(),
+                (d.getCitizen() != null) ? d.getCitizen().getCitizenId() : null,
+                (d.getVerificationStatus() != null) ? d.getVerificationStatus().name() : "PENDING"
         );
     }
 }

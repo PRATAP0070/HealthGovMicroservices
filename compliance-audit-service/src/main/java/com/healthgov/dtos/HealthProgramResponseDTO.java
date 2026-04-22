@@ -1,20 +1,25 @@
 package com.healthgov.dtos;
 
-import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
+
+import com.healthgov.enums.InfrastructureStatus;
+import com.healthgov.enums.InfrastructureType;
+import com.healthgov.enums.ProgramStatus;
+import com.healthgov.enums.ResourceStatus;
+import com.healthgov.enums.ResourceType;
 
 import lombok.Data;
 
 @Data
 public class HealthProgramResponseDTO {
-
 	private Long programId;
 	private String title;
 	private String description;
-	private Date startDate;
-	private Date endDate;
+	private LocalDate startDate;
+	private LocalDate endDate;
 	private Double budget;
-	private String status;
+	private ProgramStatus status;
 
 	private List<EnrollmentDTO> enrollments;
 	private List<ResourceDTO> resources;
@@ -24,25 +29,26 @@ public class HealthProgramResponseDTO {
 	public static class EnrollmentDTO {
 		private Long enrollmentId;
 		private Long citizenId;
-		private String citizenName;
-		private Date enrolledDate; // maps from Enrollment.date
+		LocalDate enrolledDate; // maps from Enrollment.date
 		private String status;
 	}
 
 	@Data
 	public static class ResourceDTO {
 		private Long resourceId;
-		private String type;
+		private Long programId;
+		private ResourceType type;
 		private Integer quantity;
-		private String status;
+		private ResourceStatus status;
 	}
 
 	@Data
 	public static class InfrastructureDTO {
 		private Long infraId;
-		private String type;
+		private Long programId;
+		private InfrastructureType type;
 		private String location;
-		private Integer capacity;
-		private String status;
+		private int capacity;
+		private InfrastructureStatus status;
 	}
 }

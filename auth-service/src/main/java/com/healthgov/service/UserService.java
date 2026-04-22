@@ -27,6 +27,7 @@ public class UserService {
 				.orElseThrow(() -> new UsernameNotFoundException("User not Found with id " + userId));
 
 		UserReqDTO reqDTO = new UserReqDTO();
+		reqDTO.setUserId(user.getUserId());
 		reqDTO.setName(user.getName());
 		reqDTO.setEmail(user.getEmail());
 		reqDTO.setRole(user.getRole());
@@ -48,6 +49,12 @@ public class UserService {
 			dto.setPhone(user.getPhone());
 			return dto;
 		}).collect(Collectors.toList());
+	}
+	
+	public Long getUserIdByEmail(String email)
+	{
+		User user=repo.findByEmail(email);
+		return user.getUserId();
 	}
 
 }

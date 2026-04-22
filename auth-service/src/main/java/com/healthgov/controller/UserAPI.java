@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.healthgov.config.JwtTokenUtil;
@@ -40,13 +41,13 @@ public class UserAPI {
 
 	@Autowired
 	private AuditLogService auditLogService;
-	
+
 	@Autowired
 	private ForgetPasswordService forgetPasswordService;
-	
+
 	@Autowired
 	private AuthenticationManager authenticationManager;
-	
+
 	@Autowired
 	private UserService service;
 
@@ -55,7 +56,7 @@ public class UserAPI {
 
 	@Autowired
 	private LoginServiceImpl loginServiceImpl;
-	
+
 	@Autowired
 	private RegistrationService registrationService;
 
@@ -80,12 +81,8 @@ public class UserAPI {
 		log.info("After authentication");
 		final UserDetails userDetails = loginServiceImpl.loadUserByUsername(loginDto.getEmail());
 		log.info("After userdetails");
-		String role = userDetails.getAuthorities()
-		        .stream()
-		        .findFirst()
-		        .orElseThrow(() -> new RuntimeException("Role not found"))
-		        .getAuthority()
-		        .replace("ROLE_", "");
+		String role = userDetails.getAuthorities().stream().findFirst()
+				.orElseThrow(() -> new RuntimeException("Role not found")).getAuthority().replace("ROLE_", "");
 
 		final String token = jwtTokenUtil.generateToken(userDetails, Role.valueOf(role));
 
@@ -102,20 +99,25 @@ public class UserAPI {
 			throw new AuthenticationFailedException("INVALID_CREDENTIALS", e);
 		}
 	}
-	
+
 	@GetMapping("/getUserById/{userId}")
 	public UserReqDTO getUserById(@PathVariable Long userId) {
 		UserReqDTO userDto = service.getUserDetailsById(userId);
 		return userDto;
 	}
-	
+
+	@PostMapping("/forgotPassword/otp")
+	public ResponseEntity<String> generateOtp(@RequestParam String email) {
+		return ResponseEntity.ok(forgetPasswordService.generateOtp(email));
+	}
+
 	@PutMapping("/forgotPassword")
 	public ResponseEntity<String> forgotPassword(@RequestBody ForgetPasswordDto dto) {
 		return new ResponseEntity<>(forgetPasswordService.resetPassword(dto), HttpStatus.CREATED);
 	}
-	
+
 	@GetMapping("/getAllCitizens")
-	public List<UserReqDTO> getAllCitizens(){
+	public List<UserReqDTO> getAllCitizens() {
 		return service.listOfCitizen();
 	}
 }

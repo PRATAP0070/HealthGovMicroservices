@@ -1,6 +1,7 @@
 package com.healthgov.enums;
 
 public enum RegistrationStatus {
-    PENDING,
-    VERIFIED,
+	ACTIVE,
+    INACTIVE,
+    PENDING
 }

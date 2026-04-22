@@ -51,4 +51,6 @@ public class CitizenController {
         log.info("API Call: Updating status for citizen ID: {} to {}", id, status);
         return ResponseEntity.ok(service.approveCitizen(id, status));
     }
+    
+    
 }

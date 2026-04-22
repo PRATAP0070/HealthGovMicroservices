@@ -43,7 +43,7 @@ public class RegistrationServiceImpl implements RegistrationService {
 		
 		registrationRepo.save(user);
 		
-		client.sendRegistrationMessage(userDto.getEmail());
+		//client.sendRegistrationMessage(userDto.getEmail());
 		
 		UserDTO userDTO2 = new UserDTO();
 		userDTO2.setUserId(user.getUserId());

@@ -1,23 +1,23 @@
-2026-04-22T10:08:56.184+05:30  INFO 14844 --- [resource-service] [restartedMain] c.healthgov.ResourceServiceApplication   : Starting ResourceServiceApplication using Java 21.0.8 with PID 14844 (C:\Users\2481285\git\HealthGovMicroservices\resource-service\target\classes started by 2481285 in C:\Users\2481285\git\HealthGovMicroservices\resource-service)
-2026-04-22T10:08:56.204+05:30  INFO 14844 --- [resource-service] [restartedMain] c.healthgov.ResourceServiceApplication   : No active profile set, falling back to 1 default profile: "default"
-2026-04-22T10:08:56.313+05:30  INFO 14844 --- [resource-service] [restartedMain] o.s.c.c.c.ConfigServerConfigDataLoader   : Fetching config from server at : http://localhost:1234
-2026-04-22T10:08:56.314+05:30  INFO 14844 --- [resource-service] [restartedMain] o.s.c.c.c.ConfigServerConfigDataLoader   : Located environment: name=resource-service, profiles=[default], label=null, version=c19fe4f0d371900ef97be23fd537a90bd159f4a7, state=
-2026-04-22T10:08:56.320+05:30  INFO 14844 --- [resource-service] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
-2026-04-22T10:08:56.320+05:30  INFO 14844 --- [resource-service] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
-2026-04-22T10:08:59.937+05:30  INFO 14844 --- [resource-service] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2026-04-22T10:09:00.392+05:30  INFO 14844 --- [resource-service] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 425 ms. Found 1 JPA repository interface.
-2026-04-22T10:09:01.443+05:30  INFO 14844 --- [resource-service] [restartedMain] o.s.cloud.context.scope.GenericScope     : BeanFactory id=11128d12-1be2-354c-b939-80c7608c0c0b
-2026-04-22T10:09:02.621+05:30  INFO 14844 --- [resource-service] [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 9095 (http)
-2026-04-22T10:09:02.658+05:30  INFO 14844 --- [resource-service] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
-2026-04-22T10:09:02.659+05:30  INFO 14844 --- [resource-service] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.20]
-2026-04-22T10:09:02.826+05:30  INFO 14844 --- [resource-service] [restartedMain] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 6505 ms
-2026-04-22T10:09:03.843+05:30  INFO 14844 --- [resource-service] [restartedMain] org.hibernate.orm.jpa                    : HHH008540: Processing PersistenceUnitInfo [name: default]
-2026-04-22T10:09:04.078+05:30  INFO 14844 --- [resource-service] [restartedMain] org.hibernate.orm.core                   : HHH000001: Hibernate ORM core version 7.2.7.Final
-2026-04-22T10:09:05.862+05:30  INFO 14844 --- [resource-service] [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
-2026-04-22T10:09:05.966+05:30  INFO 14844 --- [resource-service] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
-2026-04-22T10:09:08.402+05:30  WARN 14844 --- [resource-service] [restartedMain] org.hibernate.orm.jdbc.error             : HHH000247: ErrorCode: 1045, SQLState: 28000
-2026-04-22T10:09:08.403+05:30  WARN 14844 --- [resource-service] [restartedMain] org.hibernate.orm.jdbc.error             : Access denied for user 'root'@'localhost' (using password: YES)
-2026-04-22T10:09:08.407+05:30  WARN 14844 --- [resource-service] [restartedMain] org.hibernate.orm.jdbc                   : HHH100046: Could not obtain connection to query JDBC database metadata
+2026-04-22T10:08:57.513+05:30  INFO 16780 --- [infrastructure-service] [restartedMain] c.h.InfrastructureServiceApplication     : Starting InfrastructureServiceApplication using Java 21.0.8 with PID 16780 (C:\Users\2481285\git\HealthGovMicroservices\infrastructure-service\target\classes started by 2481285 in C:\Users\2481285\git\HealthGovMicroservices\infrastructure-service)
+2026-04-22T10:08:57.521+05:30  INFO 16780 --- [infrastructure-service] [restartedMain] c.h.InfrastructureServiceApplication     : No active profile set, falling back to 1 default profile: "default"
+2026-04-22T10:08:57.632+05:30  INFO 16780 --- [infrastructure-service] [restartedMain] o.s.c.c.c.ConfigServerConfigDataLoader   : Fetching config from server at : http://localhost:1234
+2026-04-22T10:08:57.633+05:30  INFO 16780 --- [infrastructure-service] [restartedMain] o.s.c.c.c.ConfigServerConfigDataLoader   : Located environment: name=infrastructure-service, profiles=[default], label=null, version=c19fe4f0d371900ef97be23fd537a90bd159f4a7, state=
+2026-04-22T10:08:57.640+05:30  INFO 16780 --- [infrastructure-service] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2026-04-22T10:08:57.640+05:30  INFO 16780 --- [infrastructure-service] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2026-04-22T10:09:01.029+05:30  INFO 16780 --- [infrastructure-service] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-04-22T10:09:01.496+05:30  INFO 16780 --- [infrastructure-service] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 438 ms. Found 1 JPA repository interface.
+2026-04-22T10:09:02.292+05:30  INFO 16780 --- [infrastructure-service] [restartedMain] o.s.cloud.context.scope.GenericScope     : BeanFactory id=e672e2d2-d4d0-39f8-86c2-1275eadcc12a
+2026-04-22T10:09:03.408+05:30  INFO 16780 --- [infrastructure-service] [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 9096 (http)
+2026-04-22T10:09:03.437+05:30  INFO 16780 --- [infrastructure-service] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-04-22T10:09:03.438+05:30  INFO 16780 --- [infrastructure-service] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.20]
+2026-04-22T10:09:03.611+05:30  INFO 16780 --- [infrastructure-service] [restartedMain] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 5970 ms
+2026-04-22T10:09:04.711+05:30  INFO 16780 --- [infrastructure-service] [restartedMain] org.hibernate.orm.jpa                    : HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-04-22T10:09:04.906+05:30  INFO 16780 --- [infrastructure-service] [restartedMain] org.hibernate.orm.core                   : HHH000001: Hibernate ORM core version 7.2.7.Final
+2026-04-22T10:09:06.258+05:30  INFO 16780 --- [infrastructure-service] [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-04-22T10:09:06.359+05:30  INFO 16780 --- [infrastructure-service] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-04-22T10:09:08.655+05:30  WARN 16780 --- [infrastructure-service] [restartedMain] org.hibernate.orm.jdbc.error             : HHH000247: ErrorCode: 1045, SQLState: 28000
+2026-04-22T10:09:08.656+05:30  WARN 16780 --- [infrastructure-service] [restartedMain] org.hibernate.orm.jdbc.error             : Access denied for user 'root'@'localhost' (using password: YES)
+2026-04-22T10:09:08.657+05:30  WARN 16780 --- [infrastructure-service] [restartedMain] org.hibernate.orm.jdbc                   : HHH100046: Could not obtain connection to query JDBC database metadata
 
 org.hibernate.exception.AuthException: Unable to obtain isolated JDBC connection [Access denied for user 'root'@'localhost' (using password: YES)] [n/a]
 	at org.hibernate.exception.internal.SQLStateConversionDelegate.convert(SQLStateConversionDelegate.java:87) ~[hibernate-core-7.2.7.Final.jar:7.2.7.Final]
@@ -61,7 +61,7 @@ org.hibernate.exception.AuthException: Unable to obtain isolated JDBC connection
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:321) ~[spring-boot-4.0.5.jar:4.0.5]
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1365) ~[spring-boot-4.0.5.jar:4.0.5]
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1354) ~[spring-boot-4.0.5.jar:4.0.5]
-	at com.healthgov.ResourceServiceApplication.main(ResourceServiceApplication.java:12) ~[classes/:na]
+	at com.healthgov.InfrastructureServiceApplication.main(InfrastructureServiceApplication.java:12) ~[classes/:na]
 	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[na:na]
 	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[na:na]
 	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:52) ~[spring-boot-devtools-4.0.5.jar:4.0.5]
@@ -84,8 +84,8 @@ Caused by: java.sql.SQLException: Access denied for user 'root'@'localhost' (usi
 	at org.hibernate.resource.transaction.backend.jdbc.internal.JdbcIsolationDelegate.delegateWork(JdbcIsolationDelegate.java:48) ~[hibernate-core-7.2.7.Final.jar:7.2.7.Final]
 	... 40 common frames omitted
 
-2026-04-22T10:09:08.503+05:30  WARN 14844 --- [resource-service] [restartedMain] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
-2026-04-22T10:09:08.540+05:30  INFO 14844 --- [resource-service] [restartedMain] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+2026-04-22T10:09:08.702+05:30  WARN 16780 --- [infrastructure-service] [restartedMain] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-04-22T10:09:08.729+05:30  INFO 16780 --- [infrastructure-service] [restartedMain] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
 	Database JDBC URL [undefined/unknown]
 	Database driver: undefined/unknown
 	Database dialect: MySQLDialect
@@ -97,17 +97,17 @@ Caused by: java.sql.SQLException: Access denied for user 'root'@'localhost' (usi
 	Pool: DataSourceConnectionProvider
 	Minimum pool size: undefined/unknown
 	Maximum pool size: undefined/unknown
-2026-04-22T10:09:10.445+05:30  INFO 14844 --- [resource-service] [restartedMain] org.hibernate.orm.core                   : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-2026-04-22T10:09:10.525+05:30  INFO 14844 --- [resource-service] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
-2026-04-22T10:09:11.556+05:30  WARN 14844 --- [resource-service] [restartedMain] org.hibernate.orm.jdbc.error             : HHH000247: ErrorCode: 1045, SQLState: 28000
-2026-04-22T10:09:11.557+05:30  WARN 14844 --- [resource-service] [restartedMain] org.hibernate.orm.jdbc.error             : Access denied for user 'root'@'localhost' (using password: YES)
-2026-04-22T10:09:11.567+05:30 ERROR 14844 --- [resource-service] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Failed to initialize JPA EntityManagerFactory: Unable to build Hibernate SessionFactory  [persistence unit: default] ; nested exception is org.hibernate.exception.AuthException: Unable to open JDBC Connection for DDL execution [Access denied for user 'root'@'localhost' (using password: YES)] [n/a]
-2026-04-22T10:09:11.570+05:30  WARN 14844 --- [resource-service] [restartedMain] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [org/springframework/boot/hibernate/autoconfigure/HibernateJpaConfiguration.class]: Unable to build Hibernate SessionFactory  [persistence unit: default] ; nested exception is org.hibernate.exception.AuthException: Unable to open JDBC Connection for DDL execution [Access denied for user 'root'@'localhost' (using password: YES)] [n/a]
-2026-04-22T10:09:11.589+05:30  INFO 14844 --- [resource-service] [restartedMain] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
-2026-04-22T10:09:11.636+05:30  INFO 14844 --- [resource-service] [restartedMain] .s.b.a.l.ConditionEvaluationReportLogger : 
+2026-04-22T10:09:10.451+05:30  INFO 16780 --- [infrastructure-service] [restartedMain] org.hibernate.orm.core                   : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-04-22T10:09:10.520+05:30  INFO 16780 --- [infrastructure-service] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-04-22T10:09:11.562+05:30  WARN 16780 --- [infrastructure-service] [restartedMain] org.hibernate.orm.jdbc.error             : HHH000247: ErrorCode: 1045, SQLState: 28000
+2026-04-22T10:09:11.563+05:30  WARN 16780 --- [infrastructure-service] [restartedMain] org.hibernate.orm.jdbc.error             : Access denied for user 'root'@'localhost' (using password: YES)
+2026-04-22T10:09:11.578+05:30 ERROR 16780 --- [infrastructure-service] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Failed to initialize JPA EntityManagerFactory: Unable to build Hibernate SessionFactory  [persistence unit: default] ; nested exception is org.hibernate.exception.AuthException: Unable to open JDBC Connection for DDL execution [Access denied for user 'root'@'localhost' (using password: YES)] [n/a]
+2026-04-22T10:09:11.581+05:30  WARN 16780 --- [infrastructure-service] [restartedMain] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [org/springframework/boot/hibernate/autoconfigure/HibernateJpaConfiguration.class]: Unable to build Hibernate SessionFactory  [persistence unit: default] ; nested exception is org.hibernate.exception.AuthException: Unable to open JDBC Connection for DDL execution [Access denied for user 'root'@'localhost' (using password: YES)] [n/a]
+2026-04-22T10:09:11.598+05:30  INFO 16780 --- [infrastructure-service] [restartedMain] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2026-04-22T10:09:11.647+05:30  INFO 16780 --- [infrastructure-service] [restartedMain] .s.b.a.l.ConditionEvaluationReportLogger : 
 
 Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
-2026-04-22T10:09:11.678+05:30 ERROR 14844 --- [resource-service] [restartedMain] o.s.boot.SpringApplication               : Application run failed
+2026-04-22T10:09:11.699+05:30 ERROR 16780 --- [infrastructure-service] [restartedMain] o.s.boot.SpringApplication               : Application run failed
 
 org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [org/springframework/boot/hibernate/autoconfigure/HibernateJpaConfiguration.class]: Unable to build Hibernate SessionFactory  [persistence unit: default] ; nested exception is org.hibernate.exception.AuthException: Unable to open JDBC Connection for DDL execution [Access denied for user 'root'@'localhost' (using password: YES)] [n/a]
 	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1817) ~[spring-beans-7.0.6.jar:7.0.6]
@@ -125,7 +125,7 @@ org.springframework.beans.factory.BeanCreationException: Error creating bean wit
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:321) ~[spring-boot-4.0.5.jar:4.0.5]
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1365) ~[spring-boot-4.0.5.jar:4.0.5]
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1354) ~[spring-boot-4.0.5.jar:4.0.5]
-	at com.healthgov.ResourceServiceApplication.main(ResourceServiceApplication.java:12) ~[classes/:na]
+	at com.healthgov.InfrastructureServiceApplication.main(InfrastructureServiceApplication.java:12) ~[classes/:na]
 	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[na:na]
 	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[na:na]
 	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:52) ~[spring-boot-devtools-4.0.5.jar:4.0.5]

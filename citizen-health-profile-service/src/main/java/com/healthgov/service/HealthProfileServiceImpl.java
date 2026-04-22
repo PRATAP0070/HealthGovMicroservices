@@ -42,7 +42,7 @@ public class HealthProfileServiceImpl implements HealthProfileService {
         profile.setMedicalHistoryJson(input.getMedicalHistoryJson());
         profile.setAllergies(input.getAllergies());
         
-        profile.setStatus(HealthProfileStatus.ACTIVE); 
+        profile.setStatus(HealthProfileStatus.INACTIVE); 
 
         HealthProfile saved = profileRepo.save(profile);
         return mapToDTO(saved);

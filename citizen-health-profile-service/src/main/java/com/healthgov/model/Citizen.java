@@ -8,6 +8,7 @@ import com.healthgov.enums.Gender;
 import com.healthgov.enums.RegistrationStatus;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -40,6 +41,7 @@ public class Citizen {
     private String contactInfo;
 
     @Enumerated(EnumType.STRING)
+    @Column(length = 20)
     private RegistrationStatus status;
 
     @OneToOne(mappedBy = "citizen", cascade = CascadeType.ALL, orphanRemoval = true)

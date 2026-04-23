@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.healthgov.client.NotificationClient;
+import com.healthgov.dto.ResearchProjectNotificationRequest;
 import com.healthgov.dto.ResearchProjectResponse;
 import com.healthgov.enums.GrantStatus;
 import com.healthgov.enums.ProjectStatus;
@@ -34,6 +36,7 @@ public class ProgramManagerReviewServiceImpl implements ProgramManagerReviewServ
 	private final GrantRepository grantRepo;
 	private final GrantApplicationRepository grantApplicationRepo;
 	private final ApplicationEventPublisher eventPublisher;
+	private final NotificationClient notificationClient;
 
 	// Get project by id
 	@Override
@@ -128,6 +131,15 @@ public class ProgramManagerReviewServiceImpl implements ProgramManagerReviewServ
 			grantApplicationRepo.save(ga);
 
 			log.info("Project rejected: projectId={}, reason={}", projectId, reason);
+
+			try {
+				notificationClient.sendNotification(new ResearchProjectNotificationRequest("RESEARCHER",
+						"PROJECT_REJECTED", p.getProjectId(), p.getTitle(), p.getResearcherId(), "REJECTED", null,
+						reason, "Your research project has been rejected."));
+			} catch (Exception ex) {
+				log.error("Notification failed for REJECTED projectId={}", p.getProjectId(), ex);
+			}
+
 		}
 
 		// APPROVED
@@ -160,11 +172,19 @@ public class ProgramManagerReviewServiceImpl implements ProgramManagerReviewServ
 
 				grantRepo.save(g);
 
-				eventPublisher
-						.publishEvent(new GrantCreatedEvent(g.getGrantId(), g.getProject().getProjectId()));
+				eventPublisher.publishEvent(new GrantCreatedEvent(g.getGrantId(), g.getProject().getProjectId()));
 
 				log.info("Grant created successfully: projectId={}, amount={}", projectId, amount);
 			}
+
+			try {
+				notificationClient.sendNotification(new ResearchProjectNotificationRequest("RESEARCHER",
+						"PROJECT_APPROVED", p.getProjectId(), p.getTitle(), p.getResearcherId(), "APPROVED", amount,
+						null, "Your research project has been approved."));
+			} catch (Exception ex) {
+				log.error("Notification failed for APPROVED projectId={}", p.getProjectId(), ex);
+			}
+
 		}
 
 		p.setStatus(d);

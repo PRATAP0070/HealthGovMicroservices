@@ -15,7 +15,9 @@ import com.healthgov.dto.ApiResponse;
 import com.healthgov.dto.CreateNotificationRequest;
 import com.healthgov.dto.NotificationDTO;
 import com.healthgov.dto.OtpRequestDTO;
+import com.healthgov.dto.ResearchProjectNotificationRequest;
 import com.healthgov.service.EmailService;
+import com.healthgov.service.GenericNotificationService;
 import com.healthgov.service.NotificationService;
 
 import jakarta.validation.Valid;
@@ -86,5 +88,6 @@ public class NotificationController {
 		notificationService.deleteNotification(id);
 		return ApiResponse.success("Notification deleted successfully", null);
 	}
+	
 	
 }

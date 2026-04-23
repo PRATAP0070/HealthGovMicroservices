@@ -8,17 +8,16 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.support.TransactionSynchronization;
+import org.springframework.transaction.support.TransactionSynchronizationManager;
 
-import com.healthgov.client.ComplianceClient;
+import com.healthgov.client.NotificationClient;
 import com.healthgov.client.UserClient;
-import com.healthgov.dto.ComplianceCreateRequest;
-import com.healthgov.dto.ComplianceResponseDTO;
 import com.healthgov.dto.ResearchProjectCreateRequest;
+import com.healthgov.dto.ResearchProjectNotificationRequest;
 import com.healthgov.dto.ResearchProjectResponse;
 import com.healthgov.dto.ResearchProjectUpdateRequest;
 import com.healthgov.dto.UserReqDTO;
-import com.healthgov.enums.ComplianceResult;
-import com.healthgov.enums.ComplianceType;
 import com.healthgov.enums.GrantStatus;
 import com.healthgov.enums.ProjectStatus;
 import com.healthgov.enums.Role;
@@ -44,6 +43,7 @@ public class ResearchProjectServiceImpl implements ResearchProjectService {
 	private final GrantApplicationRepository grantApplicationRepo;
 	private final UserClient userClient;
 	private final ApplicationEventPublisher eventPublisher;
+	private final NotificationClient notificationClient;
 
 	// Create project
 	@Override
@@ -85,6 +85,20 @@ public class ResearchProjectServiceImpl implements ResearchProjectService {
 
 		ResearchProject saved = projectRepo.save(p);
 
+		eventPublisher.publishEvent(
+			    new ResearchProjectNotificationRequest(
+			        "MANAGER",
+			        "PROJECT_CREATED",
+			        saved.getProjectId(),
+			        saved.getTitle(),
+			        saved.getResearcherId(),
+			        "PENDING",
+			        null,
+			        null,
+			        "A new research project has been created and awaits your review."
+			    )
+			);
+
 		// Creating grant application
 		GrantApplication ga = new GrantApplication();
 		ga.setProject(saved);
@@ -92,9 +106,8 @@ public class ResearchProjectServiceImpl implements ResearchProjectService {
 		ga.setSubmittedDate(LocalDate.now());
 		ga.setStatus(GrantStatus.PENDING);
 		grantApplicationRepo.save(ga);
-		
-		
-		//Calling compliance Client  for Grant 
+
+		// Calling compliance Client for Grant
 		eventPublisher.publishEvent(new ProjectCreatedEvent(saved.getProjectId(), saved.getTitle()));
 		log.info("Compliance Create Event Triggred...");
 
@@ -144,6 +157,21 @@ public class ResearchProjectServiceImpl implements ResearchProjectService {
 		p.setReason(null);
 
 		ResearchProject saved = projectRepo.save(p);
+
+		/* ✅ PUBLISH UPDATE NOTIFICATION EVENT */
+		eventPublisher.publishEvent(
+		    new ResearchProjectNotificationRequest(
+		        "MANAGER",
+		        "PROJECT_UPDATED",
+		        saved.getProjectId(),
+		        saved.getTitle(),
+		        saved.getResearcherId(),
+		        "PENDING",
+		        null,
+		        null,
+		        "A research project has been updated and requires review."
+		    )
+		);
 
 		GrantApplication ga = new GrantApplication();
 		ga.setProject(saved);

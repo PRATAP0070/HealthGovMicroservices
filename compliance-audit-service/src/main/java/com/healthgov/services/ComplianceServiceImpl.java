@@ -8,12 +8,17 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.healthgov.dtos.AuditCreateRequest;
 import com.healthgov.dtos.ComplianceCreateRequest;
 import com.healthgov.dtos.ComplianceResponseDTO;
 import com.healthgov.dtos.ComplianceUpdateRequest;
+import com.healthgov.dtos.OfficerComplianceUpdateRequest;
+import com.healthgov.dtos.UserResponseDto;
+import com.healthgov.enums.AuditStatus;
 import com.healthgov.enums.ComplianceType;
 import com.healthgov.exceptions.ComplianceRequestException;
 import com.healthgov.exceptions.ResourceNotFoundException;
+import com.healthgov.feignclients.UserClient;
 import com.healthgov.models.ComplianceRecord;
 import com.healthgov.repository.ComplianceRecordRepository;
 
@@ -25,7 +30,8 @@ public class ComplianceServiceImpl implements ComplianceService {
 
 	private final ComplianceRecordRepository complianceRepo;
 	private final ComplianceUtil complianceUtil;
-
+	private final AuditService auditService;
+	
 	private static final Logger log = LoggerFactory.getLogger(ComplianceServiceImpl.class);
 
 	@Override
@@ -107,6 +113,44 @@ public class ComplianceServiceImpl implements ComplianceService {
 	}
 
 	@Override
+	@Transactional
+	public ComplianceResponseDTO updateByOfficer(ComplianceType type, Long entityId,
+			OfficerComplianceUpdateRequest request) {
+
+		// ✅ Centralized officer validation
+		UserResponseDto officer = complianceUtil.validateComplianceOfficer(request.getOfficerId());
+
+		ComplianceRecord record = complianceRepo.findOneByEntityIdAndType(entityId, type)
+				.orElseThrow(() -> new ResourceNotFoundException(
+						"Compliance record not found for type=" + type + ", entityId=" + entityId));
+
+		// ✅ Officer is allowed to change ONLY these
+		record.setResult(request.getResult());
+
+		if (request.getNotes() != null && !request.getNotes().isBlank()) {
+			record.setNotes(request.getNotes());
+		}
+
+		record.setDate(LocalDate.now());
+
+		ComplianceRecord saved = complianceRepo.save(record);
+		
+		AuditCreateRequest auditRequest=new AuditCreateRequest();
+		auditRequest.setDate(LocalDate.now());
+		auditRequest.setOfficerId(officer.getUserId());
+		auditRequest.setStatus(AuditStatus.SCHEDULED);
+		auditRequest.setFindings("Audit Created by the Officer "+officer.getUserId()+" for Compliance ID: "+saved.getComplianceId());
+		auditRequest.setScope(saved.getType()+":"+saved.getEntityId());
+		
+        auditService.createAudit(auditRequest);
+		
+		log.info("Compliance record id={} updated by officerId={} officerName={}", saved.getComplianceId(),
+				officer.getUserId(), officer.getName());
+
+		return convertToDto(saved);
+	}
+
+	@Override
 	public ComplianceResponseDTO updateResultByEntityIdAndType(ComplianceType type, Long entityId, String result) {
 		complianceUtil.validateTypeAndEntityId(type, entityId);
 		complianceUtil.ensureTargetExists(type, entityId);
@@ -170,7 +214,7 @@ public class ComplianceServiceImpl implements ComplianceService {
 
 		return dto;
 	}
-	
+
 	private LocalDate normalizeDate(LocalDate date) {
 		log.info("Data Validation Invoked");
 		LocalDate effective = (date != null) ? date : LocalDate.now();

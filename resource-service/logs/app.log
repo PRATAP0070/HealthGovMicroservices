@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 2026-04-23T13:55:25.279+05:30  INFO 40152 --- [resource-service] [restartedMain] c.healthgov.ResourceServiceApplication   : Starting ResourceServiceApplication using Java 21.0.8 with PID 40152 (C:\Users\2481285\git\HealthGovMicroservices\resource-service\target\classes started by 2481285 in C:\Users\2481285\git\HealthGovMicroservices\resource-service)
 2026-04-23T13:55:25.286+05:30  INFO 40152 --- [resource-service] [restartedMain] c.healthgov.ResourceServiceApplication   : No active profile set, falling back to 1 default profile: "default"
 2026-04-23T13:55:25.434+05:30  INFO 40152 --- [resource-service] [restartedMain] o.s.c.c.c.ConfigServerConfigDataLoader   : Fetching config from server at : http://localhost:1234
@@ -185,3 +186,5 @@ Caused by: java.sql.SQLException: Access denied for user 'root'@'localhost' (usi
 	at org.hibernate.resource.transaction.backend.jdbc.internal.DdlTransactionIsolatorNonJtaImpl.getIsolatedConnection(DdlTransactionIsolatorNonJtaImpl.java:44) ~[hibernate-core-7.2.7.Final.jar:7.2.7.Final]
 	... 45 common frames omitted
 
+=======
+>>>>>>> branch 'main' of https://github.com/PRATAP0070/HealthGovMicroservices.git

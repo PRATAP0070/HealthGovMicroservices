@@ -3,6 +3,7 @@ package com.healthgov.repository;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 import com.healthgov.enums.ResourceStatus;
 import com.healthgov.enums.ResourceType;
@@ -15,5 +16,17 @@ public interface ResourceRepository extends JpaRepository<Resource, Long> {
 	List<Resource> findByTypeAndStatus(ResourceType type, ResourceStatus status);
 
 	List<Resource> findByProgramIdAndTypeAndStatus(Long programId, ResourceType type, ResourceStatus status);
+	
+	Long countByType(ResourceType type);
+
+	Long countByTypeAndStatus(ResourceType type, ResourceStatus status);
+	
+	@Query("SELECT COALESCE(CAST(SUM(r.quantity) AS long), 0L) FROM Resource r WHERE r.type = :type")
+	Long sumAmountByType(ResourceType type);
+	
+	@Query("SELECT COALESCE(CAST(SUM(r.quantity) AS long), 0L) FROM Resource r WHERE r.type = :type and r.status = :status")
+	Long sumAmountByTypeAndStatus(ResourceType type,  ResourceStatus status);
+	
+
 
 }

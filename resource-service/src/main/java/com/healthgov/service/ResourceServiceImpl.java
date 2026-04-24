@@ -5,7 +5,10 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.healthgov.dto.FundsResourceReportDTO;
+import com.healthgov.dto.PhysicalResourceReportDTO;
 import com.healthgov.dto.ResourceCreateRequest;
+import com.healthgov.dto.ResourceReportResponseDTO;
 import com.healthgov.dto.ResourceResponse;
 import com.healthgov.dto.ResourceUpdateRequest;
 import com.healthgov.enums.ProgramStatus;
@@ -237,4 +240,40 @@ public class ResourceServiceImpl implements ResourceService {
 			throw new IllegalStateException("FUNDS cannot be INACTIVE");
 		}
 	}
+	
+
+	public ResourceReportResponseDTO generateResourceReport() {
+
+		FundsResourceReportDTO fundsReport = buildFundsResourceReport();
+
+		List<PhysicalResourceReportDTO> physicalResourcesReport = List.of(buildPhysicalResourceReport(ResourceType.LAB),
+				buildPhysicalResourceReport(ResourceType.EQUIPMENT));
+
+		return new ResourceReportResponseDTO(fundsReport, physicalResourcesReport);
+	}
+	
+
+private FundsResourceReportDTO buildFundsResourceReport() {
+
+        return new FundsResourceReportDTO(
+        		resourceRepo.countByTypeAndStatus(ResourceType.FUNDS, ResourceStatus.PENDING),
+        		resourceRepo.countByTypeAndStatus(ResourceType.FUNDS, ResourceStatus.ALLOCATED),
+        		resourceRepo.countByTypeAndStatus(ResourceType.FUNDS, ResourceStatus.ACTIVE),
+        		resourceRepo.countByTypeAndStatus(ResourceType.FUNDS, ResourceStatus.COMPLETED),
+        		resourceRepo.sumAmountByType(ResourceType.FUNDS)
+        );
+    }
+
+
+private PhysicalResourceReportDTO buildPhysicalResourceReport(ResourceType type) {
+
+        return new PhysicalResourceReportDTO(
+                type,
+                resourceRepo.countByTypeAndStatus(type, ResourceStatus.ALLOCATED),
+                resourceRepo.countByTypeAndStatus(type, ResourceStatus.ACTIVE),
+                resourceRepo.countByTypeAndStatus(type, ResourceStatus.INACTIVE),
+                resourceRepo.countByTypeAndStatus(type, ResourceStatus.COMPLETED),
+                resourceRepo.countByType(type)
+        );
+    }
 }

@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.healthgov.dtos.AuditCreateRequest;
 import com.healthgov.dtos.AuditReponseDTO;
+import com.healthgov.dtos.AuditSummaryResponseDTO;
 import com.healthgov.dtos.AuditUpdateRequest;
 import com.healthgov.services.AuditService;
 
@@ -94,6 +95,14 @@ public class AuditController {
 		log.info("GET /api/v1/byOfficer/id request Hit for Id : {}", officerId);
 		List<AuditReponseDTO> response = auditService.getAllAuditsByOfficer(officerId);
 		return ResponseEntity.ok(response);
+	}
+	
+	@GetMapping("/summary")
+	public ResponseEntity<AuditSummaryResponseDTO> getAuditSummary() {
+
+	    log.info("GET /api/v1/audits/summary");
+
+	    return ResponseEntity.ok(auditService.getAuditSummary());
 	}
 
 }

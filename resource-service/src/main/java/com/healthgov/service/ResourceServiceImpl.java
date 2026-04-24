@@ -157,8 +157,7 @@ public class ResourceServiceImpl implements ResourceService {
 			throw new IllegalStateException("Cannot delete active or allocated or completed resource");
 		}
 		// ACTIVE resources are in use; deleting them would cause data loss.
-		// COMPLETED resources are historical records; deleting them breaks
-		// auditability.
+		// COMPLETED resources are historical records; deleting them breaks auditability.
 		resourceRepo.delete(entity);
 
 		log.info("Resource deleted successfully with resourceId={}", resourceId);
@@ -252,28 +251,21 @@ public class ResourceServiceImpl implements ResourceService {
 		return new ResourceReportResponseDTO(fundsReport, physicalResourcesReport);
 	}
 	
+	private FundsResourceReportDTO buildFundsResourceReport() {
 
-private FundsResourceReportDTO buildFundsResourceReport() {
+		return new FundsResourceReportDTO(
+				resourceRepo.sumAmountByTypeAndStatus(ResourceType.FUNDS, ResourceStatus.PENDING),
+				resourceRepo.sumAmountByTypeAndStatus(ResourceType.FUNDS, ResourceStatus.ALLOCATED),
+				resourceRepo.sumAmountByTypeAndStatus(ResourceType.FUNDS, ResourceStatus.ACTIVE),
+				resourceRepo.sumAmountByTypeAndStatus(ResourceType.FUNDS, ResourceStatus.COMPLETED),
+				resourceRepo.sumAmountByType(ResourceType.FUNDS));
+	}
 
-        return new FundsResourceReportDTO(
-        		resourceRepo.sumAmountByTypeAndStatus(ResourceType.FUNDS, ResourceStatus.PENDING),
-        		resourceRepo.sumAmountByTypeAndStatus(ResourceType.FUNDS, ResourceStatus.ALLOCATED),
-        		resourceRepo.sumAmountByTypeAndStatus(ResourceType.FUNDS, ResourceStatus.ACTIVE),
-        		resourceRepo.sumAmountByTypeAndStatus(ResourceType.FUNDS, ResourceStatus.COMPLETED),
-        		resourceRepo.sumAmountByType(ResourceType.FUNDS)
-        );
-    }
+	private PhysicalResourceReportDTO buildPhysicalResourceReport(ResourceType type) {
 
-
-private PhysicalResourceReportDTO buildPhysicalResourceReport(ResourceType type) {
-
-        return new PhysicalResourceReportDTO(
-                type,
-                resourceRepo.countByTypeAndStatus(type, ResourceStatus.ALLOCATED),
-                resourceRepo.countByTypeAndStatus(type, ResourceStatus.ACTIVE),
-                resourceRepo.countByTypeAndStatus(type, ResourceStatus.INACTIVE),
-                resourceRepo.countByTypeAndStatus(type, ResourceStatus.COMPLETED),
-                resourceRepo.countByType(type)
-        );
-    }
+		return new PhysicalResourceReportDTO(type, resourceRepo.countByTypeAndStatus(type, ResourceStatus.ALLOCATED),
+				resourceRepo.countByTypeAndStatus(type, ResourceStatus.ACTIVE),
+				resourceRepo.countByTypeAndStatus(type, ResourceStatus.INACTIVE),
+				resourceRepo.countByTypeAndStatus(type, ResourceStatus.COMPLETED), resourceRepo.countByType(type));
+	}
 }

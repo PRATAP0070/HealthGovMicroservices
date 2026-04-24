@@ -256,10 +256,10 @@ public class ResourceServiceImpl implements ResourceService {
 private FundsResourceReportDTO buildFundsResourceReport() {
 
         return new FundsResourceReportDTO(
-        		resourceRepo.countByTypeAndStatus(ResourceType.FUNDS, ResourceStatus.PENDING),
-        		resourceRepo.countByTypeAndStatus(ResourceType.FUNDS, ResourceStatus.ALLOCATED),
-        		resourceRepo.countByTypeAndStatus(ResourceType.FUNDS, ResourceStatus.ACTIVE),
-        		resourceRepo.countByTypeAndStatus(ResourceType.FUNDS, ResourceStatus.COMPLETED),
+        		resourceRepo.sumAmountByTypeAndStatus(ResourceType.FUNDS, ResourceStatus.PENDING),
+        		resourceRepo.sumAmountByTypeAndStatus(ResourceType.FUNDS, ResourceStatus.ALLOCATED),
+        		resourceRepo.sumAmountByTypeAndStatus(ResourceType.FUNDS, ResourceStatus.ACTIVE),
+        		resourceRepo.sumAmountByTypeAndStatus(ResourceType.FUNDS, ResourceStatus.COMPLETED),
         		resourceRepo.sumAmountByType(ResourceType.FUNDS)
         );
     }

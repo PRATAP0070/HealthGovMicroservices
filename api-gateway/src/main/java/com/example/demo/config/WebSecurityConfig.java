@@ -51,14 +51,14 @@ public class WebSecurityConfig {
                     "/healthGov/login",
                     "/healthGov/getUserById/**",
                     "/healthGov/citizenRegister",
-                    "/healthGov/forgotPassword",
+                    "/healthGov/forgotPassword/**",
                     "/citizen/**"
                 ).permitAll()
 
                 .pathMatchers(HttpMethod.OPTIONS, "/**").permitAll()
  
                 // ✅ ROLE check (NOT authority)
-                .pathMatchers("/healthGov/userRegisterByAdmin").hasRole("ADMIN")
+                .pathMatchers("/healthGov/userRegisterByAdmin","/healthGov/deleteUserByAdmin/**").hasRole("ADMIN")
                 .pathMatchers("/audit_log/**").hasRole("ADMIN")
                 .pathMatchers("/health-profile/**").hasRole("PROVIDER")
                 .pathMatchers("/document/**").hasAnyRole("CITIZEN","PROVIDER")
@@ -66,6 +66,11 @@ public class WebSecurityConfig {
                 .pathMatchers("/manager/**").hasRole("MANAGER")
                 .pathMatchers("/api/v1/compliance-records/**").hasAnyRole("COMPLIANCE","AUDITOR")
                 .pathMatchers("/api/v1/audits/**").hasRole("AUDITOR")
+                .pathMatchers("/api/programs/**").hasRole("MANAGER")
+                .pathMatchers("/resources/**").hasRole("MANAGER")
+                .pathMatchers("/infrastructures/**").hasRole("MANAGER")
+ 
+                .pathMatchers("/api/enrollments/**").hasRole("CITIZEN")
 
  
                 .anyExchange().authenticated()

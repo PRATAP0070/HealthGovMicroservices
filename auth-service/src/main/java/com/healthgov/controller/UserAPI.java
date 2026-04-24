@@ -27,7 +27,6 @@ import com.healthgov.dto.UserDTO;
 import com.healthgov.dto.UserReqDTO;
 import com.healthgov.enums.Role;
 import com.healthgov.exception.AuthenticationFailedException;
-import com.healthgov.model.User;
 import com.healthgov.service.AuditLogService;
 import com.healthgov.service.ForgetPasswordService;
 import com.healthgov.service.LoginServiceImpl;
@@ -87,9 +86,8 @@ public class UserAPI {
 		String role = userDetails.getAuthorities().stream().findFirst()
 				.orElseThrow(() -> new RuntimeException("Role not found")).getAuthority().replace("ROLE_", "");
 
-		
-		
-		final String token = jwtTokenUtil.generateToken(userDetails, Role.valueOf(role),service.getUserIdByEmail(loginDto.getEmail()));
+		final String token = jwtTokenUtil.generateToken(userDetails, Role.valueOf(role),
+				service.getUserIdByEmail(loginDto.getEmail()));
 
 		log.info("After token generated");
 		auditLogService.createAuditLog(loginServiceImpl.getUserById(loginDto.getEmail()), "login", "Profile");
@@ -125,11 +123,11 @@ public class UserAPI {
 	public List<UserReqDTO> getAllCitizens() {
 		return service.listOfCitizen();
 	}
-	
+
 	@DeleteMapping("/deleteUserByAdmin/{userId}")
-	public ResponseEntity<String> deleteUserByAdmin(@PathVariable Long userId){
+	public ResponseEntity<String> deleteUserByAdmin(@PathVariable Long userId) {
 		String deletedUser = registrationService.deleteUserByAdmin(userId);
-		return  new ResponseEntity<>(deletedUser, HttpStatus.NO_CONTENT);
+		return new ResponseEntity<>(deletedUser, HttpStatus.NO_CONTENT);
 	}
-	
+
 }

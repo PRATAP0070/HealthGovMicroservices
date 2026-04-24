@@ -5,6 +5,7 @@ import java.util.List;
 import com.healthgov.dtos.ComplianceCreateRequest;
 import com.healthgov.dtos.ComplianceResponseDTO;
 import com.healthgov.dtos.ComplianceUpdateRequest;
+import com.healthgov.dtos.OfficerComplianceUpdateRequest;
 import com.healthgov.enums.ComplianceType;
 
 public interface ComplianceService {
@@ -24,4 +25,6 @@ public interface ComplianceService {
 	ComplianceResponseDTO updateNotesByEntityIdAndType(ComplianceType type, Long entityId, String notes);
 
 	ComplianceResponseDTO deleteById(Long id);
+
+	ComplianceResponseDTO updateByOfficer(ComplianceType type, Long entityId, OfficerComplianceUpdateRequest request);
 }

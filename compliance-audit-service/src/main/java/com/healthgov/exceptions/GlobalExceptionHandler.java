@@ -43,36 +43,26 @@ public class GlobalExceptionHandler {
 				.path(req.getRequestURI()).build();
 		return ResponseEntity.badRequest().body(body);
 	}
-	
+
 	@ExceptionHandler(TransactionSystemException.class)
-	public ResponseEntity<ApiError> handleTransactionException(
-	        TransactionSystemException ex,
-	        HttpServletRequest req) {
+	public ResponseEntity<ApiError> handleTransactionException(TransactionSystemException ex, HttpServletRequest req) {
 
-	    Throwable rootCause = ex.getMostSpecificCause();
+		Throwable rootCause = ex.getMostSpecificCause();
 
-	    if (rootCause instanceof AuditRequestException auditEx) {
-	        ApiError body = ApiError.builder()
-	                .timestamp(Instant.now())
-	                .status(HttpStatus.BAD_REQUEST.value())
-	                .error(HttpStatus.BAD_REQUEST.getReasonPhrase())
-	                .code("BAD_REQUEST")
-	                .message(auditEx.getMessage())
-	                .path(req.getRequestURI())
-	                .build();
-	        return ResponseEntity.badRequest().body(body);
-	    }
+		if (rootCause instanceof AuditRequestException auditEx) {
+			ApiError body = ApiError.builder().timestamp(Instant.now()).status(HttpStatus.BAD_REQUEST.value())
+					.error(HttpStatus.BAD_REQUEST.getReasonPhrase()).code("BAD_REQUEST").message(auditEx.getMessage())
+					.path(req.getRequestURI()).build();
+			return ResponseEntity.badRequest().body(body);
+		}
 
-	    ApiError body = ApiError.builder()
-	            .timestamp(Instant.now())
-	            .status(HttpStatus.INTERNAL_SERVER_ERROR.value())
-	            .error(HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase())
-	            .code("INTERNAL_ERROR")
-	            .message("Something went wrong. Please try again or contact support.")
-	            .path(req.getRequestURI())
-	            .build();
-	    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(body);
+		ApiError body = ApiError.builder().timestamp(Instant.now()).status(HttpStatus.INTERNAL_SERVER_ERROR.value())
+				.error(HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase()).code("INTERNAL_ERROR")
+				.message("Something went wrong. Please try again or contact support.").path(req.getRequestURI())
+				.build();
+		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(body);
 	}
+
 
 	@ExceptionHandler(MethodArgumentTypeMismatchException.class)
 	public ResponseEntity<ApiError> handleTypeMismatch(MethodArgumentTypeMismatchException ex, HttpServletRequest req) {
@@ -92,44 +82,29 @@ public class GlobalExceptionHandler {
 
 		return ResponseEntity.badRequest().body(body);
 	}
-	 @ExceptionHandler(HttpMessageNotReadableException.class)
-	    public ResponseEntity<Map<String, Object>> handleInvalidEnumValue(
-	            HttpMessageNotReadableException ex) {
 
-	        Throwable cause = ex.getCause();
+	@ExceptionHandler(HttpMessageNotReadableException.class)
+	public ResponseEntity<Map<String, Object>> handleInvalidEnumValue(HttpMessageNotReadableException ex) {
 
-	        if (cause instanceof InvalidFormatException ife &&
-	                ife.getTargetType().isEnum()) {
+		Throwable cause = ex.getCause();
 
-	            String invalidValue = ife.getValue().toString();
-	            String enumName = ife.getTargetType().getSimpleName();
+		if (cause instanceof InvalidFormatException ife && ife.getTargetType().isEnum()) {
 
-	            Object[] allowedValues = ife.getTargetType().getEnumConstants();
+			String invalidValue = ife.getValue().toString();
+			String enumName = ife.getTargetType().getSimpleName();
 
-	            return ResponseEntity
-	                    .status(HttpStatus.BAD_REQUEST)
-	                    .body(Map.of(
-	                            "status", 400,
-	                            "error", "Invalid value provided",
-	                            "message", String.format(
-	                                    "Invalid %s value '%s'. Allowed values are: %s",
-	                                    enumName,
-	                                    invalidValue,
-	                                    java.util.Arrays.toString(allowedValues)
-	                            )
-	                    ));
-	        }
+			Object[] allowedValues = ife.getTargetType().getEnumConstants();
 
-	        // fallback
-	        return ResponseEntity
-	                .status(HttpStatus.BAD_REQUEST)
-	                .body(Map.of(
-	                        "status", 400,
-	                        "error", "Malformed request",
-	                        "message", "Request body or path variable is invalid"
-	                ));
-	    }
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+					.body(Map.of("status", 400, "error", "Invalid value provided", "message",
+							String.format("Invalid %s value '%s'. Allowed values are: %s", enumName, invalidValue,
+									java.util.Arrays.toString(allowedValues))));
+		}
 
+		// fallback
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("status", 400, "error", "Malformed request",
+				"message", "Request body or path variable is invalid"));
+	}
 
 	@ExceptionHandler(DataIntegrityViolationException.class)
 	public ResponseEntity<ApiError> handleConstraint(DataIntegrityViolationException ex, HttpServletRequest req) {

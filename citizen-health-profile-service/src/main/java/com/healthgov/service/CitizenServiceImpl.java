@@ -60,7 +60,7 @@ public class CitizenServiceImpl implements CitizenService {
         
         citizen.setAddress(request.getAddress());
         citizen.setContactInfo(request.getContactInfo());
-        citizen.setStatus(RegistrationStatus.INACTIVE);
+        citizen.setStatus(RegistrationStatus.PENDING);
 
         Citizen saved = repository.save(citizen);
         return mapToResponse(saved);

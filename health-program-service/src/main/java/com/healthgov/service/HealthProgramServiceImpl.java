@@ -1,8 +1,11 @@
 package com.healthgov.service;
 
+
+
 import java.time.LocalDate;
 import java.util.List;
 
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -11,22 +14,27 @@ import com.healthgov.citizenFeignClient.ResourceClient;
 import com.healthgov.dto.HealthProgramDTO;
 import com.healthgov.dto.HealthProgramResponseDTO;
 import com.healthgov.dto.ProgramStatusResponse;
+import com.healthgov.events.ProgramCreatedEvent;
 import com.healthgov.exceptions.ProgramException;
 import com.healthgov.model.Enrollment;
 import com.healthgov.model.HealthProgram;
 import com.healthgov.repository.EnrollmentRepository;
 import com.healthgov.repository.HealthProgramRepository;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class HealthProgramServiceImpl implements HealthProgramService {
 
 	private final HealthProgramRepository repo;
 	private final EnrollmentRepository enrollRoll;
 
 	private final ResourceClient resourceClient;
+	private final ApplicationEventPublisher eventPublisher;
 
 	private final InfrastructureClient infraClient;
 
@@ -46,6 +54,7 @@ public class HealthProgramServiceImpl implements HealthProgramService {
 
 	/* -------------------- Create -------------------- */
 
+	@Transactional
 	@Override
 	public HealthProgramResponseDTO createProgram(HealthProgramDTO dto) {
 
@@ -59,7 +68,13 @@ public class HealthProgramServiceImpl implements HealthProgramService {
 		program.setBudget(dto.getBudget());
 		program.setStatus(dto.getStatus());
 
-		return map(repo.save(program));
+		HealthProgram saved = repo.save(program);
+
+		// Calling compliance Client for Grant
+		eventPublisher.publishEvent(new ProgramCreatedEvent(saved.getProgramId(), saved.getTitle()));
+		log.info("Compliance Create Event Triggred for Program...");
+		
+		return map(saved);
 	}
 
 	/* -------------------- Update -------------------- */
@@ -139,8 +154,8 @@ public class HealthProgramServiceImpl implements HealthProgramService {
 		dto.setBudget(program.getBudget());
 		dto.setStatus(program.getStatus());
 
-		dto.setEnrollments(enrollRoll.findByProgramId(program.getProgramId()).stream()
-				.map(this::mapEnrollment).toList());
+		dto.setEnrollments(
+				enrollRoll.findByProgramId(program.getProgramId()).stream().map(this::mapEnrollment).toList());
 
 		try {
 			dto.setResources(resourceClient.getResourcesByProgram(program.getProgramId()));
@@ -156,17 +171,16 @@ public class HealthProgramServiceImpl implements HealthProgramService {
 
 		return dto;
 	}
-	
-	private HealthProgramResponseDTO.EnrollmentDTO mapEnrollment(Enrollment e)
-	{
-		HealthProgramResponseDTO.EnrollmentDTO enroll=new HealthProgramResponseDTO.EnrollmentDTO();
-		
+
+	private HealthProgramResponseDTO.EnrollmentDTO mapEnrollment(Enrollment e) {
+		HealthProgramResponseDTO.EnrollmentDTO enroll = new HealthProgramResponseDTO.EnrollmentDTO();
+
 		enroll.setCitizenId(e.getCitizenId());
 		enroll.setEnrolledDate(e.getDate());
 		enroll.setEnrollmentId(e.getEnrollmentId());
 		enroll.setStatus(e.getStatus());
-		
-		return  enroll;
+
+		return enroll;
 	}
 
 }

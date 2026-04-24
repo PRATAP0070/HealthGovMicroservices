@@ -65,6 +65,7 @@ public class UserAPI {
 	@PostMapping("/citizenRegister")
 	public ResponseEntity<UserDTO> addCitizen(@RequestBody UserDTO userDTO) {
 		UserDTO savedDto = registrationService.registerUser(userDTO);
+		userDTO.setRole(Role.CITIZEN);
 		return new ResponseEntity<>(savedDto, HttpStatus.CREATED);
 	}
 

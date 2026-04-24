@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.healthgov.dto.InfrastructureCreateRequest;
+import com.healthgov.dto.InfrastructureReportResponseDTO;
 import com.healthgov.dto.InfrastructureResponse;
 import com.healthgov.dto.InfrastructureUpdateRequest;
 import com.healthgov.enums.InfrastructureStatus;
@@ -42,6 +43,7 @@ public class InfrastructureController {
 		return service.createInfrastructure(request);
 	}
 
+	
 	@PutMapping("/update/{infraId}")
 	public InfrastructureResponse update(@PathVariable Long infraId,
 			@Valid @RequestBody InfrastructureUpdateRequest request) {
@@ -62,6 +64,7 @@ public class InfrastructureController {
 		return service.getInfrastructureById(infraId);
 	}
 
+	
 	@GetMapping("/getAll")
 	public List<InfrastructureResponse> getAll() {
 		log.info("Fetching all infrastructures");
@@ -81,4 +84,10 @@ public class InfrastructureController {
 		log.info("Searching infrastructures with type={}, location={}, status={}", type, location, status);
 		return service.getInfrastructuresByTypeLocationAndStatus(type, location.trim(), status);
 	}
+	
+	@GetMapping("/report")
+	public InfrastructureReportResponseDTO getInfrastructureReport() {
+		return service.getInfrastructureReport();
+	}
+
 }

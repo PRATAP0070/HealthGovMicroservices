@@ -2,6 +2,8 @@ package com.healthgov.services;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,14 +13,15 @@ import org.springframework.transaction.annotation.Transactional;
 import com.healthgov.dtos.AuditCreateRequest;
 import com.healthgov.dtos.ComplianceCreateRequest;
 import com.healthgov.dtos.ComplianceResponseDTO;
+import com.healthgov.dtos.ComplianceSummaryResponseDTO;
 import com.healthgov.dtos.ComplianceUpdateRequest;
 import com.healthgov.dtos.OfficerComplianceUpdateRequest;
 import com.healthgov.dtos.UserResponseDto;
 import com.healthgov.enums.AuditStatus;
+import com.healthgov.enums.ComplianceResult;
 import com.healthgov.enums.ComplianceType;
 import com.healthgov.exceptions.ComplianceRequestException;
 import com.healthgov.exceptions.ResourceNotFoundException;
-import com.healthgov.feignclients.UserClient;
 import com.healthgov.models.ComplianceRecord;
 import com.healthgov.repository.ComplianceRecordRepository;
 
@@ -31,7 +34,7 @@ public class ComplianceServiceImpl implements ComplianceService {
 	private final ComplianceRecordRepository complianceRepo;
 	private final ComplianceUtil complianceUtil;
 	private final AuditService auditService;
-	
+
 	private static final Logger log = LoggerFactory.getLogger(ComplianceServiceImpl.class);
 
 	@Override
@@ -117,14 +120,14 @@ public class ComplianceServiceImpl implements ComplianceService {
 	public ComplianceResponseDTO updateByOfficer(ComplianceType type, Long entityId,
 			OfficerComplianceUpdateRequest request) {
 
-		// ✅ Centralized officer validation
+		//Centralized officer validation
 		UserResponseDto officer = complianceUtil.validateComplianceOfficer(request.getOfficerId());
 
 		ComplianceRecord record = complianceRepo.findOneByEntityIdAndType(entityId, type)
 				.orElseThrow(() -> new ResourceNotFoundException(
 						"Compliance record not found for type=" + type + ", entityId=" + entityId));
 
-		// ✅ Officer is allowed to change ONLY these
+		//Officer is allowed to change ONLY these
 		record.setResult(request.getResult());
 
 		if (request.getNotes() != null && !request.getNotes().isBlank()) {
@@ -134,16 +137,17 @@ public class ComplianceServiceImpl implements ComplianceService {
 		record.setDate(LocalDate.now());
 
 		ComplianceRecord saved = complianceRepo.save(record);
-		
-		AuditCreateRequest auditRequest=new AuditCreateRequest();
+
+		AuditCreateRequest auditRequest = new AuditCreateRequest();
 		auditRequest.setDate(LocalDate.now());
 		auditRequest.setOfficerId(officer.getUserId());
 		auditRequest.setStatus(AuditStatus.SCHEDULED);
-		auditRequest.setFindings("Audit Created by the Officer "+officer.getUserId()+" for Compliance ID: "+saved.getComplianceId());
-		auditRequest.setScope(saved.getType()+":"+saved.getEntityId());
-		
-        auditService.createAudit(auditRequest);
-		
+		auditRequest.setFindings("Audit Created by the Officer " + officer.getUserId() + " for Compliance ID: "
+				+ saved.getComplianceId());
+		auditRequest.setScope(saved.getType() + ":" + saved.getEntityId());
+
+		auditService.createAudit(auditRequest);
+
 		log.info("Compliance record id={} updated by officerId={} officerName={}", saved.getComplianceId(),
 				officer.getUserId(), officer.getName());
 
@@ -200,6 +204,22 @@ public class ComplianceServiceImpl implements ComplianceService {
 		return convertToDto(existing);
 	}
 
+	@Transactional(readOnly = true)
+	public ComplianceSummaryResponseDTO getComplianceSummary() {
+
+		long total = complianceRepo.count();
+
+		Map<ComplianceType, Long> byType = complianceRepo.countByType().stream()
+				.collect(Collectors.toMap(r -> (ComplianceType) r[0], r -> (Long) r[1]));
+
+		Map<ComplianceResult, Long> byResult = complianceRepo.countByResult().stream()
+				.collect(Collectors.toMap(r -> (ComplianceResult) r[0], r -> (Long) r[1]));
+
+		log.info("Compliance summary fetched: total={}", total);
+
+		return new ComplianceSummaryResponseDTO(total, byResult, byType);
+	}
+
 	private ComplianceResponseDTO convertToDto(ComplianceRecord rec) {
 		ComplianceResponseDTO dto = new ComplianceResponseDTO();
 		dto.setComplianceId(rec.getComplianceId());
@@ -209,7 +229,7 @@ public class ComplianceServiceImpl implements ComplianceService {
 		dto.setEntityId(rec.getEntityId());
 		dto.setType(rec.getType());
 
-		// ✅ Fetch and embed entity details
+		//Fetch and embed entity details
 		dto.setEntity(complianceUtil.fetchEntityDetails(rec.getType(), rec.getEntityId()));
 
 		return dto;

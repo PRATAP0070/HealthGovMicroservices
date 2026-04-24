@@ -154,3 +154,75 @@
 2026-04-24T16:49:42.030+05:30  WARN 37044 --- [research-service] [HikariPool-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=45m15s336ms755µs100ns).
 2026-04-24T16:54:35.695+05:30  INFO 37044 --- [research-service] [AsyncResolver-bootstrap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
 2026-04-24T16:59:35.726+05:30  INFO 37044 --- [research-service] [AsyncResolver-bootstrap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-04-24T18:07:21.945+05:30  INFO 1012 --- [research-service] [main] c.healthgov.ResearchServiceApplication   : Starting ResearchServiceApplication using Java 21.0.8 with PID 1012 (C:\Users\2481285\git\HealthGovMicroservices\research-service\target\classes started by 2481285 in C:\Users\2481285\git\HealthGovMicroservices\research-service)
+2026-04-24T18:07:21.953+05:30  INFO 1012 --- [research-service] [main] c.healthgov.ResearchServiceApplication   : No active profile set, falling back to 1 default profile: "default"
+2026-04-24T18:07:24.121+05:30  INFO 1012 --- [research-service] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-04-24T18:07:24.508+05:30  INFO 1012 --- [research-service] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 366 ms. Found 3 JPA repository interfaces.
+2026-04-24T18:07:25.164+05:30  INFO 1012 --- [research-service] [main] o.s.cloud.context.scope.GenericScope     : BeanFactory id=87affe21-6549-35aa-9791-e9e20fb70c39
+2026-04-24T18:07:25.638+05:30  INFO 1012 --- [research-service] [main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 7777 (http)
+2026-04-24T18:07:25.655+05:30  INFO 1012 --- [research-service] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-04-24T18:07:25.656+05:30  INFO 1012 --- [research-service] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.20]
+2026-04-24T18:07:25.723+05:30  INFO 1012 --- [research-service] [main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 3654 ms
+2026-04-24T18:07:26.153+05:30  INFO 1012 --- [research-service] [main] org.hibernate.orm.jpa                    : HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-04-24T18:07:26.265+05:30  INFO 1012 --- [research-service] [main] org.hibernate.orm.core                   : HHH000001: Hibernate ORM core version 7.2.7.Final
+2026-04-24T18:07:27.166+05:30  INFO 1012 --- [research-service] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-04-24T18:07:27.226+05:30  INFO 1012 --- [research-service] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-04-24T18:07:27.844+05:30  INFO 1012 --- [research-service] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@65f36591
+2026-04-24T18:07:27.848+05:30  INFO 1012 --- [research-service] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-04-24T18:07:28.096+05:30  INFO 1012 --- [research-service] [main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [jdbc:mysql://localhost:3306/research_service_db]
+	Database driver: MySQL Connector/J
+	Database dialect: MySQLDialect
+	Database version: 8.0.44
+	Default catalog/schema: research_service_db/undefined
+	Autocommit mode: undefined/unknown
+	Isolation level: REPEATABLE_READ [default REPEATABLE_READ]
+	JDBC fetch size: none
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-04-24T18:07:30.021+05:30  INFO 1012 --- [research-service] [main] org.hibernate.orm.core                   : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-04-24T18:07:30.302+05:30  INFO 1012 --- [research-service] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-04-24T18:07:30.456+05:30  INFO 1012 --- [research-service] [main] o.s.d.j.r.query.QueryEnhancerFactories   : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-04-24T18:07:31.026+05:30  WARN 1012 --- [research-service] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-04-24T18:07:31.185+05:30  INFO 1012 --- [research-service] [main] o.s.c.openfeign.FeignClientFactoryBean   : For 'auth-service' URL not provided. Will try picking an instance via load-balancing.
+2026-04-24T18:07:31.298+05:30  INFO 1012 --- [research-service] [main] o.s.c.openfeign.FeignClientFactoryBean   : For 'compliance-audit-service' URL not provided. Will try picking an instance via load-balancing.
+2026-04-24T18:07:32.352+05:30  INFO 1012 --- [research-service] [main] DiscoveryClientOptionalArgsConfiguration : Eureka HTTP Client uses RestClient.
+2026-04-24T18:07:32.405+05:30  WARN 1012 --- [research-service] [main] iguration$LoadBalancerCaffeineWarnLogger : Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2026-04-24T18:07:32.436+05:30  INFO 1012 --- [research-service] [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 2 endpoints beneath base path '/actuator'
+2026-04-24T18:07:32.579+05:30  INFO 1012 --- [research-service] [main] o.s.c.n.eureka.InstanceInfoFactory       : Setting initial instance status as: STARTING
+2026-04-24T18:07:32.629+05:30  INFO 1012 --- [research-service] [main] com.netflix.discovery.DiscoveryClient    : Initializing Eureka in region us-east-1
+2026-04-24T18:07:32.640+05:30  INFO 1012 --- [research-service] [main] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-04-24T18:07:32.657+05:30  INFO 1012 --- [research-service] [main] com.netflix.discovery.DiscoveryClient    : Disable delta property : false
+2026-04-24T18:07:32.657+05:30  INFO 1012 --- [research-service] [main] com.netflix.discovery.DiscoveryClient    : Single vip registry refresh property : null
+2026-04-24T18:07:32.657+05:30  INFO 1012 --- [research-service] [main] com.netflix.discovery.DiscoveryClient    : Force full registry fetch : false
+2026-04-24T18:07:32.657+05:30  INFO 1012 --- [research-service] [main] com.netflix.discovery.DiscoveryClient    : Application is null : false
+2026-04-24T18:07:32.657+05:30  INFO 1012 --- [research-service] [main] com.netflix.discovery.DiscoveryClient    : Registered Applications size is zero : true
+2026-04-24T18:07:32.658+05:30  INFO 1012 --- [research-service] [main] com.netflix.discovery.DiscoveryClient    : Application version is -1: true
+2026-04-24T18:07:32.658+05:30  INFO 1012 --- [research-service] [main] com.netflix.discovery.DiscoveryClient    : Getting all instance registry info from the eureka server
+2026-04-24T18:07:33.495+05:30  INFO 1012 --- [research-service] [main] com.netflix.discovery.DiscoveryClient    : The response status is 200
+2026-04-24T18:07:33.499+05:30  INFO 1012 --- [research-service] [main] com.netflix.discovery.DiscoveryClient    : Starting heartbeat executor: renew interval is: 30
+2026-04-24T18:07:33.505+05:30  INFO 1012 --- [research-service] [main] c.n.discovery.InstanceInfoReplicator     : InstanceInfoReplicator onDemand update allowed rate per min is 4
+2026-04-24T18:07:33.508+05:30  INFO 1012 --- [research-service] [main] com.netflix.discovery.DiscoveryClient    : Discovery Client initialized at timestamp 1777034253507 with initial instances count: 0
+2026-04-24T18:07:33.516+05:30  INFO 1012 --- [research-service] [main] o.s.c.n.e.s.EurekaServiceRegistry        : Registering application RESEARCH-SERVICE with eureka with status UP
+2026-04-24T18:07:33.517+05:30  INFO 1012 --- [research-service] [main] com.netflix.discovery.DiscoveryClient    : Saw local status change event StatusChangeEvent [timestamp=1777034253517, current=UP, previous=STARTING]
+2026-04-24T18:07:33.521+05:30  INFO 1012 --- [research-service] [DiscoveryClient-InstanceInfoReplicator-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_RESEARCH-SERVICE/LTIN718314.cts.com:research-service:7777: registering service...
+2026-04-24T18:07:33.562+05:30  INFO 1012 --- [research-service] [main] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 7777 (http) with context path '/'
+2026-04-24T18:07:33.563+05:30  INFO 1012 --- [research-service] [main] .s.c.n.e.s.EurekaAutoServiceRegistration : Updating port to 7777
+2026-04-24T18:07:33.590+05:30  INFO 1012 --- [research-service] [main] c.healthgov.ResearchServiceApplication   : Started ResearchServiceApplication in 12.599 seconds (process running for 14.38)
+2026-04-24T18:07:33.745+05:30  INFO 1012 --- [research-service] [DiscoveryClient-InstanceInfoReplicator-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_RESEARCH-SERVICE/LTIN718314.cts.com:research-service:7777 - registration status: 204
+2026-04-24T18:07:33.962+05:30  INFO 1012 --- [research-service] [RMI TCP Connection(5)-127.0.0.1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-04-24T18:07:33.962+05:30  INFO 1012 --- [research-service] [RMI TCP Connection(5)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-04-24T18:07:33.964+05:30  INFO 1012 --- [research-service] [RMI TCP Connection(5)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
+2026-04-24T18:08:03.502+05:30  INFO 1012 --- [research-service] [DiscoveryClient-CacheRefreshExecutor-%d] com.netflix.discovery.DiscoveryClient    : Disable delta property : false
+2026-04-24T18:08:03.502+05:30  INFO 1012 --- [research-service] [DiscoveryClient-CacheRefreshExecutor-%d] com.netflix.discovery.DiscoveryClient    : Single vip registry refresh property : null
+2026-04-24T18:08:03.502+05:30  INFO 1012 --- [research-service] [DiscoveryClient-CacheRefreshExecutor-%d] com.netflix.discovery.DiscoveryClient    : Force full registry fetch : false
+2026-04-24T18:08:03.502+05:30  INFO 1012 --- [research-service] [DiscoveryClient-CacheRefreshExecutor-%d] com.netflix.discovery.DiscoveryClient    : Application is null : false
+2026-04-24T18:08:03.502+05:30  INFO 1012 --- [research-service] [DiscoveryClient-CacheRefreshExecutor-%d] com.netflix.discovery.DiscoveryClient    : Registered Applications size is zero : true
+2026-04-24T18:08:03.502+05:30  INFO 1012 --- [research-service] [DiscoveryClient-CacheRefreshExecutor-%d] com.netflix.discovery.DiscoveryClient    : Application version is -1: false
+2026-04-24T18:08:03.502+05:30  INFO 1012 --- [research-service] [DiscoveryClient-CacheRefreshExecutor-%d] com.netflix.discovery.DiscoveryClient    : Getting all instance registry info from the eureka server
+2026-04-24T18:08:03.546+05:30  INFO 1012 --- [research-service] [DiscoveryClient-CacheRefreshExecutor-%d] com.netflix.discovery.DiscoveryClient    : The response status is 200
+2026-04-24T18:12:32.672+05:30  INFO 1012 --- [research-service] [AsyncResolver-bootstrap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-04-24T18:13:00.696+05:30  INFO 1012 --- [research-service] [http-nio-7777-exec-1] c.h.c.ResearchProjectController          : Fetching project by ID=1
+2026-04-24T18:13:01.294+05:30  INFO 1012 --- [research-service] [http-nio-7777-exec-3] c.h.c.ResearchProjectController          : Fetching project by ID=2
+2026-04-24T18:17:32.688+05:30  INFO 1012 --- [research-service] [AsyncResolver-bootstrap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration

@@ -6,5 +6,6 @@ import lombok.Data;
 public class ForgetPasswordDto {
     private String email;       // or phone
     private String password;
+    private String otp;
 }
 

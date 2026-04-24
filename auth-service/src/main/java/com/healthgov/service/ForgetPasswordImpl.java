@@ -5,7 +5,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.healthgov.client.NotificationClient;
 import com.healthgov.dto.ForgetPasswordDto;
+import com.healthgov.dto.OtpNotificationDto;
 //import com.healthgov.exception.ResourceNotFoundException;
 import com.healthgov.model.User;
 import com.healthgov.repo.RegistrationLoginRepo;
@@ -14,7 +16,13 @@ import com.healthgov.repo.RegistrationLoginRepo;
 public class ForgetPasswordImpl implements ForgetPasswordService {
 
 	@Autowired
+	private NotificationClient client;
+
+	@Autowired
 	private RegistrationLoginRepo registrationRepo;
+
+	@Autowired
+	private OtpService otpService;
 
 	@Autowired
 	private PasswordEncoder bcryptEncoder;
@@ -22,12 +30,34 @@ public class ForgetPasswordImpl implements ForgetPasswordService {
 	@Override
 	public String resetPassword(ForgetPasswordDto dto) {
 
+		otpService.validateOtp(dto.getEmail(), dto.getOtp());
+
 		User user = registrationRepo.findByEmail(dto.getEmail())
-		        .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+				.orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
 		user.setPassword(bcryptEncoder.encode(dto.getPassword()));
 		registrationRepo.save(user);
 
 		return "Password updated successfully!";
 	}
+
+	@Override
+	public String generateOtp(String email) {
+
+		registrationRepo.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("User not found"));
+
+		String otp = otpService.generateOtp(email);
+
+		OtpNotificationDto dto = new OtpNotificationDto();
+		dto.setEmail(email);
+		dto.setOtp(otp);
+
+		client.sendOtp(dto);
+
+		// TODO: Send OTP via Email/SMS
+		System.out.println("✅ OTP for " + email + " = " + otp);
+
+		return "OTP sent successfully";
+	}
+
 }

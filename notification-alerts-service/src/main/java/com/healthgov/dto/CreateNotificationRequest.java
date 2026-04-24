@@ -7,6 +7,7 @@ import lombok.Data;
 public class CreateNotificationRequest {
 
     private Long userId;
+    private String mail;
     private Long entityId;
     private NotificationCategory category;
     private String message;

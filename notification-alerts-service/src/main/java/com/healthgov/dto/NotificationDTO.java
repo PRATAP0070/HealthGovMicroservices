@@ -12,6 +12,7 @@ public class NotificationDTO {
     private Long userId;
     private Long entityId;
     private String message;
+    private String email;
     private NotificationCategory category;
     private String status;
     private LocalDateTime createdDate;

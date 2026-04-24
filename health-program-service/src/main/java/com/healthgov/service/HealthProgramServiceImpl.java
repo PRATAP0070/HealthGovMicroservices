@@ -70,7 +70,7 @@ public class HealthProgramServiceImpl implements HealthProgramService {
 
 		HealthProgram saved = repo.save(program);
 
-		// Calling compliance Client for Grant
+		// Calling compliance Client for program
 		eventPublisher.publishEvent(new ProgramCreatedEvent(saved.getProgramId(), saved.getTitle()));
 		log.info("Compliance Create Event Triggred for Program...");
 		

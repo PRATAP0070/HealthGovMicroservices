@@ -3,6 +3,7 @@ package com.healthgov.service;
 import java.util.List;
 
 import com.healthgov.dto.ResourceCreateRequest;
+import com.healthgov.dto.ResourceReportResponseDTO;
 import com.healthgov.dto.ResourceResponse;
 import com.healthgov.dto.ResourceUpdateRequest;
 import com.healthgov.enums.ResourceStatus;
@@ -23,4 +24,6 @@ public interface ResourceService {
 	List<ResourceResponse> getResourcesByProgramId(Long programId);
 
 	List<ResourceResponse> getResourcesByTypeAndStatus(ResourceType type, ResourceStatus status);
+	
+	ResourceReportResponseDTO generateResourceReport();
 }

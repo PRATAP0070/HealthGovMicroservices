@@ -3,6 +3,7 @@ package com.healthgov.repository;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,5 +19,14 @@ public interface AuditRepository extends JpaRepository<Audit, Long> {
 	List<Audit> findByOfficerId(Long officerId);
 
 	boolean existsByOfficerIdAndScopeIgnoreCase(Long userId, String scope);
+
+	@Query("SELECT a.status, COUNT(a) FROM Audit a GROUP BY a.status")
+	List<Object[]> countByStatus();
+
+	@Query("SELECT a.officerId, COUNT(a) FROM Audit a GROUP BY a.officerId")
+	List<Object[]> countByOfficer();
+
+	@Query("SELECT a.scope FROM Audit a")
+	List<String> findAllScopes();
 
 }

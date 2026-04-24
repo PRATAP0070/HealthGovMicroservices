@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.healthgov.dtos.AuditCreateRequest;
 import com.healthgov.dtos.AuditReponseDTO;
+import com.healthgov.dtos.AuditSummaryResponseDTO;
 import com.healthgov.dtos.AuditUpdateRequest;
 
 public interface AuditService {
@@ -21,4 +22,7 @@ public interface AuditService {
 	AuditReponseDTO getAudit(Long auditId);
 
 	List<AuditReponseDTO> getAllAuditsByOfficer(Long officerId);
+	
+    AuditSummaryResponseDTO getAuditSummary();
+
 }

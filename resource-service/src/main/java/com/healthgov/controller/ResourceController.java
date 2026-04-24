@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.healthgov.dto.ResourceCreateRequest;
+import com.healthgov.dto.ResourceReportResponseDTO;
 import com.healthgov.dto.ResourceResponse;
 import com.healthgov.dto.ResourceUpdateRequest;
 import com.healthgov.enums.ResourceStatus;
@@ -75,5 +76,11 @@ public class ResourceController {
 		log.info("Searching resources with type={} and status={}", type, status);
 		return service.getResourcesByTypeAndStatus(type, status);
 	}
+
+	@GetMapping("/report")
+	public ResourceReportResponseDTO getResourceReport() {
+		return service.generateResourceReport();
+	}
+
 	
 }

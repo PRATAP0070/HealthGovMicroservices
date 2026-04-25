@@ -5,8 +5,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -37,7 +35,6 @@ public class AuditServiceImpl implements AuditService {
 	private final AuditUtil auditUtil;
 	private final UserClient userClient;
 
-	private static final Logger log = LoggerFactory.getLogger(AuditServiceImpl.class);
 
 	@Override
 	public List<AuditReponseDTO> getAllAudits() {

@@ -27,54 +27,48 @@ public class NotificationController {
 	private final EmailService emailService;
 	private final NotificationService notificationService;
 
-	public NotificationController(
-	        NotificationService notificationService,
-	        EmailService emailService
-	) {
-	    this.notificationService = notificationService;
-	    this.emailService = emailService;
+	public NotificationController(NotificationService notificationService, EmailService emailService) {
+		this.notificationService = notificationService;
+		this.emailService = emailService;
 	}
 
-	// ================= SEND NOTIFICATION =================
+	// ================= SEND NOTIFICATION (OLD FLOW) =================
 	@PostMapping("/send")
 	public ApiResponse<NotificationDTO> sendNotification(@Valid @RequestBody CreateNotificationRequest request) {
 
 		return ApiResponse.success("Notification sent successfully", notificationService.sendNotification(request));
 	}
-	
+
+	// ================= SEND OTP =================
 	@PostMapping("/sendOtp")
 	public void sendOtp(@RequestBody OtpRequestDTO dto) {
 
-	    if (dto.getEmail() == null || dto.getEmail().isBlank()) {
-	        throw new IllegalArgumentException("Email must not be empty");
-	    }
+		if (dto.getEmail() == null || dto.getEmail().isBlank()) {
+			throw new IllegalArgumentException("Email must not be empty");
+		}
 
-	    if (dto.getOtp() == null || dto.getOtp().isBlank()) {
-	        throw new IllegalArgumentException("OTP must not be empty");
-	    }
+		if (dto.getOtp() == null || dto.getOtp().isBlank()) {
+			throw new IllegalArgumentException("OTP must not be empty");
+		}
 
-	    emailService.sendOtpEmail(dto.getEmail(), dto.getOtp());
+		emailService.sendOtpEmail(dto.getEmail(), dto.getOtp());
 	}
 
-
-	// ================= GET ALL NOTIFICATIONS =================
+	// ================= GET ALL =================
 	@GetMapping
 	public ApiResponse<List<NotificationDTO>> getAllNotifications() {
-
 		return ApiResponse.success("All notifications fetched", notificationService.getAllNotifications());
 	}
 
 	// ================= GET BY USER =================
 	@GetMapping("/user/{userId}")
 	public ApiResponse<List<NotificationDTO>> getByUser(@PathVariable Long userId) {
-
 		return ApiResponse.success("Notifications fetched for user", notificationService.getUserNotifications(userId));
 	}
 
 	// ================= MARK AS READ =================
 	@PutMapping("/{id}/read")
 	public ApiResponse<Void> markAsRead(@PathVariable Long id) {
-
 		notificationService.markAsRead(id);
 		return ApiResponse.success("Notification marked as read", null);
 	}
@@ -82,9 +76,7 @@ public class NotificationController {
 	// ================= DELETE =================
 	@DeleteMapping("/{id}")
 	public ApiResponse<Void> deleteNotification(@PathVariable Long id) {
-
 		notificationService.deleteNotification(id);
 		return ApiResponse.success("Notification deleted successfully", null);
 	}
-	
 }

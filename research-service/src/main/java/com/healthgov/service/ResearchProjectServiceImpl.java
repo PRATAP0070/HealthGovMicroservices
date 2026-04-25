@@ -9,16 +9,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.healthgov.client.ComplianceClient;
 import com.healthgov.client.UserClient;
-import com.healthgov.dto.ComplianceCreateRequest;
-import com.healthgov.dto.ComplianceResponseDTO;
 import com.healthgov.dto.ResearchProjectCreateRequest;
 import com.healthgov.dto.ResearchProjectResponse;
 import com.healthgov.dto.ResearchProjectUpdateRequest;
 import com.healthgov.dto.UserReqDTO;
-import com.healthgov.enums.ComplianceResult;
-import com.healthgov.enums.ComplianceType;
 import com.healthgov.enums.GrantStatus;
 import com.healthgov.enums.ProjectStatus;
 import com.healthgov.enums.Role;

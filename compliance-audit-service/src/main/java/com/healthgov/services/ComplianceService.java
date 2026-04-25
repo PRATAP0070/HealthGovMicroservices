@@ -9,6 +9,8 @@ import com.healthgov.dtos.ComplianceUpdateRequest;
 import com.healthgov.dtos.OfficerComplianceUpdateRequest;
 import com.healthgov.enums.ComplianceType;
 
+import jakarta.servlet.http.HttpServletRequest;
+
 public interface ComplianceService {
 
 	List<ComplianceResponseDTO> getAllComplianceRecords();
@@ -29,5 +31,5 @@ public interface ComplianceService {
 
 	ComplianceSummaryResponseDTO getComplianceSummary();
 
-	ComplianceResponseDTO updateByOfficer(ComplianceType type, Long entityId, OfficerComplianceUpdateRequest request);
+	ComplianceResponseDTO updateByOfficer(ComplianceType type, Long entityId, OfficerComplianceUpdateRequest request, HttpServletRequest httpRequest);
 }

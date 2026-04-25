@@ -16,6 +16,7 @@ import com.healthgov.dtos.ComplianceResponseDTO;
 import com.healthgov.dtos.ComplianceSummaryResponseDTO;
 import com.healthgov.dtos.ComplianceUpdateRequest;
 import com.healthgov.dtos.OfficerComplianceUpdateRequest;
+import com.healthgov.dtos.RequestUserContext;
 import com.healthgov.dtos.UserResponseDto;
 import com.healthgov.enums.AuditStatus;
 import com.healthgov.enums.ComplianceResult;
@@ -25,6 +26,7 @@ import com.healthgov.exceptions.ResourceNotFoundException;
 import com.healthgov.models.ComplianceRecord;
 import com.healthgov.repository.ComplianceRecordRepository;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -34,6 +36,7 @@ public class ComplianceServiceImpl implements ComplianceService {
 	private final ComplianceRecordRepository complianceRepo;
 	private final ComplianceUtil complianceUtil;
 	private final AuditService auditService;
+	private final RequestUserContext requestUserContext;
 
 	private static final Logger log = LoggerFactory.getLogger(ComplianceServiceImpl.class);
 
@@ -118,9 +121,16 @@ public class ComplianceServiceImpl implements ComplianceService {
 	@Override
 	@Transactional
 	public ComplianceResponseDTO updateByOfficer(ComplianceType type, Long entityId,
-			OfficerComplianceUpdateRequest request) {
+			OfficerComplianceUpdateRequest request,HttpServletRequest httpRequest) {
 
 		//Centralized officer validation
+		
+		Long userId = requestUserContext.getUserId(httpRequest);
+		String email = requestUserContext.getEmail(httpRequest);
+		String role = requestUserContext.getRole(httpRequest);
+		
+		System.out.printf("Headers userId=%d, email=%s, role=%s%n", userId, email, role);
+		
 		UserResponseDto officer = complianceUtil.validateComplianceOfficer(request.getOfficerId());
 
 		ComplianceRecord record = complianceRepo.findOneByEntityIdAndType(entityId, type)

@@ -25,6 +25,7 @@ import com.healthgov.dtos.OfficerComplianceUpdateRequest;
 import com.healthgov.enums.ComplianceType;
 import com.healthgov.services.ComplianceService;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 
 @RestController
@@ -101,12 +102,12 @@ public class ComplianceController {
 	// OFFICER UPDATE: result + notes (by type & entityId)
 	@PatchMapping("/{type}/{entityId}/officer-update")
 	public ResponseEntity<ComplianceResponseDTO> officerUpdate(@PathVariable ComplianceType type,
-			@PathVariable Long entityId, @Valid @RequestBody OfficerComplianceUpdateRequest request) {
+			@PathVariable Long entityId, @Valid @RequestBody OfficerComplianceUpdateRequest request, HttpServletRequest httpRequest) {
 
 		log.info("PATCH /api/v1/compliance-records/{}/{}/officer-update result={} officerId={}", type, entityId,
 				request.getResult(), request.getOfficerId());
 
-		return ResponseEntity.ok(complianceService.updateByOfficer(type, entityId, request));
+		return ResponseEntity.ok(complianceService.updateByOfficer(type, entityId, request,httpRequest));
 	}
 
 	@GetMapping("/summary")

@@ -129,5 +129,9 @@ public class UserAPI {
 		String deletedUser = registrationService.deleteUserByAdmin(userId);
 		return new ResponseEntity<>(deletedUser, HttpStatus.NO_CONTENT);
 	}
-
+	
+	@GetMapping("/getUserByRole/{role}")
+	public List<UserReqDTO> getUserByRole(@PathVariable Role role) {
+	    return service.getUsersByRole(role);
+	}
 }

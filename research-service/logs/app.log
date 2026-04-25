@@ -1,0 +1,1 @@
+2026-04-24T18:27:32.705+05:30  INFO 1012 --- [research-service] [AsyncResolver-bootstrap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration

@@ -69,7 +69,6 @@ public class WebSecurityConfig {
                 .pathMatchers("/api/programs/**").hasRole("MANAGER")
                 .pathMatchers("/resources/**").hasRole("MANAGER")
                 .pathMatchers("/infrastructures/**").hasRole("MANAGER")
- 
                 .pathMatchers("/api/enrollments/**").hasRole("CITIZEN")
 
  

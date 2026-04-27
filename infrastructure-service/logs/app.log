@@ -1,0 +1,88 @@
+2026-04-24T18:09:16.252+05:30  INFO 33872 --- [infrastructure-service] [restartedMain] c.h.InfrastructureServiceApplication     : Starting InfrastructureServiceApplication using Java 21.0.8 with PID 33872 (C:\Users\2481476\git\HealthGovMicroservices2\infrastructure-service\target\classes started by 2481476 in C:\Users\2481476\git\HealthGovMicroservices2\infrastructure-service)
+2026-04-24T18:09:16.261+05:30  INFO 33872 --- [infrastructure-service] [restartedMain] c.h.InfrastructureServiceApplication     : No active profile set, falling back to 1 default profile: "default"
+2026-04-24T18:09:16.361+05:30  INFO 33872 --- [infrastructure-service] [restartedMain] o.s.c.c.c.ConfigServerConfigDataLoader   : Fetching config from server at : http://localhost:1234
+2026-04-24T18:09:16.364+05:30  INFO 33872 --- [infrastructure-service] [restartedMain] o.s.c.c.c.ConfigServerConfigDataLoader   : Located environment: name=infrastructure-service, profiles=[default], label=null, version=eb59825c7973525a69d759180560ae99f0d8bc78, state=
+2026-04-24T18:09:16.369+05:30  INFO 33872 --- [infrastructure-service] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2026-04-24T18:09:16.369+05:30  INFO 33872 --- [infrastructure-service] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2026-04-24T18:09:17.959+05:30  INFO 33872 --- [infrastructure-service] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-04-24T18:09:18.173+05:30  INFO 33872 --- [infrastructure-service] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 198 ms. Found 1 JPA repository interface.
+2026-04-24T18:09:18.603+05:30  INFO 33872 --- [infrastructure-service] [restartedMain] o.s.cloud.context.scope.GenericScope     : BeanFactory id=e672e2d2-d4d0-39f8-86c2-1275eadcc12a
+2026-04-24T18:09:19.213+05:30  INFO 33872 --- [infrastructure-service] [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 9096 (http)
+2026-04-24T18:09:19.235+05:30  INFO 33872 --- [infrastructure-service] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-04-24T18:09:19.236+05:30  INFO 33872 --- [infrastructure-service] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.20]
+2026-04-24T18:09:19.315+05:30  INFO 33872 --- [infrastructure-service] [restartedMain] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 2945 ms
+2026-04-24T18:09:19.754+05:30  INFO 33872 --- [infrastructure-service] [restartedMain] org.hibernate.orm.jpa                    : HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-04-24T18:09:19.855+05:30  INFO 33872 --- [infrastructure-service] [restartedMain] org.hibernate.orm.core                   : HHH000001: Hibernate ORM core version 7.2.7.Final
+2026-04-24T18:09:20.546+05:30  INFO 33872 --- [infrastructure-service] [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-04-24T18:09:20.612+05:30  INFO 33872 --- [infrastructure-service] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-04-24T18:09:21.022+05:30  INFO 33872 --- [infrastructure-service] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@785e7093
+2026-04-24T18:09:21.025+05:30  INFO 33872 --- [infrastructure-service] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-04-24T18:09:21.104+05:30  WARN 33872 --- [infrastructure-service] [restartedMain] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-04-24T18:09:21.131+05:30  INFO 33872 --- [infrastructure-service] [restartedMain] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [jdbc:mysql://localhost:3306/infrastructure_db]
+	Database driver: MySQL Connector/J
+	Database dialect: MySQLDialect
+	Database version: 8.0.44
+	Default catalog/schema: infrastructure_db/undefined
+	Autocommit mode: undefined/unknown
+	Isolation level: REPEATABLE_READ [default REPEATABLE_READ]
+	JDBC fetch size: none
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-04-24T18:09:22.467+05:30  INFO 33872 --- [infrastructure-service] [restartedMain] org.hibernate.orm.core                   : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-04-24T18:09:22.565+05:30  INFO 33872 --- [infrastructure-service] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-04-24T18:09:22.664+05:30  INFO 33872 --- [infrastructure-service] [restartedMain] o.s.d.j.r.query.QueryEnhancerFactories   : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-04-24T18:09:22.959+05:30  WARN 33872 --- [infrastructure-service] [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-04-24T18:09:23.063+05:30  INFO 33872 --- [infrastructure-service] [restartedMain] o.s.c.openfeign.FeignClientFactoryBean   : For 'health-program-service' URL not provided. Will try picking an instance via load-balancing.
+2026-04-24T18:09:23.856+05:30  INFO 33872 --- [infrastructure-service] [restartedMain] DiscoveryClientOptionalArgsConfiguration : Eureka HTTP Client uses RestClient.
+2026-04-24T18:09:23.912+05:30  WARN 33872 --- [infrastructure-service] [restartedMain] iguration$LoadBalancerCaffeineWarnLogger : Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2026-04-24T18:09:23.928+05:30  INFO 33872 --- [infrastructure-service] [restartedMain] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 2 endpoints beneath base path '/actuator'
+2026-04-24T18:09:24.012+05:30  INFO 33872 --- [infrastructure-service] [restartedMain] o.s.c.n.eureka.InstanceInfoFactory       : Setting initial instance status as: STARTING
+2026-04-24T18:09:24.042+05:30  INFO 33872 --- [infrastructure-service] [restartedMain] com.netflix.discovery.DiscoveryClient    : Initializing Eureka in region us-east-1
+2026-04-24T18:09:24.046+05:30  INFO 33872 --- [infrastructure-service] [restartedMain] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-04-24T18:09:24.057+05:30  INFO 33872 --- [infrastructure-service] [restartedMain] com.netflix.discovery.DiscoveryClient    : Disable delta property : false
+2026-04-24T18:09:24.058+05:30  INFO 33872 --- [infrastructure-service] [restartedMain] com.netflix.discovery.DiscoveryClient    : Single vip registry refresh property : null
+2026-04-24T18:09:24.058+05:30  INFO 33872 --- [infrastructure-service] [restartedMain] com.netflix.discovery.DiscoveryClient    : Force full registry fetch : false
+2026-04-24T18:09:24.058+05:30  INFO 33872 --- [infrastructure-service] [restartedMain] com.netflix.discovery.DiscoveryClient    : Application is null : false
+2026-04-24T18:09:24.059+05:30  INFO 33872 --- [infrastructure-service] [restartedMain] com.netflix.discovery.DiscoveryClient    : Registered Applications size is zero : true
+2026-04-24T18:09:24.059+05:30  INFO 33872 --- [infrastructure-service] [restartedMain] com.netflix.discovery.DiscoveryClient    : Application version is -1: true
+2026-04-24T18:09:24.059+05:30  INFO 33872 --- [infrastructure-service] [restartedMain] com.netflix.discovery.DiscoveryClient    : Getting all instance registry info from the eureka server
+2026-04-24T18:09:24.439+05:30  INFO 33872 --- [infrastructure-service] [restartedMain] com.netflix.discovery.DiscoveryClient    : The response status is 200
+2026-04-24T18:09:24.444+05:30  INFO 33872 --- [infrastructure-service] [restartedMain] com.netflix.discovery.DiscoveryClient    : Starting heartbeat executor: renew interval is: 30
+2026-04-24T18:09:24.448+05:30  INFO 33872 --- [infrastructure-service] [restartedMain] c.n.discovery.InstanceInfoReplicator     : InstanceInfoReplicator onDemand update allowed rate per min is 4
+2026-04-24T18:09:24.450+05:30  INFO 33872 --- [infrastructure-service] [restartedMain] com.netflix.discovery.DiscoveryClient    : Discovery Client initialized at timestamp 1777034364450 with initial instances count: 3
+2026-04-24T18:09:24.456+05:30  INFO 33872 --- [infrastructure-service] [restartedMain] o.s.c.n.e.s.EurekaServiceRegistry        : Registering application INFRASTRUCTURE-SERVICE with eureka with status UP
+2026-04-24T18:09:24.458+05:30  INFO 33872 --- [infrastructure-service] [restartedMain] com.netflix.discovery.DiscoveryClient    : Saw local status change event StatusChangeEvent [timestamp=1777034364457, current=UP, previous=STARTING]
+2026-04-24T18:09:24.461+05:30  INFO 33872 --- [infrastructure-service] [DiscoveryClient-InstanceInfoReplicator-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_INFRASTRUCTURE-SERVICE/LTIN717715.cts.com:infrastructure-service:9096: registering service...
+2026-04-24T18:09:24.496+05:30  INFO 33872 --- [infrastructure-service] [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 9096 (http) with context path '/'
+2026-04-24T18:09:24.497+05:30  INFO 33872 --- [infrastructure-service] [restartedMain] .s.c.n.e.s.EurekaAutoServiceRegistration : Updating port to 9096
+2026-04-24T18:09:24.516+05:30  INFO 33872 --- [infrastructure-service] [restartedMain] c.h.InfrastructureServiceApplication     : Started InfrastructureServiceApplication in 10.244 seconds (process running for 11.711)
+2026-04-24T18:09:24.518+05:30  INFO 33872 --- [infrastructure-service] [DiscoveryClient-InstanceInfoReplicator-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_INFRASTRUCTURE-SERVICE/LTIN717715.cts.com:infrastructure-service:9096 - registration status: 204
+2026-04-24T18:09:24.796+05:30  INFO 33872 --- [infrastructure-service] [RMI TCP Connection(6)-127.0.0.1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-04-24T18:09:24.797+05:30  INFO 33872 --- [infrastructure-service] [RMI TCP Connection(6)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-04-24T18:09:24.800+05:30  INFO 33872 --- [infrastructure-service] [RMI TCP Connection(6)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
+2026-04-24T18:14:07.257+05:30  INFO 33872 --- [infrastructure-service] [http-nio-9096-exec-3] c.h.controller.InfrastructureController  : Fetching infrastructures for programId=11
+2026-04-24T18:14:07.298+05:30  INFO 33872 --- [infrastructure-service] [http-nio-9096-exec-3] c.h.service.InfrastructureServiceImpl    : Fetching infrastructures for programId=11
+2026-04-24T18:14:13.379+05:30  INFO 33872 --- [infrastructure-service] [http-nio-9096-exec-4] c.h.controller.InfrastructureController  : Fetching infrastructures for programId=11
+2026-04-24T18:14:13.387+05:30  INFO 33872 --- [infrastructure-service] [http-nio-9096-exec-4] c.h.service.InfrastructureServiceImpl    : Fetching infrastructures for programId=11
+2026-04-24T18:14:24.069+05:30  INFO 33872 --- [infrastructure-service] [AsyncResolver-bootstrap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-04-24T18:14:26.981+05:30  INFO 33872 --- [infrastructure-service] [http-nio-9096-exec-5] c.h.controller.InfrastructureController  : Fetching infrastructures for programId=1
+2026-04-24T18:14:26.988+05:30  INFO 33872 --- [infrastructure-service] [http-nio-9096-exec-5] c.h.service.InfrastructureServiceImpl    : Fetching infrastructures for programId=1
+2026-04-24T18:14:27.122+05:30  INFO 33872 --- [infrastructure-service] [http-nio-9096-exec-6] c.h.controller.InfrastructureController  : Fetching infrastructures for programId=6
+2026-04-24T18:14:27.132+05:30  INFO 33872 --- [infrastructure-service] [http-nio-9096-exec-6] c.h.service.InfrastructureServiceImpl    : Fetching infrastructures for programId=6
+2026-04-24T18:14:27.206+05:30  INFO 33872 --- [infrastructure-service] [http-nio-9096-exec-7] c.h.controller.InfrastructureController  : Fetching infrastructures for programId=7
+2026-04-24T18:14:27.214+05:30  INFO 33872 --- [infrastructure-service] [http-nio-9096-exec-7] c.h.service.InfrastructureServiceImpl    : Fetching infrastructures for programId=7
+2026-04-24T18:14:27.289+05:30  INFO 33872 --- [infrastructure-service] [http-nio-9096-exec-8] c.h.controller.InfrastructureController  : Fetching infrastructures for programId=8
+2026-04-24T18:14:27.293+05:30  INFO 33872 --- [infrastructure-service] [http-nio-9096-exec-8] c.h.service.InfrastructureServiceImpl    : Fetching infrastructures for programId=8
+2026-04-24T18:14:27.356+05:30  INFO 33872 --- [infrastructure-service] [http-nio-9096-exec-9] c.h.controller.InfrastructureController  : Fetching infrastructures for programId=9
+2026-04-24T18:14:27.369+05:30  INFO 33872 --- [infrastructure-service] [http-nio-9096-exec-9] c.h.service.InfrastructureServiceImpl    : Fetching infrastructures for programId=9
+2026-04-24T18:14:27.448+05:30  INFO 33872 --- [infrastructure-service] [http-nio-9096-exec-10] c.h.controller.InfrastructureController  : Fetching infrastructures for programId=10
+2026-04-24T18:14:27.456+05:30  INFO 33872 --- [infrastructure-service] [http-nio-9096-exec-10] c.h.service.InfrastructureServiceImpl    : Fetching infrastructures for programId=10
+2026-04-24T18:14:27.539+05:30  INFO 33872 --- [infrastructure-service] [http-nio-9096-exec-1] c.h.controller.InfrastructureController  : Fetching infrastructures for programId=11
+2026-04-24T18:14:27.540+05:30  INFO 33872 --- [infrastructure-service] [http-nio-9096-exec-1] c.h.service.InfrastructureServiceImpl    : Fetching infrastructures for programId=11
+2026-04-24T18:14:38.640+05:30  INFO 33872 --- [infrastructure-service] [http-nio-9096-exec-2] c.h.controller.InfrastructureController  : Fetching infrastructures for programId=1
+2026-04-24T18:14:38.648+05:30  INFO 33872 --- [infrastructure-service] [http-nio-9096-exec-2] c.h.service.InfrastructureServiceImpl    : Fetching infrastructures for programId=1
+2026-04-24T18:14:59.753+05:30  INFO 33872 --- [infrastructure-service] [http-nio-9096-exec-3] c.h.controller.InfrastructureController  : Fetching infrastructures for programId=1
+2026-04-24T18:14:59.753+05:30  INFO 33872 --- [infrastructure-service] [http-nio-9096-exec-3] c.h.service.InfrastructureServiceImpl    : Fetching infrastructures for programId=1
+2026-04-24T18:17:51.309+05:30  WARN 33872 --- [infrastructure-service] [HikariPool-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=1m30s76ms589µs800ns).

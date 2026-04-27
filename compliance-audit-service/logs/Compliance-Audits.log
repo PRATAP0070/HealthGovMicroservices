@@ -1,1 +1,103 @@
 2026-04-24T18:00:30.950+05:30  INFO 26820 --- [compliance-audit-service] [AsyncResolver-bootstrap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-04-24T18:08:46.174+05:30  INFO 8156 --- [compliance-audit-service] [restartedMain] c.h.ComplianceAuditServiceApplication    : Starting ComplianceAuditServiceApplication using Java 21.0.8 with PID 8156 (C:\Users\2481476\git\HealthGovMicroservices2\compliance-audit-service\target\classes started by 2481476 in C:\Users\2481476\git\HealthGovMicroservices2\compliance-audit-service)
+2026-04-24T18:08:46.180+05:30  INFO 8156 --- [compliance-audit-service] [restartedMain] c.h.ComplianceAuditServiceApplication    : No active profile set, falling back to 1 default profile: "default"
+2026-04-24T18:08:46.260+05:30  INFO 8156 --- [compliance-audit-service] [restartedMain] o.s.c.c.c.ConfigServerConfigDataLoader   : Fetching config from server at : http://localhost:1234
+2026-04-24T18:08:46.260+05:30  INFO 8156 --- [compliance-audit-service] [restartedMain] o.s.c.c.c.ConfigServerConfigDataLoader   : Located environment: name=compliance-audit-service, profiles=[default], label=null, version=eb59825c7973525a69d759180560ae99f0d8bc78, state=
+2026-04-24T18:08:46.265+05:30  INFO 8156 --- [compliance-audit-service] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2026-04-24T18:08:46.265+05:30  INFO 8156 --- [compliance-audit-service] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2026-04-24T18:08:48.704+05:30  INFO 8156 --- [compliance-audit-service] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-04-24T18:08:48.955+05:30  INFO 8156 --- [compliance-audit-service] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 237 ms. Found 2 JPA repository interfaces.
+2026-04-24T18:08:49.557+05:30  INFO 8156 --- [compliance-audit-service] [restartedMain] o.s.cloud.context.scope.GenericScope     : BeanFactory id=3be3e4ad-f38f-3f3b-af18-be8b61dfa91a
+2026-04-24T18:08:50.255+05:30  INFO 8156 --- [compliance-audit-service] [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 5050 (http)
+2026-04-24T18:08:50.280+05:30  INFO 8156 --- [compliance-audit-service] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-04-24T18:08:50.280+05:30  INFO 8156 --- [compliance-audit-service] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.20]
+2026-04-24T18:08:50.387+05:30  INFO 8156 --- [compliance-audit-service] [restartedMain] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 4121 ms
+2026-04-24T18:08:50.914+05:30  INFO 8156 --- [compliance-audit-service] [restartedMain] org.hibernate.orm.jpa                    : HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-04-24T18:08:50.992+05:30  INFO 8156 --- [compliance-audit-service] [restartedMain] org.hibernate.orm.core                   : HHH000001: Hibernate ORM core version 7.2.7.Final
+2026-04-24T18:08:51.706+05:30  INFO 8156 --- [compliance-audit-service] [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-04-24T18:08:51.756+05:30  INFO 8156 --- [compliance-audit-service] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-04-24T18:08:52.306+05:30  INFO 8156 --- [compliance-audit-service] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@4ca4f99a
+2026-04-24T18:08:52.310+05:30  INFO 8156 --- [compliance-audit-service] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-04-24T18:08:52.394+05:30  WARN 8156 --- [compliance-audit-service] [restartedMain] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-04-24T18:08:52.425+05:30  INFO 8156 --- [compliance-audit-service] [restartedMain] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [jdbc:mysql://localhost:3306/compliance_audit_db?createDatabaseIfNotExist=true]
+	Database driver: MySQL Connector/J
+	Database dialect: MySQLDialect
+	Database version: 8.0.44
+	Default catalog/schema: compliance_audit_db/undefined
+	Autocommit mode: undefined/unknown
+	Isolation level: REPEATABLE_READ [default REPEATABLE_READ]
+	JDBC fetch size: none
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-04-24T18:08:53.786+05:30  INFO 8156 --- [compliance-audit-service] [restartedMain] org.hibernate.orm.core                   : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-04-24T18:08:54.004+05:30  INFO 8156 --- [compliance-audit-service] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-04-24T18:08:54.178+05:30  INFO 8156 --- [compliance-audit-service] [restartedMain] o.s.d.j.r.query.QueryEnhancerFactories   : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-04-24T18:08:54.764+05:30  WARN 8156 --- [compliance-audit-service] [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-04-24T18:08:54.887+05:30  INFO 8156 --- [compliance-audit-service] [restartedMain] o.s.c.openfeign.FeignClientFactoryBean   : For 'health-program-service' URL not provided. Will try picking an instance via load-balancing.
+2026-04-24T18:08:54.957+05:30  INFO 8156 --- [compliance-audit-service] [restartedMain] o.s.c.openfeign.FeignClientFactoryBean   : For 'research-service' URL not provided. Will try picking an instance via load-balancing.
+2026-04-24T18:08:54.984+05:30  INFO 8156 --- [compliance-audit-service] [restartedMain] o.s.c.openfeign.FeignClientFactoryBean   : For 'auth-service' URL not provided. Will try picking an instance via load-balancing.
+2026-04-24T18:08:56.058+05:30  INFO 8156 --- [compliance-audit-service] [restartedMain] DiscoveryClientOptionalArgsConfiguration : Eureka HTTP Client uses RestClient.
+2026-04-24T18:08:56.096+05:30  WARN 8156 --- [compliance-audit-service] [restartedMain] iguration$LoadBalancerCaffeineWarnLogger : Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2026-04-24T18:08:56.126+05:30  INFO 8156 --- [compliance-audit-service] [restartedMain] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 2 endpoints beneath base path '/actuator'
+2026-04-24T18:08:56.243+05:30  INFO 8156 --- [compliance-audit-service] [restartedMain] o.s.c.n.eureka.InstanceInfoFactory       : Setting initial instance status as: STARTING
+2026-04-24T18:08:56.271+05:30  INFO 8156 --- [compliance-audit-service] [restartedMain] com.netflix.discovery.DiscoveryClient    : Initializing Eureka in region us-east-1
+2026-04-24T18:08:56.276+05:30  INFO 8156 --- [compliance-audit-service] [restartedMain] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-04-24T18:08:56.295+05:30  INFO 8156 --- [compliance-audit-service] [restartedMain] com.netflix.discovery.DiscoveryClient    : Disable delta property : false
+2026-04-24T18:08:56.295+05:30  INFO 8156 --- [compliance-audit-service] [restartedMain] com.netflix.discovery.DiscoveryClient    : Single vip registry refresh property : null
+2026-04-24T18:08:56.296+05:30  INFO 8156 --- [compliance-audit-service] [restartedMain] com.netflix.discovery.DiscoveryClient    : Force full registry fetch : false
+2026-04-24T18:08:56.296+05:30  INFO 8156 --- [compliance-audit-service] [restartedMain] com.netflix.discovery.DiscoveryClient    : Application is null : false
+2026-04-24T18:08:56.296+05:30  INFO 8156 --- [compliance-audit-service] [restartedMain] com.netflix.discovery.DiscoveryClient    : Registered Applications size is zero : true
+2026-04-24T18:08:56.296+05:30  INFO 8156 --- [compliance-audit-service] [restartedMain] com.netflix.discovery.DiscoveryClient    : Application version is -1: true
+2026-04-24T18:08:56.296+05:30  INFO 8156 --- [compliance-audit-service] [restartedMain] com.netflix.discovery.DiscoveryClient    : Getting all instance registry info from the eureka server
+2026-04-24T18:08:56.659+05:30  INFO 8156 --- [compliance-audit-service] [restartedMain] com.netflix.discovery.DiscoveryClient    : The response status is 200
+2026-04-24T18:08:56.662+05:30  INFO 8156 --- [compliance-audit-service] [restartedMain] com.netflix.discovery.DiscoveryClient    : Starting heartbeat executor: renew interval is: 30
+2026-04-24T18:08:56.667+05:30  INFO 8156 --- [compliance-audit-service] [restartedMain] c.n.discovery.InstanceInfoReplicator     : InstanceInfoReplicator onDemand update allowed rate per min is 4
+2026-04-24T18:08:56.670+05:30  INFO 8156 --- [compliance-audit-service] [restartedMain] com.netflix.discovery.DiscoveryClient    : Discovery Client initialized at timestamp 1777034336669 with initial instances count: 0
+2026-04-24T18:08:56.675+05:30  INFO 8156 --- [compliance-audit-service] [restartedMain] o.s.c.n.e.s.EurekaServiceRegistry        : Registering application COMPLIANCE-AUDIT-SERVICE with eureka with status UP
+2026-04-24T18:08:56.676+05:30  INFO 8156 --- [compliance-audit-service] [restartedMain] com.netflix.discovery.DiscoveryClient    : Saw local status change event StatusChangeEvent [timestamp=1777034336676, current=UP, previous=STARTING]
+2026-04-24T18:08:56.679+05:30  INFO 8156 --- [compliance-audit-service] [DiscoveryClient-InstanceInfoReplicator-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_COMPLIANCE-AUDIT-SERVICE/LTIN717715.cts.com:compliance-audit-service:5050: registering service...
+2026-04-24T18:08:56.715+05:30  INFO 8156 --- [compliance-audit-service] [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 5050 (http) with context path '/'
+2026-04-24T18:08:56.716+05:30  INFO 8156 --- [compliance-audit-service] [restartedMain] .s.c.n.e.s.EurekaAutoServiceRegistration : Updating port to 5050
+2026-04-24T18:08:56.740+05:30  INFO 8156 --- [compliance-audit-service] [DiscoveryClient-InstanceInfoReplicator-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_COMPLIANCE-AUDIT-SERVICE/LTIN717715.cts.com:compliance-audit-service:5050 - registration status: 204
+2026-04-24T18:08:56.744+05:30  INFO 8156 --- [compliance-audit-service] [restartedMain] c.h.ComplianceAuditServiceApplication    : Started ComplianceAuditServiceApplication in 13.405 seconds (process running for 15.217)
+2026-04-24T18:08:56.753+05:30  WARN 8156 --- [compliance-audit-service] [restartedMain] o.s.core.events.SpringDocAppInitializer  : SpringDoc /v3/api-docs endpoint is enabled by default. To disable it in production, set the property 'springdoc.api-docs.enabled=false'
+2026-04-24T18:08:56.753+05:30  WARN 8156 --- [compliance-audit-service] [restartedMain] o.s.core.events.SpringDocAppInitializer  : SpringDoc /swagger-ui.html endpoint is enabled by default. To disable it in production, set the property 'springdoc.swagger-ui.enabled=false'
+2026-04-24T18:08:57.322+05:30  INFO 8156 --- [compliance-audit-service] [RMI TCP Connection(7)-127.0.0.1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-04-24T18:08:57.323+05:30  INFO 8156 --- [compliance-audit-service] [RMI TCP Connection(7)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-04-24T18:08:57.326+05:30  INFO 8156 --- [compliance-audit-service] [RMI TCP Connection(7)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 3 ms
+2026-04-24T18:09:26.664+05:30  INFO 8156 --- [compliance-audit-service] [DiscoveryClient-CacheRefreshExecutor-%d] com.netflix.discovery.DiscoveryClient    : Disable delta property : false
+2026-04-24T18:09:26.665+05:30  INFO 8156 --- [compliance-audit-service] [DiscoveryClient-CacheRefreshExecutor-%d] com.netflix.discovery.DiscoveryClient    : Single vip registry refresh property : null
+2026-04-24T18:09:26.665+05:30  INFO 8156 --- [compliance-audit-service] [DiscoveryClient-CacheRefreshExecutor-%d] com.netflix.discovery.DiscoveryClient    : Force full registry fetch : false
+2026-04-24T18:09:26.665+05:30  INFO 8156 --- [compliance-audit-service] [DiscoveryClient-CacheRefreshExecutor-%d] com.netflix.discovery.DiscoveryClient    : Application is null : false
+2026-04-24T18:09:26.665+05:30  INFO 8156 --- [compliance-audit-service] [DiscoveryClient-CacheRefreshExecutor-%d] com.netflix.discovery.DiscoveryClient    : Registered Applications size is zero : true
+2026-04-24T18:09:26.665+05:30  INFO 8156 --- [compliance-audit-service] [DiscoveryClient-CacheRefreshExecutor-%d] com.netflix.discovery.DiscoveryClient    : Application version is -1: false
+2026-04-24T18:09:26.666+05:30  INFO 8156 --- [compliance-audit-service] [DiscoveryClient-CacheRefreshExecutor-%d] com.netflix.discovery.DiscoveryClient    : Getting all instance registry info from the eureka server
+2026-04-24T18:09:26.702+05:30  INFO 8156 --- [compliance-audit-service] [DiscoveryClient-CacheRefreshExecutor-%d] com.netflix.discovery.DiscoveryClient    : The response status is 200
+2026-04-24T18:13:56.305+05:30  INFO 8156 --- [compliance-audit-service] [AsyncResolver-bootstrap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-04-24T18:14:10.299+05:30  INFO 8156 --- [compliance-audit-service] [http-nio-5050-exec-2] c.h.controller.ComplianceController      : POST /api/v1/compliance-records/create type=PROGRAM entityId=11
+2026-04-24T18:14:12.423+05:30  INFO 8156 --- [compliance-audit-service] [http-nio-5050-exec-2] com.healthgov.services.ComplianceUtil    : Validating the compliance type before updatring the status
+2026-04-24T18:14:12.423+05:30  INFO 8156 --- [compliance-audit-service] [http-nio-5050-exec-2] com.healthgov.services.ComplianceUtil    : Validating target entity: type=PROGRAM, entityId=11
+2026-04-24T18:14:12.431+05:30 DEBUG 8156 --- [compliance-audit-service] [http-nio-5050-exec-2] feign.template.Template                  : Explicit slash decoding specified, decoding all slashes in uri
+2026-04-24T18:14:12.997+05:30  INFO 8156 --- [compliance-audit-service] [http-nio-5050-exec-2] com.healthgov.services.ComplianceUtil    : Validating the compliance result based on the enums
+2026-04-24T18:14:12.997+05:30  INFO 8156 --- [compliance-audit-service] [http-nio-5050-exec-2] c.h.services.ComplianceServiceImpl       : Data Validation Invoked
+2026-04-24T18:14:13.284+05:30  INFO 8156 --- [compliance-audit-service] [http-nio-5050-exec-2] c.h.services.ComplianceServiceImpl       : Created ComplianceRecord id=3 type=PROGRAM entityId=11
+2026-04-24T18:14:13.286+05:30  INFO 8156 --- [compliance-audit-service] [http-nio-5050-exec-2] com.healthgov.services.ComplianceUtil    : [PROGRAM-CLIENT] Calling getProgramById with id=11
+2026-04-24T18:14:13.288+05:30 DEBUG 8156 --- [compliance-audit-service] [http-nio-5050-exec-2] feign.template.Template                  : Explicit slash decoding specified, decoding all slashes in uri
+2026-04-24T18:14:13.539+05:30  INFO 8156 --- [compliance-audit-service] [http-nio-5050-exec-2] com.healthgov.services.ComplianceUtil    : [PROGRAM-CLIENT] Response received: HealthProgramResponseDTO(programId=11, title=p camp, description=VUF EVENT., startDate=2028-03-31, endDate=2029-08-30, budget=76000.0, status=ACTIVE, enrollments=[], resources=[], infrastructures=[])
+2026-04-24T18:17:52.580+05:30  WARN 8156 --- [compliance-audit-service] [HikariPool-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=1m30s71ms760µs800ns).
+2026-04-24T18:18:52.649+05:30  INFO 8156 --- [compliance-audit-service] [RMI TCP Connection(18)-127.0.0.1] inMXBeanRegistrar$SpringApplicationAdmin : Application shutdown requested.
+2026-04-24T18:18:52.656+05:30  INFO 8156 --- [compliance-audit-service] [RMI TCP Connection(18)-127.0.0.1] o.s.c.n.e.s.EurekaServiceRegistry        : Unregistering application COMPLIANCE-AUDIT-SERVICE with eureka with status DOWN
+2026-04-24T18:18:52.656+05:30  INFO 8156 --- [compliance-audit-service] [RMI TCP Connection(18)-127.0.0.1] com.netflix.discovery.DiscoveryClient    : Saw local status change event StatusChangeEvent [timestamp=1777034932656, current=DOWN, previous=UP]
+2026-04-24T18:18:52.657+05:30  INFO 8156 --- [compliance-audit-service] [DiscoveryClient-InstanceInfoReplicator-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_COMPLIANCE-AUDIT-SERVICE/LTIN717715.cts.com:compliance-audit-service:5050: registering service...
+2026-04-24T18:18:52.666+05:30  INFO 8156 --- [compliance-audit-service] [RMI TCP Connection(18)-127.0.0.1] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
+2026-04-24T18:18:52.705+05:30  INFO 8156 --- [compliance-audit-service] [DiscoveryClient-InstanceInfoReplicator-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_COMPLIANCE-AUDIT-SERVICE/LTIN717715.cts.com:compliance-audit-service:5050 - registration status: 204
+2026-04-24T18:18:52.739+05:30  INFO 8156 --- [compliance-audit-service] [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete
+2026-04-24T18:18:52.800+05:30  INFO 8156 --- [compliance-audit-service] [RMI TCP Connection(18)-127.0.0.1] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-04-24T18:18:52.832+05:30  INFO 8156 --- [compliance-audit-service] [RMI TCP Connection(18)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2026-04-24T18:18:52.888+05:30  INFO 8156 --- [compliance-audit-service] [RMI TCP Connection(18)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2026-04-24T18:18:52.892+05:30  INFO 8156 --- [compliance-audit-service] [RMI TCP Connection(18)-127.0.0.1] com.netflix.discovery.DiscoveryClient    : Shutting down DiscoveryClient ...
+2026-04-24T18:18:55.903+05:30  INFO 8156 --- [compliance-audit-service] [RMI TCP Connection(18)-127.0.0.1] com.netflix.discovery.DiscoveryClient    : Unregistering ...
+2026-04-24T18:18:55.964+05:30  INFO 8156 --- [compliance-audit-service] [RMI TCP Connection(18)-127.0.0.1] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_COMPLIANCE-AUDIT-SERVICE/LTIN717715.cts.com:compliance-audit-service:5050 - deregister  status: 200
+2026-04-24T18:18:55.965+05:30  INFO 8156 --- [compliance-audit-service] [RMI TCP Connection(18)-127.0.0.1] com.netflix.discovery.DiscoveryClient    : Completed shut down of DiscoveryClient

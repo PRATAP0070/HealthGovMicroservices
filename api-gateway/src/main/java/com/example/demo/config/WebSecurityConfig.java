@@ -71,6 +71,7 @@ public class WebSecurityConfig {
                 .pathMatchers("/infrastructures/**").hasRole("MANAGER")
  
                 .pathMatchers("/api/enrollments/**").hasRole("CITIZEN")
+                .pathMatchers(HttpMethod.GET,"/api/notifications/**").permitAll()
 
  
                 .anyExchange().authenticated()

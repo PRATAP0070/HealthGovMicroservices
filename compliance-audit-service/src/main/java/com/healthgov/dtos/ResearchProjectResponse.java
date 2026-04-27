@@ -2,10 +2,12 @@ package com.healthgov.dtos;
 
 import java.time.LocalDate;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Data;
 
 @Data
-public class ResearchProjectResponse {
+public class ResearchProjectResponse implements ComplianceEntityDTO {
 
 	private Long projectId;
 	private String title;
@@ -17,4 +19,10 @@ public class ResearchProjectResponse {
 
 	private Long researcherId;
 	private String researcherName;
+
+	@Override
+	@JsonIgnore
+	public Long getOwnerId() {
+		return researcherId;
+	}
 }

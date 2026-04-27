@@ -25,7 +25,7 @@ public class HealthProgram {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long programId;
-
+	private Long managerId;
 	private String title;
 	private String description;
 	private LocalDate startDate;

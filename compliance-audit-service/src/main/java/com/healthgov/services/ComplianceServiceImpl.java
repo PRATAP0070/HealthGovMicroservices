@@ -16,6 +16,7 @@ import com.healthgov.dtos.ComplianceResponseDTO;
 import com.healthgov.dtos.ComplianceSummaryResponseDTO;
 import com.healthgov.dtos.ComplianceUpdateRequest;
 import com.healthgov.dtos.OfficerComplianceUpdateRequest;
+import com.healthgov.dtos.RequestUserContext;
 import com.healthgov.dtos.UserResponseDto;
 import com.healthgov.enums.AuditStatus;
 import com.healthgov.enums.ComplianceResult;
@@ -25,6 +26,7 @@ import com.healthgov.exceptions.ResourceNotFoundException;
 import com.healthgov.models.ComplianceRecord;
 import com.healthgov.repository.ComplianceRecordRepository;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -34,6 +36,8 @@ public class ComplianceServiceImpl implements ComplianceService {
 	private final ComplianceRecordRepository complianceRepo;
 	private final ComplianceUtil complianceUtil;
 	private final AuditService auditService;
+	private final RequestUserContext requestUserContext;
+	private final NotificationUtil notificationUtil;
 
 	private static final Logger log = LoggerFactory.getLogger(ComplianceServiceImpl.class);
 
@@ -85,6 +89,8 @@ public class ComplianceServiceImpl implements ComplianceService {
 
 		ComplianceRecord saved = complianceRepo.save(compRecord);
 
+		notificationUtil.notifyOnCreate(convertToDto(compRecord));
+
 		log.info("Created ComplianceRecord id={} type={} entityId={}", saved.getComplianceId(), saved.getType(),
 				saved.getEntityId());
 
@@ -118,16 +124,23 @@ public class ComplianceServiceImpl implements ComplianceService {
 	@Override
 	@Transactional
 	public ComplianceResponseDTO updateByOfficer(ComplianceType type, Long entityId,
-			OfficerComplianceUpdateRequest request) {
+			OfficerComplianceUpdateRequest request, HttpServletRequest httpRequest) {
 
-		//Centralized officer validation
+		// Centralized officer validation
+
+		Long userId = requestUserContext.getUserId(httpRequest);
+		String email = requestUserContext.getEmail(httpRequest);
+		String role = requestUserContext.getRole(httpRequest);
+
+		System.out.printf("Headers userId=%d, email=%s, role=%s%n", userId, email, role);
+
 		UserResponseDto officer = complianceUtil.validateComplianceOfficer(request.getOfficerId());
 
 		ComplianceRecord record = complianceRepo.findOneByEntityIdAndType(entityId, type)
 				.orElseThrow(() -> new ResourceNotFoundException(
 						"Compliance record not found for type=" + type + ", entityId=" + entityId));
 
-		//Officer is allowed to change ONLY these
+		// Officer is allowed to change ONLY these
 		record.setResult(request.getResult());
 
 		if (request.getNotes() != null && !request.getNotes().isBlank()) {
@@ -137,6 +150,13 @@ public class ComplianceServiceImpl implements ComplianceService {
 		record.setDate(LocalDate.now());
 
 		ComplianceRecord saved = complianceRepo.save(record);
+
+		var entity = complianceUtil.fetchEntityDetails(type, entityId);
+
+		String message = NotificationUtil.buildDetailedComplianceMessage(record, saved, officer.getName(),
+				entity.getTitle());
+
+		notificationUtil.notifyAfterRecordUpdate(entity.getOwnerId(),email, entityId, message);
 
 		AuditCreateRequest auditRequest = new AuditCreateRequest();
 		auditRequest.setDate(LocalDate.now());
@@ -229,7 +249,7 @@ public class ComplianceServiceImpl implements ComplianceService {
 		dto.setEntityId(rec.getEntityId());
 		dto.setType(rec.getType());
 
-		//Fetch and embed entity details
+		// Fetch and embed entity details
 		dto.setEntity(complianceUtil.fetchEntityDetails(rec.getType(), rec.getEntityId()));
 
 		return dto;

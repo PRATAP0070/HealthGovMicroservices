@@ -2,14 +2,15 @@ package com.healthgov.services;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.healthgov.dtos.AuditCreateRequest;
 import com.healthgov.dtos.AuditReponseDTO;
+import com.healthgov.dtos.AuditSummaryResponseDTO;
 import com.healthgov.dtos.AuditUpdateRequest;
 import com.healthgov.dtos.UserResponseDto;
 import com.healthgov.enums.AuditStatus;
@@ -34,7 +35,6 @@ public class AuditServiceImpl implements AuditService {
 	private final AuditUtil auditUtil;
 	private final UserClient userClient;
 
-	private static final Logger log = LoggerFactory.getLogger(AuditServiceImpl.class);
 
 	@Override
 	public List<AuditReponseDTO> getAllAudits() {
@@ -58,7 +58,7 @@ public class AuditServiceImpl implements AuditService {
 				throw new AuditRequestException("Invalid user data returned for officerId=" + officerId);
 			}
 
-			//User Role comparison
+			// User Role comparison
 			if (!user.getRole().equals(Role.COMPLIANCE)) {
 				throw new AuditRequestException(
 						"User with ID: " + user.getUserId() + " : " + user.getName() + " is not a Compliance Officer");
@@ -70,7 +70,18 @@ public class AuditServiceImpl implements AuditService {
 
 		String scope = request.getScope().trim();
 		auditUtil.validateAndEnsureScopeTargetExists(scope);
-		
+
+		// Prevent duplicate audit creation
+		if (auditRepo.existsByOfficerIdAndScopeIgnoreCase(officerId, scope)) {
+
+			log.info("Audit already exists for officerId={} and scope={}, returning existing audit", officerId, scope);
+
+			Audit existingAudit = auditRepo.findByOfficerId(officerId).stream()
+					.filter(a -> a.getScope().equalsIgnoreCase(scope)).findFirst()
+					.orElseThrow(() -> new AuditRequestException("Audit exists but could not be retrieved"));
+
+			return convertToDto(existingAudit);
+		}
 
 		LocalDate date = (request.getDate() != null) ? request.getDate() : LocalDate.now();
 
@@ -177,6 +188,27 @@ public class AuditServiceImpl implements AuditService {
 			throw new AuditRequestException(
 					"Invalid status. Allowed: SCHEDULED, IN_REVIEW, COMPLETED, FOLLOW_UP_REQUIRED.");
 		}
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public AuditSummaryResponseDTO getAuditSummary() {
+
+		long total = auditRepo.count();
+
+		Map<AuditStatus, Long> byStatus = auditRepo.countByStatus().stream()
+				.collect(Collectors.toMap(r -> (AuditStatus) r[0], r -> (Long) r[1]));
+
+		Map<Long, Long> byOfficer = auditRepo.countByOfficer().stream()
+				.collect(Collectors.toMap(r -> (Long) r[0], r -> (Long) r[1]));
+
+		Map<String, Long> byScopeType = auditRepo.findAllScopes().stream()
+				.filter(scope -> scope != null && scope.contains(":")).map(scope -> scope.split(":")[0]) // extract type
+				.collect(Collectors.groupingBy(s -> s, Collectors.counting()));
+
+		log.info("Audit summary generated. total={}", total);
+
+		return new AuditSummaryResponseDTO(total, byStatus, byOfficer, byScopeType);
 	}
 
 	private AuditReponseDTO convertToDto(Audit a) {

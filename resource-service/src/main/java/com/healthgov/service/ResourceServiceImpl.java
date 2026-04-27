@@ -5,7 +5,10 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.healthgov.dto.FundsResourceReportDTO;
+import com.healthgov.dto.PhysicalResourceReportDTO;
 import com.healthgov.dto.ResourceCreateRequest;
+import com.healthgov.dto.ResourceReportResponseDTO;
 import com.healthgov.dto.ResourceResponse;
 import com.healthgov.dto.ResourceUpdateRequest;
 import com.healthgov.enums.ProgramStatus;
@@ -154,8 +157,7 @@ public class ResourceServiceImpl implements ResourceService {
 			throw new IllegalStateException("Cannot delete active or allocated or completed resource");
 		}
 		// ACTIVE resources are in use; deleting them would cause data loss.
-		// COMPLETED resources are historical records; deleting them breaks
-		// auditability.
+		// COMPLETED resources are historical records; deleting them breaks auditability.
 		resourceRepo.delete(entity);
 
 		log.info("Resource deleted successfully with resourceId={}", resourceId);
@@ -236,5 +238,34 @@ public class ResourceServiceImpl implements ResourceService {
 		if (type == ResourceType.FUNDS && status == ResourceStatus.INACTIVE) {
 			throw new IllegalStateException("FUNDS cannot be INACTIVE");
 		}
+	}
+	
+
+	public ResourceReportResponseDTO generateResourceReport() {
+
+		FundsResourceReportDTO fundsReport = buildFundsResourceReport();
+
+		List<PhysicalResourceReportDTO> physicalResourcesReport = List.of(buildPhysicalResourceReport(ResourceType.LAB),
+				buildPhysicalResourceReport(ResourceType.EQUIPMENT));
+
+		return new ResourceReportResponseDTO(fundsReport, physicalResourcesReport);
+	}
+	
+	private FundsResourceReportDTO buildFundsResourceReport() {
+
+		return new FundsResourceReportDTO(
+				resourceRepo.sumAmountByTypeAndStatus(ResourceType.FUNDS, ResourceStatus.PENDING),
+				resourceRepo.sumAmountByTypeAndStatus(ResourceType.FUNDS, ResourceStatus.ALLOCATED),
+				resourceRepo.sumAmountByTypeAndStatus(ResourceType.FUNDS, ResourceStatus.ACTIVE),
+				resourceRepo.sumAmountByTypeAndStatus(ResourceType.FUNDS, ResourceStatus.COMPLETED),
+				resourceRepo.sumAmountByType(ResourceType.FUNDS));
+	}
+
+	private PhysicalResourceReportDTO buildPhysicalResourceReport(ResourceType type) {
+
+		return new PhysicalResourceReportDTO(type, resourceRepo.countByTypeAndStatus(type, ResourceStatus.ALLOCATED),
+				resourceRepo.countByTypeAndStatus(type, ResourceStatus.ACTIVE),
+				resourceRepo.countByTypeAndStatus(type, ResourceStatus.INACTIVE),
+				resourceRepo.countByTypeAndStatus(type, ResourceStatus.COMPLETED), resourceRepo.countByType(type));
 	}
 }

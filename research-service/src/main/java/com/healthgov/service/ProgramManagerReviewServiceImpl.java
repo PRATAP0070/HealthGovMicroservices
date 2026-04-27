@@ -9,8 +9,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.healthgov.client.NotificationClient;
+import com.healthgov.client.UserClient;
 import com.healthgov.dto.ResearchProjectResponse;
+import com.healthgov.dto.UniversalNotificationRequest;
+import com.healthgov.dto.UserReqDTO;
 import com.healthgov.enums.GrantStatus;
+import com.healthgov.enums.NotificationCategory;
 import com.healthgov.enums.ProjectStatus;
 import com.healthgov.events.GrantCreatedEvent;
 import com.healthgov.exceptions.MedicalResearchException;
@@ -34,6 +39,8 @@ public class ProgramManagerReviewServiceImpl implements ProgramManagerReviewServ
 	private final GrantRepository grantRepo;
 	private final GrantApplicationRepository grantApplicationRepo;
 	private final ApplicationEventPublisher eventPublisher;
+	private final UserClient userClient;
+	private final NotificationClient notificationClient;
 
 	// Get project by id
 	@Override
@@ -160,8 +167,7 @@ public class ProgramManagerReviewServiceImpl implements ProgramManagerReviewServ
 
 				grantRepo.save(g);
 
-				eventPublisher
-						.publishEvent(new GrantCreatedEvent(g.getGrantId(), g.getProject().getProjectId()));
+				eventPublisher.publishEvent(new GrantCreatedEvent(g.getGrantId(), g.getProject().getProjectId()));
 
 				log.info("Grant created successfully: projectId={}, amount={}", projectId, amount);
 			}
@@ -169,6 +175,32 @@ public class ProgramManagerReviewServiceImpl implements ProgramManagerReviewServ
 
 		p.setStatus(d);
 		ResearchProject saved = projectRepo.save(p);
+
+		// ✅ ✅ ✅ ADD NOTIFICATION CODE RIGHT HERE
+		try {
+			UserReqDTO researcher = userClient.getUserById(p.getResearcherId());
+
+			UniversalNotificationRequest notification = new UniversalNotificationRequest();
+
+			notification.setUserId(researcher.getUserId());
+			notification.setEmail(researcher.getEmail());
+			notification.setCategory(NotificationCategory.PROJECT);
+
+			if (d == ProjectStatus.APPROVED) {
+				notification.setMessage("✅ Your research project has been APPROVED.\n\n" + "Project ID: " + projectId
+						+ "\n" + "Project Title: " + saved.getTitle() + "\n" + "Approved Amount: " + amount);
+			} else {
+				notification.setMessage("❌ Your research project has been REJECTED.\n\n" + "Project ID: " + projectId
+						+ "\n" + "Project Title: " + saved.getTitle() + "\n" + "Reason: " + reason);
+			}
+
+			notification.setEntityId(projectId);
+
+			notificationClient.sendUniversalNotification(notification);
+
+		} catch (Exception ex) {
+			log.warn("Researcher notification failed, PM decision succeeded for projectId={}", projectId, ex);
+		}
 
 		log.info("Project decision applied successfully: projectId={}, finalStatus={}", projectId, d);
 

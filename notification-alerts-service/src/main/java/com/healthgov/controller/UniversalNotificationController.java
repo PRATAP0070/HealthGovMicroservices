@@ -19,9 +19,9 @@ public class UniversalNotificationController {
 	}
 
 	// ✅ UNIVERSAL NOTIFICATION ENDPOINT (ONLY HERE)
-	@PostMapping("/send-universal")
-	public void sendUniversalNotification(@RequestBody UniversalNotificationRequest request) {
-
-		notificationService.sendUniversalNotification(request);
-	}
+//	@PostMapping("/send-universal")
+//	public void sendUniversalNotification(@RequestBody UniversalNotificationRequest request) {
+//
+//		notificationService.sendUniversalNotification(request);
+//	}
 }

@@ -1,14 +1,14 @@
 package com.healthgov.dto;
 
 import com.healthgov.enums.NotificationCategory;
-import lombok.Data;
 
+import lombok.Data;
 @Data
-public class CreateNotificationRequest {
+public class UniversalNotificationRequest {
 
     private Long userId;
-    private String mail;
-    private Long entityId;
+    private String email;
     private NotificationCategory category;
     private String message;
+    private Long entityId;
 }

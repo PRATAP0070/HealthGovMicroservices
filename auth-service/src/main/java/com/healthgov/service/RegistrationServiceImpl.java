@@ -32,18 +32,14 @@ public class RegistrationServiceImpl implements RegistrationService {
 		User user = new User();
 		user.setName(userDto.getName());
 		user.setEmail(userDto.getEmail());
-		if(userDto.getRole() == null) {
-			user.setRole(Role.CITIZEN);
-		}else {
-			user.setRole(userDto.getRole());
-		}
+		user.setRole(userDto.getRole());
 		user.setPhone(userDto.getPhone());
 		user.setStatus("ACTIVE");
 		user.setPassword(bcryptEncoder.encode(userDto.getPassword()));
 		
 		registrationRepo.save(user);
 		
-		client.sendRegistrationMessage(userDto.getEmail());
+		//client.sendRegistrationMessage(userDto.getEmail());
 		
 		UserDTO userDTO2 = new UserDTO();
 		userDTO2.setUserId(user.getUserId());

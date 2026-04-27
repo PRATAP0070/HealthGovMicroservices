@@ -1,8 +1,10 @@
 package com.healthgov.service;
 
 import java.util.List;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import com.healthgov.client.CitizenClient;
 import com.healthgov.dto.CitizenRequestDTO;
 import com.healthgov.dto.CitizenResponseDTO;
@@ -12,6 +14,8 @@ import com.healthgov.enums.RegistrationStatus;
 import com.healthgov.exceptions.CitizenNotFoundException;
 import com.healthgov.model.Citizen;
 import com.healthgov.repository.CitizenRepository;
+
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -25,16 +29,12 @@ public class CitizenServiceImpl implements CitizenService {
     private final CitizenClient citizenClient;
 
     @Override
+    @CircuitBreaker(name = "authService", fallbackMethod = "registerCitizenFallback")
     public CitizenResponseDTO registerCitizen(CitizenRequestDTO request) {
         log.info("Attempting to register citizen: {}", request.getName());
 
-        List<UserReqDTO> allAuthUsers;
-        try {
-            allAuthUsers = citizenClient.getAllCitizens();
-        } catch (Exception e) {
-            log.error("Auth-Service communication failed: {}", e.getMessage());
-            throw new RuntimeException("Auth-Service is currently unreachable.");
-        }
+        // The Circuit Breaker handles the failure, so we don't need the try-catch block hiding the exception anymore.
+        List<UserReqDTO> allAuthUsers = citizenClient.getAllCitizens();
 
         boolean userExists = allAuthUsers != null && allAuthUsers.stream()
                 .filter(u -> u != null && u.getUserId() != null)
@@ -66,6 +66,23 @@ public class CitizenServiceImpl implements CitizenService {
         return mapToResponse(saved);
     }
 
+    // --- FALLBACK METHOD ---
+    // Must have the exact same return type and parameters as the original method, plus a Throwable.
+    public CitizenResponseDTO registerCitizenFallback(CitizenRequestDTO request, Throwable throwable) {
+        log.error("Auth-Service communication failed. Fallback triggered for {}. Reason: {}", request.getName(), throwable.getMessage());
+        
+        // Return a safe response indicating the service is temporarily down, preventing a 500 error crash.
+        return new CitizenResponseDTO(
+            request.getUserId(),
+            null, // No Citizen ID generated yet
+            request.getName(),
+            request.getDob(),
+            request.getGender(),
+            request.getAddress(),
+            "SERVICE_UNAVAILABLE" 
+        );
+    }
+
     @Override
     public CitizenResponseDTO getCitizen(Long id) {
         log.info("Fetching citizen by ID: {}", id);
@@ -85,7 +102,7 @@ public class CitizenServiceImpl implements CitizenService {
             c.getCitizenId(),   
             c.getName(),        
             c.getDob(),         
-            genderStr,         
+            genderStr,          
             c.getAddress(),     
             statusStr           
         );

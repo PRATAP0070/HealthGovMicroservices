@@ -9,7 +9,9 @@ import org.springframework.stereotype.Service;
 import com.healthgov.client.UserClient;
 import com.healthgov.dto.CreateNotificationRequest;
 import com.healthgov.dto.NotificationDTO;
+import com.healthgov.dto.UniversalNotificationRequest;
 import com.healthgov.dto.UserDTO;
+import com.healthgov.enums.NotificationCategory;
 import com.healthgov.enums.NotificationStatus;
 import com.healthgov.exception.BadRequestException;
 import com.healthgov.exception.NotFoundException;
@@ -39,8 +41,8 @@ public class NotificationServiceImpl implements NotificationService {
 
 		// ===== FEIGN CALL (MATCHES FRIEND) =====
 		UserDTO user = userClient.getUserById(request.getUserId());
-		
-		log.info("User Client Data : {}",user);
+
+		log.info("User Client Data : {}", user);
 		String email = user.getEmail();
 
 		// ===== MESSAGE LOGIC (CATEGORY-BASED, LIKE FRIEND) =====
@@ -116,6 +118,40 @@ public class NotificationServiceImpl implements NotificationService {
 
 		notification.setStatus(NotificationStatus.READ);
 		notificationRepository.save(notification);
+	}
+	// Universal Notification
+
+	@Override
+	public void sendUniversalNotification(UniversalNotificationRequest request) {
+
+		if(request.getUserId()==null)
+		{
+			throw new BadRequestException("userId is required");
+		}
+		
+		if (request.getEmail() == null || request.getEmail().isBlank()) {
+			throw new BadRequestException("Email is required");
+		}
+
+		if (request.getMessage() == null || request.getMessage().isBlank()) {
+			throw new BadRequestException("Message is required");
+		}
+
+		// ✅ Save notification
+		Notification notification = new Notification();
+		notification.setUserId(request.getUserId());
+		notification.setEntityId(request.getEntityId());
+		notification.setCategory(request.getCategory() != null ? request.getCategory() : NotificationCategory.GENERAL);
+		notification.setMessage(request.getMessage());
+		notification.setStatus(NotificationStatus.SENT);
+		notification.setCreatedDate(LocalDateTime.now());
+
+		notificationRepository.save(notification);
+
+		// ✅ Send email
+		emailService.sendSimpleEmail(request.getEmail(), "HealthGov Notification", request.getMessage());
+
+		log.info("Universal notification sent to {}", request.getEmail());
 	}
 
 	// ================= DELETE =================

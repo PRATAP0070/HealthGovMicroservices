@@ -3,6 +3,7 @@ package com.healthgov.service;
 import java.util.List;
 
 import com.healthgov.dto.InfrastructureCreateRequest;
+import com.healthgov.dto.InfrastructureReportResponseDTO;
 import com.healthgov.dto.InfrastructureResponse;
 import com.healthgov.dto.InfrastructureUpdateRequest;
 import com.healthgov.enums.InfrastructureStatus;
@@ -24,4 +25,6 @@ public interface InfrastructureService {
 
 	List<InfrastructureResponse> getInfrastructuresByTypeLocationAndStatus(InfrastructureType type, String location,
 			InfrastructureStatus status);
+	
+	InfrastructureReportResponseDTO getInfrastructureReport();
 }

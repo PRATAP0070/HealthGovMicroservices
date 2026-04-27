@@ -1,6 +1,5 @@
 package com.healthgov.dto;
 
-import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -14,6 +13,7 @@ import lombok.Data;
 
 @Data
 public class HealthProgramResponseDTO {
+	private Long managerId;
 	private Long programId;
 	private String title;
 	private String description;

@@ -4,9 +4,12 @@ import java.util.List;
 
 import com.healthgov.dtos.ComplianceCreateRequest;
 import com.healthgov.dtos.ComplianceResponseDTO;
+import com.healthgov.dtos.ComplianceSummaryResponseDTO;
 import com.healthgov.dtos.ComplianceUpdateRequest;
 import com.healthgov.dtos.OfficerComplianceUpdateRequest;
 import com.healthgov.enums.ComplianceType;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 public interface ComplianceService {
 
@@ -26,5 +29,7 @@ public interface ComplianceService {
 
 	ComplianceResponseDTO deleteById(Long id);
 
-	ComplianceResponseDTO updateByOfficer(ComplianceType type, Long entityId, OfficerComplianceUpdateRequest request);
+	ComplianceSummaryResponseDTO getComplianceSummary();
+
+	ComplianceResponseDTO updateByOfficer(ComplianceType type, Long entityId, OfficerComplianceUpdateRequest request, HttpServletRequest httpRequest);
 }

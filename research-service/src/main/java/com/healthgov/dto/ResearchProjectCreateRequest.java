@@ -21,9 +21,6 @@ public class ResearchProjectCreateRequest {
 	@NotBlank(message = "description is required")
 	private String description;
 
-	@NotNull(message = "researcherId is required")
-	private Long researcherId;
-
 	@NotNull(message = "startDate is required")
 	private LocalDate startDate;
 

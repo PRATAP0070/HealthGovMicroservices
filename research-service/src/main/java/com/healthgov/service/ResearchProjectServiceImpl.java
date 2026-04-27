@@ -46,9 +46,9 @@ public class ResearchProjectServiceImpl implements ResearchProjectService {
 
 	// Create project
 	@Override
-	public ResearchProjectResponse create(ResearchProjectCreateRequest req) {
+	public ResearchProjectResponse create(ResearchProjectCreateRequest req, Long researcherId) {
 
-		log.info("Creating new research project for researcherId={}", req.getResearcherId());
+		log.info("Creating new research project for logged-in researcherId={}", researcherId);
 
 		LocalDate today = LocalDate.now();
 
@@ -60,23 +60,24 @@ public class ResearchProjectServiceImpl implements ResearchProjectService {
 			throw new MedicalResearchException(HttpStatus.BAD_REQUEST, "endDate cannot be before startDate");
 		}
 
-		// Validate researcher existence + role
+		// ✅ Validate researcher existence + role using HEADER-derived userId
 		UserReqDTO user;
 		try {
-			user = userClient.getUserById(req.getResearcherId());
+			user = userClient.getUserById(researcherId);
 		} catch (Exception e) {
-			throw new MedicalResearchException(HttpStatus.NOT_FOUND, "Researcher not found: " + req.getResearcherId());
+			throw new MedicalResearchException(HttpStatus.NOT_FOUND, "Researcher not found: " + researcherId);
 		}
 
 		if (user.getRole() != Role.RESEARCHER) {
-			throw new MedicalResearchException(HttpStatus.BAD_REQUEST,
+			throw new MedicalResearchException(HttpStatus.FORBIDDEN,
 					"Only users with RESEARCHER role can create research projects");
 		}
 
+		// ✅ Create project
 		ResearchProject p = new ResearchProject();
 		p.setTitle(req.getTitle());
 		p.setDescription(req.getDescription());
-		p.setResearcherId(req.getResearcherId());
+		p.setResearcherId(researcherId);
 		p.setStartDate(req.getStartDate());
 		p.setEndDate(req.getEndDate());
 		p.setStatus(ProjectStatus.PENDING);
@@ -84,14 +85,15 @@ public class ResearchProjectServiceImpl implements ResearchProjectService {
 
 		ResearchProject saved = projectRepo.save(p);
 
-		// Creating grant application
+		// ✅ Create grant application
 		GrantApplication ga = new GrantApplication();
 		ga.setProject(saved);
-		ga.setResearcherId(req.getResearcherId());
+		ga.setResearcherId(researcherId);
 		ga.setSubmittedDate(LocalDate.now());
 		ga.setStatus(GrantStatus.PENDING);
 		grantApplicationRepo.save(ga);
 
+		// ✅ Notify managers (best-effort)
 		try {
 			List<UserReqDTO> managers = userClient.getUserByRole(Role.MANAGER);
 
@@ -116,9 +118,9 @@ public class ResearchProjectServiceImpl implements ResearchProjectService {
 			log.warn("Manager notification failed, project flow continues", ex);
 		}
 
-		// Calling compliance Client for Grant
+		// ✅ Trigger compliance asynchronously
 		eventPublisher.publishEvent(new ProjectCreatedEvent(saved.getProjectId(), saved.getTitle()));
-		log.info("Compliance Create Event Triggred...");
+		log.info("Compliance Create Event Triggered");
 
 		return toResponse(saved);
 	}

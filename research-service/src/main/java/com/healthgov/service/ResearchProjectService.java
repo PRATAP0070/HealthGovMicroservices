@@ -8,7 +8,7 @@ import com.healthgov.dto.ResearchProjectUpdateRequest;
 
 public interface ResearchProjectService {
 
-    ResearchProjectResponse create(ResearchProjectCreateRequest req);
+	ResearchProjectResponse create(ResearchProjectCreateRequest req, Long researcherId);
 
     ResearchProjectResponse update(ResearchProjectUpdateRequest req);
 

@@ -12,5 +12,6 @@ public interface ResearchProjectRepository extends JpaRepository<ResearchProject
 	List<ResearchProject> findByStatus(ProjectStatus status);
 	
 	boolean existsByProjectId(Long projectId);
+	
 
 }

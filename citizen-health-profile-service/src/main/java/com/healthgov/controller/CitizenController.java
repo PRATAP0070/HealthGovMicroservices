@@ -2,7 +2,15 @@ package com.healthgov.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.healthgov.dto.CitizenRequestDTO;
 import com.healthgov.dto.CitizenResponseDTO;
@@ -21,9 +29,20 @@ public class CitizenController {
     private final CitizenService service;
 
     @PostMapping("/register")
-    public ResponseEntity<CitizenResponseDTO> register(@Valid @RequestBody CitizenRequestDTO request) {
+    public ResponseEntity<Object> register(@Valid @RequestBody CitizenRequestDTO request) {
         log.info("API Call: Registering new citizen with name: {}", request.getName());
+        
         CitizenResponseDTO response = service.registerCitizen(request);
+        
+        // Intercept the Circuit Breaker Fallback
+        if ("SERVICE_UNAVAILABLE".equals(response.getStatus())) {
+            log.warn("Returning custom 503 Service Unavailable plain text message.");
+            
+            // Return exactly the string you requested
+            return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE)
+                    .body("The Authentication Service is currently down. Citizen registration cannot proceed.");
+        }
+        
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
@@ -51,6 +70,4 @@ public class CitizenController {
         log.info("API Call: Updating status for citizen ID: {} to {}", id, status);
         return ResponseEntity.ok(service.approveCitizen(id, status));
     }
-    
-    
 }

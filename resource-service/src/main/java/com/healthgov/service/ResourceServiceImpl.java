@@ -14,12 +14,14 @@ import com.healthgov.dto.ResourceUpdateRequest;
 import com.healthgov.enums.ProgramStatus;
 import com.healthgov.enums.ResourceStatus;
 import com.healthgov.enums.ResourceType;
+import com.healthgov.exceptions.ProgramServiceUnavailableException;
 import com.healthgov.exceptions.ResourceNotFoundException;
 import com.healthgov.external.ProgramFeignClient;
 import com.healthgov.external.dto.ProgramStatusResponse;
 import com.healthgov.model.Resource;
 import com.healthgov.repository.ResourceRepository;
 
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import lombok.extern.slf4j.Slf4j;
 
 @Service
@@ -74,7 +76,7 @@ public class ResourceServiceImpl implements ResourceService {
 			entity.setStatus(request.getStatus());
 		}
 
-		//  Persist only after all validations
+		// Persist only after all validations
 		entity = resourceRepo.save(entity);
 
 		log.info("Resource created successfully with resourceId={}", entity.getResourceId());
@@ -89,7 +91,7 @@ public class ResourceServiceImpl implements ResourceService {
 
 		// Load existing resource
 		Resource entity = getResourceOrThrow(resourceId);
-		
+
 		// Validate program
 		ProgramStatusResponse program = programFeignClient.getProgramStatus(entity.getProgramId());
 
@@ -108,7 +110,7 @@ public class ResourceServiceImpl implements ResourceService {
 		}
 
 		validateResourceRequest(request.getQuantity(), request.getType(), request.getStatus());
-		
+
 		ResourceType newType = request.getType();
 
 		/* ---------- FUNDS BUDGET VALIDATION ---------- */
@@ -127,24 +129,23 @@ public class ResourceServiceImpl implements ResourceService {
 			if (effectiveAllocated > budget) {
 				throw new IllegalStateException(
 						"Insufficient budget. Remaining: " + (budget - (allocated - oldQuantity)));
-			}	
+			}
 		}
-			
-		log.info("Updating resourceId={}, oldStatus={}, newStatus={}", resourceId, entity.getStatus(), request.getStatus());
-		
+
+		log.info("Updating resourceId={}, oldStatus={}, newStatus={}", resourceId, entity.getStatus(),
+				request.getStatus());
+
 		// Apply update after all validations
 		entity.setType(request.getType());
 		entity.setQuantity(request.getQuantity());
 		entity.setStatus(request.getStatus());
 
-
 		resourceRepo.save(entity);
-	
+
 		log.info("Resource updated successfully with resourceId={}", resourceId);
 
 		return toResponse(entity);
 	}
-
 
 	@Override
 	public void deleteResourceById(Long resourceId) {
@@ -153,11 +154,13 @@ public class ResourceServiceImpl implements ResourceService {
 		// Confirm resource exists before deleting
 		Resource entity = getResourceOrThrow(resourceId);
 
-		if (entity.getStatus() == ResourceStatus.ACTIVE || entity.getStatus() == ResourceStatus.ALLOCATED || entity.getStatus() == ResourceStatus.COMPLETED) {
+		if (entity.getStatus() == ResourceStatus.ACTIVE || entity.getStatus() == ResourceStatus.ALLOCATED
+				|| entity.getStatus() == ResourceStatus.COMPLETED) {
 			throw new IllegalStateException("Cannot delete active or allocated or completed resource");
 		}
 		// ACTIVE resources are in use; deleting them would cause data loss.
-		// COMPLETED resources are historical records; deleting them breaks auditability.
+		// COMPLETED resources are historical records; deleting them breaks
+		// auditability.
 		resourceRepo.delete(entity);
 
 		log.info("Resource deleted successfully with resourceId={}", resourceId);
@@ -239,7 +242,6 @@ public class ResourceServiceImpl implements ResourceService {
 			throw new IllegalStateException("FUNDS cannot be INACTIVE");
 		}
 	}
-	
 
 	public ResourceReportResponseDTO generateResourceReport() {
 
@@ -250,7 +252,7 @@ public class ResourceServiceImpl implements ResourceService {
 
 		return new ResourceReportResponseDTO(fundsReport, physicalResourcesReport);
 	}
-	
+
 	private FundsResourceReportDTO buildFundsResourceReport() {
 
 		return new FundsResourceReportDTO(

@@ -9,6 +9,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -63,6 +64,7 @@ public class UserAPI {
 	@PostMapping("/citizenRegister")
 	public ResponseEntity<UserDTO> addCitizen(@RequestBody UserDTO userDTO) {
 		UserDTO savedDto = registrationService.registerUser(userDTO);
+		userDTO.setRole(Role.CITIZEN);
 		return new ResponseEntity<>(savedDto, HttpStatus.CREATED);
 	}
 
@@ -84,7 +86,8 @@ public class UserAPI {
 		String role = userDetails.getAuthorities().stream().findFirst()
 				.orElseThrow(() -> new RuntimeException("Role not found")).getAuthority().replace("ROLE_", "");
 
-		final String token = jwtTokenUtil.generateToken(userDetails, Role.valueOf(role));
+		final String token = jwtTokenUtil.generateToken(userDetails, Role.valueOf(role),
+				service.getUserIdByEmail(loginDto.getEmail()));
 
 		log.info("After token generated");
 		auditLogService.createAuditLog(loginServiceImpl.getUserById(loginDto.getEmail()), "login", "Profile");
@@ -119,5 +122,16 @@ public class UserAPI {
 	@GetMapping("/getAllCitizens")
 	public List<UserReqDTO> getAllCitizens() {
 		return service.listOfCitizen();
+	}
+
+	@DeleteMapping("/deleteUserByAdmin/{userId}")
+	public ResponseEntity<String> deleteUserByAdmin(@PathVariable Long userId) {
+		String deletedUser = registrationService.deleteUserByAdmin(userId);
+		return new ResponseEntity<>(deletedUser, HttpStatus.NO_CONTENT);
+	}
+	
+	@GetMapping("/getUserByRole/{role}")
+	public List<UserReqDTO> getUserByRole(@PathVariable Role role) {
+	    return service.getUsersByRole(role);
 	}
 }

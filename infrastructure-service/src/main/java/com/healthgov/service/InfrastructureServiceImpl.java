@@ -5,8 +5,11 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.healthgov.dto.InfrastructureAvailabilityDTO;
 import com.healthgov.dto.InfrastructureCreateRequest;
+import com.healthgov.dto.InfrastructureReportResponseDTO;
 import com.healthgov.dto.InfrastructureResponse;
+import com.healthgov.dto.InfrastructureSummaryDTO;
 import com.healthgov.dto.InfrastructureUpdateRequest;
 import com.healthgov.enums.InfrastructureStatus;
 import com.healthgov.enums.InfrastructureType;
@@ -168,4 +171,29 @@ public class InfrastructureServiceImpl implements InfrastructureService {
 		dto.setStatus(e.getStatus());
 		return dto;
 	}
+	
+	@Override
+	@Transactional(readOnly = true)
+	public InfrastructureReportResponseDTO getInfrastructureReport() {
+
+		InfrastructureAvailabilityDTO hospital = getStatusByType(InfrastructureType.HOSPITAL);
+		InfrastructureAvailabilityDTO lab = getStatusByType(InfrastructureType.LAB);
+		InfrastructureAvailabilityDTO center = getStatusByType(InfrastructureType.CENTER);
+
+		InfrastructureSummaryDTO summary = new InfrastructureSummaryDTO(infraRepo.countTotal(),
+				infraRepo.countByType(InfrastructureType.HOSPITAL), infraRepo.countByType(InfrastructureType.LAB), infraRepo.countByType(InfrastructureType.CENTER));
+
+		return new InfrastructureReportResponseDTO(summary, List.of(hospital, lab, center));
+	}
+
+	private InfrastructureAvailabilityDTO getStatusByType(InfrastructureType type) {
+		return new InfrastructureAvailabilityDTO(type, 
+				infraRepo.countByTypeAndStatus(type, InfrastructureStatus.OPERATIONAL),
+				infraRepo.countByTypeAndStatus(type, InfrastructureStatus.UNDER_MAINTENANCE),
+				infraRepo.countByTypeAndStatus(type, InfrastructureStatus.TEMPORARILY_CLOSED),
+				infraRepo.countByTypeAndStatus(type, InfrastructureStatus.DECOMMISSIONED), 
+				infraRepo.countByType(type));
+	}
+
+
 }

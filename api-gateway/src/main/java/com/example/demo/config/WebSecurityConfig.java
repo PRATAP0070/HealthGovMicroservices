@@ -58,7 +58,7 @@ public class WebSecurityConfig {
                 .pathMatchers(HttpMethod.OPTIONS, "/**").permitAll()
  
                 // ✅ ROLE check (NOT authority)
-                .pathMatchers("/healthGov/userRegisterByAdmin").hasRole("ADMIN")
+                .pathMatchers("/healthGov/userRegisterByAdmin","/healthGov/deleteUserByAdmin/**").hasRole("ADMIN")
                 .pathMatchers("/audit_log/**").hasRole("ADMIN")
                 .pathMatchers("/health-profile/**").hasRole("PROVIDER")
                 .pathMatchers("/document/**").hasAnyRole("CITIZEN","PROVIDER")

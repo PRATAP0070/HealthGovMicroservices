@@ -1,9 +1,11 @@
 package com.healthgov.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.healthgov.client.NotificationClient;
 import com.healthgov.dto.UserDTO;
 import com.healthgov.enums.Role;
 import com.healthgov.model.User;
@@ -16,6 +18,9 @@ import lombok.AllArgsConstructor;
 public class RegistrationServiceImpl implements RegistrationService {
 
 	@Autowired
+	private NotificationClient client;
+	
+	@Autowired
 	private RegistrationLoginRepo registrationRepo;
 	
 	@Autowired
@@ -27,16 +32,14 @@ public class RegistrationServiceImpl implements RegistrationService {
 		User user = new User();
 		user.setName(userDto.getName());
 		user.setEmail(userDto.getEmail());
-		if(userDto.getRole() == null) {
-			user.setRole(Role.CITIZEN);
-		}else {
-			user.setRole(userDto.getRole());
-		}
+		user.setRole(userDto.getRole());
 		user.setPhone(userDto.getPhone());
 		user.setStatus("ACTIVE");
 		user.setPassword(bcryptEncoder.encode(userDto.getPassword()));
 		
 		registrationRepo.save(user);
+		
+		//client.sendRegistrationMessage(userDto.getEmail());
 		
 		UserDTO userDTO2 = new UserDTO();
 		userDTO2.setUserId(user.getUserId());
@@ -48,4 +51,17 @@ public class RegistrationServiceImpl implements RegistrationService {
 		return userDTO2;
 	}
 
+	@Override
+	public String deleteUserByAdmin(Long userId) {
+		
+		User user = registrationRepo.findById(userId).orElseThrow(() -> new UsernameNotFoundException("User not found"));
+		if(user.getRole().equals(Role.ADMIN)) {
+			throw new UsernameNotFoundException("ADMIN Cannot be deleted");
+		}
+		registrationRepo.delete(user);
+		return "Deleted data successfully";
+	}
+
+	
+	
 }

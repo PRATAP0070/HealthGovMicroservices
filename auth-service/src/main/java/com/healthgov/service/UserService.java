@@ -50,5 +50,27 @@ public class UserService {
 			return dto;
 		}).collect(Collectors.toList());
 	}
+	
+	public Long getUserIdByEmail(String email)
+	{
+		User user=repo.findByEmail(email);
+		return user.getUserId();
+	}
+	
+	public List<UserReqDTO> getUsersByRole(Role role) {
+
+	    List<User> users = repo.findByRole(role);
+
+	    return users.stream().map(user -> {
+	        UserReqDTO dto = new UserReqDTO();
+	        dto.setUserId(user.getUserId());
+	        dto.setName(user.getName());
+	        dto.setEmail(user.getEmail());
+	        dto.setRole(user.getRole());
+	        dto.setPhone(user.getPhone());
+	        return dto;
+	    }).toList();
+	}
+
 
 }

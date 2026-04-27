@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import com.healthgov.dto.CitizenResponseDTO;
 
-@FeignClient(name = "citizen-health-profile-service")
+@FeignClient(name = "citizen-health-profile-service",url = "http://localhost:6789")
 public interface CitizenClient {
 
 	@GetMapping("/citizen/{id}")

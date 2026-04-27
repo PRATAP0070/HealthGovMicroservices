@@ -2,21 +2,21 @@ package com.healthgov.services;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Set;
+import java.util.Map;
+import java.util.stream.Collectors;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.healthgov.dtos.AuditCreateRequest;
 import com.healthgov.dtos.AuditReponseDTO;
+import com.healthgov.dtos.AuditSummaryResponseDTO;
 import com.healthgov.dtos.AuditUpdateRequest;
+import com.healthgov.dtos.UserResponseDto;
 import com.healthgov.enums.AuditStatus;
+import com.healthgov.enums.Role;
 import com.healthgov.exceptions.AuditRequestException;
 import com.healthgov.exceptions.ResourceNotFoundException;
-import com.healthgov.feignclients.ProgramClient;
-import com.healthgov.feignclients.ProjectClient;
 import com.healthgov.feignclients.UserClient;
 import com.healthgov.models.Audit;
 import com.healthgov.repository.AuditRepository;
@@ -31,14 +31,10 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class AuditServiceImpl implements AuditService {
 
-	private static final Set<String> ALLOWED_SCOPE_TYPES = Set.of("PROGRAM", "PROJECT", "GRANT");
-
 	private final AuditRepository auditRepo;
-	private final ProgramClient programClient;
-	private final ProjectClient projectClient;
+	private final AuditUtil auditUtil;
 	private final UserClient userClient;
 
-	private static final Logger log = LoggerFactory.getLogger(AuditServiceImpl.class);
 
 	@Override
 	public List<AuditReponseDTO> getAllAudits() {
@@ -54,22 +50,38 @@ public class AuditServiceImpl implements AuditService {
 			throw new AuditRequestException("Compliance officer ID is required.");
 		}
 
-		Boolean exists;
-		Boolean isCompliance;
-
 		try {
-			isCompliance = userClient.userHasRole(officerId, "COMPLIANCE");
-			log.info("Response from the User-Client {}", isCompliance);
+			UserResponseDto user = userClient.getUserById(officerId);
+			log.info("Response from the User-Client {}", user);
+
+			if (user == null || user.getRole() == null) {
+				throw new AuditRequestException("Invalid user data returned for officerId=" + officerId);
+			}
+
+			// User Role comparison
+			if (!user.getRole().equals(Role.COMPLIANCE)) {
+				throw new AuditRequestException(
+						"User with ID: " + user.getUserId() + " : " + user.getName() + " is not a Compliance Officer");
+			}
+
 		} catch (FeignClientException e) {
 			throw new AuditRequestException("Unable to validate compliance officer. User service unavailable.");
 		}
 
-		if (isCompliance == null || !isCompliance) {
-			throw new AuditRequestException("User is not a COMPLIANCE officer: id=" + officerId);
-		}
-
 		String scope = request.getScope().trim();
-		validateAndEnsureScopeTargetExists(scope);
+		auditUtil.validateAndEnsureScopeTargetExists(scope);
+
+		// Prevent duplicate audit creation
+		if (auditRepo.existsByOfficerIdAndScopeIgnoreCase(officerId, scope)) {
+
+			log.info("Audit already exists for officerId={} and scope={}, returning existing audit", officerId, scope);
+
+			Audit existingAudit = auditRepo.findByOfficerId(officerId).stream()
+					.filter(a -> a.getScope().equalsIgnoreCase(scope)).findFirst()
+					.orElseThrow(() -> new AuditRequestException("Audit exists but could not be retrieved"));
+
+			return convertToDto(existingAudit);
+		}
 
 		LocalDate date = (request.getDate() != null) ? request.getDate() : LocalDate.now();
 
@@ -178,62 +190,25 @@ public class AuditServiceImpl implements AuditService {
 		}
 	}
 
-	private void validateAndEnsureScopeTargetExists(String scope) {
+	@Override
+	@Transactional(readOnly = true)
+	public AuditSummaryResponseDTO getAuditSummary() {
 
-		String[] parts = scope.split(":", 2);
-		if (parts.length != 2) {
-			throw new AuditRequestException("Invalid scope format. Use PROGRAM:<id>, PROJECT:<id>, or GRANT:<id>.");
-		}
+		long total = auditRepo.count();
 
-		String type = parts[0].trim().toUpperCase();
-		String idPart = parts[1].trim();
+		Map<AuditStatus, Long> byStatus = auditRepo.countByStatus().stream()
+				.collect(Collectors.toMap(r -> (AuditStatus) r[0], r -> (Long) r[1]));
 
-		if (!ALLOWED_SCOPE_TYPES.contains(type)) {
-			throw new AuditRequestException("Invalid scope type. Allowed: PROGRAM, PROJECT, GRANT.");
-		}
+		Map<Long, Long> byOfficer = auditRepo.countByOfficer().stream()
+				.collect(Collectors.toMap(r -> (Long) r[0], r -> (Long) r[1]));
 
-		long id;
-		try {
-			id = Long.parseLong(idPart);
-		} catch (NumberFormatException ex) {
-			throw new AuditRequestException("Invalid scope id. Use numeric id. Example: PROGRAM:4");
-		}
+		Map<String, Long> byScopeType = auditRepo.findAllScopes().stream()
+				.filter(scope -> scope != null && scope.contains(":")).map(scope -> scope.split(":")[0]) // extract type
+				.collect(Collectors.groupingBy(s -> s, Collectors.counting()));
 
-		Boolean exists;
-		try {
+		log.info("Audit summary generated. total={}", total);
 
-			switch (type) {
-
-			case "PROGRAM" -> {
-				log.debug("Calling ProgramClient.programExists(id={})", id);
-				exists = programClient.programExists(id);
-				log.debug("ProgramClient response for id {}: {}", id, exists);
-			}
-
-			case "PROJECT" -> {
-				log.debug("Calling ProjectClient.projectExists(id={})", id);
-				exists = projectClient.projectExists(id);
-				log.debug("ProjectClient response for id {}: {}", id, exists);
-			}
-
-			case "GRANT" -> {
-				log.debug("Calling ProjectClient.grantExists(id={})", id);
-				exists = projectClient.grantExists(id);
-				log.debug("Grant existence response for id {}: {}", id, exists);
-			}
-
-			default -> {
-				log.error("Unexpected scope type encountered: {}", type);
-				exists = false;
-			}
-			}
-		} catch (FeignClientException e) {
-			throw new AuditRequestException("Unable to validate scope. Dependent service unavailable.");
-		}
-
-		if (exists == null || !exists) {
-			throw new ResourceNotFoundException("Scope target not found: " + type + " id=" + id);
-		}
+		return new AuditSummaryResponseDTO(total, byStatus, byOfficer, byScopeType);
 	}
 
 	private AuditReponseDTO convertToDto(Audit a) {
@@ -243,7 +218,17 @@ public class AuditServiceImpl implements AuditService {
 		dto.setDate(a.getDate());
 		dto.setFindings(a.getFindings());
 		dto.setStatus(a.getStatus());
-		// dto.setOfficer(a.getOfficer());
+
+		if (a.getOfficerId() != null) {
+			try {
+				dto.setOfficer(userClient.getUserById(a.getOfficerId()));
+			} catch (Exception e) {
+				log.warn("Unable to fetch officer details for officerId={}, setting officer=null", a.getOfficerId(), e);
+				dto.setOfficer(null);
+			}
+		} else {
+			dto.setOfficer(null);
+		}
 
 		return dto;
 

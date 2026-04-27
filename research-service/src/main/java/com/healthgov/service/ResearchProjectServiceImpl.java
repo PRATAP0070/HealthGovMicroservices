@@ -9,12 +9,15 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.healthgov.client.NotificationClient;
 import com.healthgov.client.UserClient;
 import com.healthgov.dto.ResearchProjectCreateRequest;
 import com.healthgov.dto.ResearchProjectResponse;
 import com.healthgov.dto.ResearchProjectUpdateRequest;
+import com.healthgov.dto.UniversalNotificationRequest;
 import com.healthgov.dto.UserReqDTO;
 import com.healthgov.enums.GrantStatus;
+import com.healthgov.enums.NotificationCategory;
 import com.healthgov.enums.ProjectStatus;
 import com.healthgov.enums.Role;
 import com.healthgov.events.ProjectCreatedEvent;
@@ -39,6 +42,7 @@ public class ResearchProjectServiceImpl implements ResearchProjectService {
 	private final GrantApplicationRepository grantApplicationRepo;
 	private final UserClient userClient;
 	private final ApplicationEventPublisher eventPublisher;
+	private final NotificationClient notificationClient;
 
 	// Create project
 	@Override
@@ -87,9 +91,32 @@ public class ResearchProjectServiceImpl implements ResearchProjectService {
 		ga.setSubmittedDate(LocalDate.now());
 		ga.setStatus(GrantStatus.PENDING);
 		grantApplicationRepo.save(ga);
-		
-		
-		//Calling compliance Client  for Grant 
+
+		try {
+			List<UserReqDTO> managers = userClient.getUserByRole(Role.MANAGER);
+
+			if (managers == null || managers.isEmpty()) {
+				log.warn("No MANAGER users found. Skipping manager notification.");
+			} else {
+				for (UserReqDTO manager : managers) {
+
+					UniversalNotificationRequest notification = new UniversalNotificationRequest();
+
+					notification.setUserId(manager.getUserId());
+					notification.setEmail(manager.getEmail());
+					notification.setCategory(NotificationCategory.PROJECT);
+					notification.setEntityId(saved.getProjectId());
+					notification.setMessage("📌 A research project requires your approval.\n\n" + "Project ID: "
+							+ saved.getProjectId() + "\n" + "Project Title: " + saved.getTitle());
+
+					notificationClient.sendUniversalNotification(notification);
+				}
+			}
+		} catch (Exception ex) {
+			log.warn("Manager notification failed, project flow continues", ex);
+		}
+
+		// Calling compliance Client for Grant
 		eventPublisher.publishEvent(new ProjectCreatedEvent(saved.getProjectId(), saved.getTitle()));
 		log.info("Compliance Create Event Triggred...");
 
@@ -146,6 +173,30 @@ public class ResearchProjectServiceImpl implements ResearchProjectService {
 		ga.setSubmittedDate(LocalDate.now());
 		ga.setStatus(GrantStatus.PENDING);
 		grantApplicationRepo.save(ga);
+
+		try {
+			List<UserReqDTO> managers = userClient.getUserByRole(Role.MANAGER);
+
+			if (managers == null || managers.isEmpty()) {
+				log.warn("No MANAGER users found. Skipping manager notification.");
+			} else {
+				for (UserReqDTO manager : managers) {
+
+					UniversalNotificationRequest notification = new UniversalNotificationRequest();
+
+					notification.setUserId(manager.getUserId());
+					notification.setEmail(manager.getEmail());
+					notification.setCategory(NotificationCategory.PROJECT);
+					notification.setEntityId(saved.getProjectId());
+					notification.setMessage("📌 A research project updated & requires your approval.\n\n"
+							+ "Project ID: " + saved.getProjectId() + "\n" + "Project Title: " + saved.getTitle());
+
+					notificationClient.sendUniversalNotification(notification);
+				}
+			}
+		} catch (Exception ex) {
+			log.warn("Manager notification failed, project flow continues", ex);
+		}
 
 		return toResponse(saved);
 	}

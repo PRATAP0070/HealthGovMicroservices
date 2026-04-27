@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import com.healthgov.dto.ComplianceCreateRequest;
 import com.healthgov.dto.ComplianceResponseDTO;
 
-@FeignClient(name = "compliance-audit-service")
+@FeignClient(name = "compliance-audit-service", fallback = ComplianceClientFallback.class)
 public interface ComplianceClient {
 
 	@PostMapping("/api/v1/compliance-records/create")

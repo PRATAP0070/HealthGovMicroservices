@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import com.healthgov.dto.UniversalNotificationRequest;
 
-@FeignClient(name = "notification-alerts-service")
+@FeignClient(name = "notification-alerts-service", fallback = NotificationClientFallback.class)
 public interface NotificationClient {
 
 	@PostMapping("/api/notifications/send-universal")

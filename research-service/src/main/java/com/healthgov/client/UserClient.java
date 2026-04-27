@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import com.healthgov.dto.UserReqDTO;
 import com.healthgov.enums.Role;
 
-@FeignClient(name = "auth-service")
+@FeignClient(name = "auth-service", fallback = UserClientFallback.class)
 public interface UserClient {
 
     @GetMapping("/healthGov/getUserById/{userId}")

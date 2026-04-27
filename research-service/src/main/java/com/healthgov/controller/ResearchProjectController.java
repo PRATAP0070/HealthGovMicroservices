@@ -33,6 +33,7 @@ public class ResearchProjectController {
 	private final ResearchProjectService service;
 	private final GrantService grantService;
 
+
 	// Create project
 	@PostMapping("/createProject")
 	public ResponseEntity<List<String>> create(@Valid @RequestBody ResearchProjectCreateRequest req) {
@@ -101,5 +102,7 @@ public class ResearchProjectController {
 		log.info("Checking if grant exists for grantId={}", grantId);
 		return ResponseEntity.ok(grantService.grantExists(grantId));
 	}
+	
+
 
 }

@@ -3,6 +3,7 @@ package com.healthgov.dtos;
 import java.time.LocalDate;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.healthgov.enums.InfrastructureStatus;
 import com.healthgov.enums.InfrastructureType;
 import com.healthgov.enums.ProgramStatus;
@@ -12,7 +13,8 @@ import com.healthgov.enums.ResourceType;
 import lombok.Data;
 
 @Data
-public class HealthProgramResponseDTO {
+public class HealthProgramResponseDTO implements ComplianceEntityDTO{
+	private Long managerId;
 	private Long programId;
 	private String title;
 	private String description;
@@ -24,6 +26,15 @@ public class HealthProgramResponseDTO {
 	private List<EnrollmentDTO> enrollments;
 	private List<ResourceDTO> resources;
 	private List<InfrastructureDTO> infrastructures;
+	
+	
+
+	 @Override
+	 @JsonIgnore 
+	 public Long getOwnerId() {
+	        return managerId;
+	 }
+
 
 	@Data
 	public static class EnrollmentDTO {

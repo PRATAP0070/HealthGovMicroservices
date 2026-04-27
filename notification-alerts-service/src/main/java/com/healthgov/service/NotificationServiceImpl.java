@@ -124,6 +124,11 @@ public class NotificationServiceImpl implements NotificationService {
 	@Override
 	public void sendUniversalNotification(UniversalNotificationRequest request) {
 
+		if(request.getUserId()==null)
+		{
+			throw new BadRequestException("userId is required");
+		}
+		
 		if (request.getEmail() == null || request.getEmail().isBlank()) {
 			throw new BadRequestException("Email is required");
 		}

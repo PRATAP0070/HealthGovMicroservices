@@ -16,6 +16,8 @@ import com.healthgov.dto.HealthProgramResponseDTO;
 import com.healthgov.dto.ProgramStatusResponse;
 import com.healthgov.service.HealthProgramService;
 
+import jakarta.servlet.http.HttpServletRequest;
+
 @RestController
 @RequestMapping("/api/programs")
 public class HealthProgramController {
@@ -42,8 +44,8 @@ public class HealthProgramController {
     }
 
     @PostMapping("/create")
-    public HealthProgramResponseDTO create(@RequestBody HealthProgramDTO dto) {
-        return service.createProgram(dto); 
+    public HealthProgramResponseDTO create(@RequestBody HealthProgramDTO dto, HttpServletRequest request) {
+        return service.createProgram(dto,request); 
     }
 
     @PutMapping("/{id}")

@@ -4,6 +4,7 @@ import java.util.EnumSet;
 
 import org.springframework.stereotype.Service;
 
+import com.healthgov.dtos.ComplianceEntityDTO;
 import com.healthgov.dtos.UserResponseDto;
 import com.healthgov.enums.ComplianceResult;
 import com.healthgov.enums.ComplianceType;
@@ -113,28 +114,28 @@ public class ComplianceUtil {
         }
     }
 
-	public Object fetchEntityDetails(ComplianceType type, Long entityId) {
+	public ComplianceEntityDTO fetchEntityDetails(ComplianceType type, Long entityId) {
 
 		try {
 			return switch (type) {
 
 			case PROGRAM -> {
 				log.info("[PROGRAM-CLIENT] Calling getProgramById with id={}", entityId);
-				Object program = programClient.getProgramById(entityId);
+				ComplianceEntityDTO program = programClient.getProgramById(entityId);
 				log.info("[PROGRAM-CLIENT] Response received: {}", program);
 				yield program;
 			}
 
 			case PROJECT -> {
 				log.info("[PROJECT-CLIENT] Calling getProjectById with id={}", entityId);
-				Object project = projectClient.getProjectById(entityId);
+				ComplianceEntityDTO project = projectClient.getProjectById(entityId);
 				log.info("[PROJECT-CLIENT] Response received: {}", project);
 				yield project;
 			}
 
 			case GRANT -> {
 				log.info("[GRANT-CLIENT] Calling getGrantById with id={}", entityId);
-				Object grant = projectClient.getGrantById(entityId);
+				ComplianceEntityDTO grant = projectClient.getGrantById(entityId);
 				log.info("[GRANT-CLIENT] Response received: {}", grant);
 				yield grant;
 			}
@@ -142,7 +143,7 @@ public class ComplianceUtil {
 
 		} catch (Exception e) {
 			log.error("[ENTITY-FETCH-FAILED] type={} entityId={}", type, entityId, e);
-			return "micro Service is Down";
+			return null;
 		}
 	}
 }

@@ -16,6 +16,6 @@ public class ComplianceResponseDTO {
 	private ComplianceResult result;
 	private LocalDate date;
 	private String notes;
-	private Object entity;
+	private ComplianceEntityDTO entity;
 
 }

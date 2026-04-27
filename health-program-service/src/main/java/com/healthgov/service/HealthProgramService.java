@@ -6,19 +6,21 @@ import com.healthgov.dto.HealthProgramDTO;
 import com.healthgov.dto.HealthProgramResponseDTO;
 import com.healthgov.dto.ProgramStatusResponse;
 
+import jakarta.servlet.http.HttpServletRequest;
+
 public interface HealthProgramService {
 
-    List<HealthProgramResponseDTO> getAllPrograms();
+	List<HealthProgramResponseDTO> getAllPrograms();
 
-    HealthProgramResponseDTO getProgramById(Long id);
+	HealthProgramResponseDTO getProgramById(Long id);
 
-    HealthProgramResponseDTO createProgram(HealthProgramDTO dto);
+	HealthProgramResponseDTO createProgram(HealthProgramDTO dto, HttpServletRequest request);
 
-    HealthProgramResponseDTO updateProgram(Long id, HealthProgramDTO dto);
+	HealthProgramResponseDTO updateProgram(Long id, HealthProgramDTO dto);
 
-    void deleteProgram(Long id);
+	void deleteProgram(Long id);
 
-    Boolean programExists(Long id);
-    
-    public ProgramStatusResponse getProgramStatus(Long programId);
+	Boolean programExists(Long id);
+
+	public ProgramStatusResponse getProgramStatus(Long programId);
 }

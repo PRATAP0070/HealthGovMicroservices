@@ -1,7 +1,5 @@
 package com.healthgov.service;
 
-
-
 import java.time.LocalDate;
 import java.util.List;
 
@@ -14,6 +12,7 @@ import com.healthgov.citizenFeignClient.ResourceClient;
 import com.healthgov.dto.HealthProgramDTO;
 import com.healthgov.dto.HealthProgramResponseDTO;
 import com.healthgov.dto.ProgramStatusResponse;
+import com.healthgov.dto.RequestUserContext;
 import com.healthgov.events.ProgramCreatedEvent;
 import com.healthgov.exceptions.ProgramException;
 import com.healthgov.model.Enrollment;
@@ -21,6 +20,7 @@ import com.healthgov.model.HealthProgram;
 import com.healthgov.repository.EnrollmentRepository;
 import com.healthgov.repository.HealthProgramRepository;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -37,6 +37,7 @@ public class HealthProgramServiceImpl implements HealthProgramService {
 	private final ApplicationEventPublisher eventPublisher;
 
 	private final InfrastructureClient infraClient;
+	private final RequestUserContext requestUserContext;
 
 	/* -------------------- Read Operations -------------------- */
 
@@ -56,11 +57,12 @@ public class HealthProgramServiceImpl implements HealthProgramService {
 
 	@Transactional
 	@Override
-	public HealthProgramResponseDTO createProgram(HealthProgramDTO dto) {
+	public HealthProgramResponseDTO createProgram(HealthProgramDTO dto, HttpServletRequest request) {
 
 		validateDates(dto.getStartDate(), dto.getEndDate());
 
 		HealthProgram program = new HealthProgram();
+		program.setManagerId(requestUserContext.getUserId(request));
 		program.setTitle(dto.getTitle());
 		program.setDescription(dto.getDescription());
 		program.setStartDate(dto.getStartDate());
@@ -73,7 +75,7 @@ public class HealthProgramServiceImpl implements HealthProgramService {
 		// Calling compliance Client for Grant
 		eventPublisher.publishEvent(new ProgramCreatedEvent(saved.getProgramId(), saved.getTitle()));
 		log.info("Compliance Create Event Triggred for Program...");
-		
+
 		return map(saved);
 	}
 
@@ -146,6 +148,7 @@ public class HealthProgramServiceImpl implements HealthProgramService {
 
 	private HealthProgramResponseDTO map(HealthProgram program) {
 		HealthProgramResponseDTO dto = new HealthProgramResponseDTO();
+		dto.setManagerId(program.getManagerId());
 		dto.setProgramId(program.getProgramId());
 		dto.setTitle(program.getTitle());
 		dto.setDescription(program.getDescription());

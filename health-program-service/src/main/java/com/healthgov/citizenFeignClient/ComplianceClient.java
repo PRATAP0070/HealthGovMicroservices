@@ -12,5 +12,4 @@ public interface ComplianceClient {
 
 	@PostMapping("/api/v1/compliance-records/create")
 	ComplianceResponseDTO create(@RequestBody ComplianceCreateRequest request);
-
 }

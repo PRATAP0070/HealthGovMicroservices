@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -33,14 +34,14 @@ public class ResearchProjectController {
 	private final ResearchProjectService service;
 	private final GrantService grantService;
 
-
 	// Create project
 	@PostMapping("/createProject")
-	public ResponseEntity<List<String>> create(@Valid @RequestBody ResearchProjectCreateRequest req) {
+	public ResponseEntity<List<String>> create(@RequestHeader("X-User-Id") Long researcherId,
+			@Valid @RequestBody ResearchProjectCreateRequest req) {
 
-		log.info("CREATE project request for researcherId={}", req.getResearcherId());
+		log.info("CREATE project request for logged-in researcherId={}", researcherId);
 
-		ResearchProjectResponse created = service.create(req);
+		ResearchProjectResponse created = service.create(req, researcherId);
 
 		return ResponseEntity.ok(List.of("Project created successfully", "Project ID: " + created.getProjectId()));
 	}
@@ -102,7 +103,5 @@ public class ResearchProjectController {
 		log.info("Checking if grant exists for grantId={}", grantId);
 		return ResponseEntity.ok(grantService.grantExists(grantId));
 	}
-	
-
 
 }

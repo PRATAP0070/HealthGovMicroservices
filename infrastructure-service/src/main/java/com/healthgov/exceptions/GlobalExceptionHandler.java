@@ -122,6 +122,21 @@ public class GlobalExceptionHandler {
 
 		return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
 	}
+	
+	@ExceptionHandler(ProgramServiceUnavailableException.class)
+	public ResponseEntity<ExceptionResponse> handleProgramServiceUnavailable(
+	        ProgramServiceUnavailableException e) {
+
+	    log.error("Program service unavailable: {}", e.getMessage(), e);
+
+	    ExceptionResponse ex = new ExceptionResponse(
+	            e.getMessage(),
+	            LocalDate.now(),
+	            503
+	    );
+
+	    return new ResponseEntity<>(ex, HttpStatus.SERVICE_UNAVAILABLE);
+	}
 
 	@ExceptionHandler(Exception.class)
 	public ResponseEntity<ExceptionResponse> handleGenericException(Exception e) {

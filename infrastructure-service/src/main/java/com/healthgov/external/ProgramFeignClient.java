@@ -6,7 +6,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import com.healthgov.external.dto.ProgramStatusResponse;
 
-@FeignClient(name = "health-program-service")
+@FeignClient(name = "health-program-service",
+fallbackFactory = ProgramFeignClientFallbackFactory.class)
 public interface ProgramFeignClient {
 
 	@GetMapping("/api/programs/program-status/{programId}")

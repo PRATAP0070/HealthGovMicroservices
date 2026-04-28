@@ -5,15 +5,16 @@ import java.util.EnumSet;
 import org.springframework.stereotype.Service;
 
 import com.healthgov.dtos.ComplianceEntityDTO;
+import com.healthgov.dtos.ComplianceEntityFallbackDTO;
 import com.healthgov.dtos.UserResponseDto;
 import com.healthgov.enums.ComplianceResult;
 import com.healthgov.enums.ComplianceType;
 import com.healthgov.enums.Role;
 import com.healthgov.exceptions.ComplianceRequestException;
 import com.healthgov.exceptions.ResourceNotFoundException;
-import com.healthgov.feignclients.ProgramClient;
-import com.healthgov.feignclients.ProjectClient;
-import com.healthgov.feignclients.UserClient;
+import com.healthgov.fallbacks.ProgramServiceClient;
+import com.healthgov.fallbacks.ProjectServiceClient;
+import com.healthgov.fallbacks.UserServiceClient;
 
 import feign.FeignException;
 import feign.FeignException.FeignClientException;
@@ -24,9 +25,13 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RequiredArgsConstructor
 public class ComplianceUtil {
-	private final ProgramClient programClient;
-	private final ProjectClient projectClient;
-	private final UserClient userClient;
+//	private final ProgramClient programClient;
+//	private final ProjectClient projectClient;
+//	private final UserClient userClient;
+
+	private final ProgramServiceClient programServiceClient;
+	private final ProjectServiceClient projectServiceClient;
+	private final UserServiceClient userServiceClient;
 
 	public ComplianceResult parseResultOrThrow(String result) {
 		log.info("Validating the compliance result based on the enums");
@@ -63,9 +68,9 @@ public class ComplianceUtil {
 
 		try {
 			exists = switch (type) {
-			case PROGRAM -> programClient.programExists(entityId);
-			case PROJECT -> projectClient.projectExists(entityId);
-			case GRANT -> projectClient.grantExists(entityId);
+			case PROGRAM -> programServiceClient.programExists(entityId);
+			case PROJECT -> projectServiceClient.projectExists(entityId);
+			case GRANT -> projectServiceClient.garntExists(entityId);
 			};
 		} catch (FeignClientException e) {
 			log.error("Feign validation failed for {}:{}", type, entityId, e);
@@ -76,43 +81,34 @@ public class ComplianceUtil {
 			throw new ResourceNotFoundException("Target not found: " + type + " id=" + entityId);
 		}
 	}
-	
 
 	public UserResponseDto validateComplianceOfficer(Long officerId) {
 
-        if (officerId == null) {
-            throw new ComplianceRequestException("Officer ID is required");
-        }
+		if (officerId == null) {
+			throw new ComplianceRequestException("Officer ID is required");
+		}
 
-        try {
-            UserResponseDto user = userClient.getUserById(officerId);
-            log.info("Response from User Service for officerId={}: {}", officerId, user);
+		try {
+			UserResponseDto user = userServiceClient.getUserById(officerId);
+			log.info("Response from User Service for officerId={}: {}", officerId, user);
 
-            if (user == null || user.getRole() == null) {
-                throw new ComplianceRequestException(
-                        "Invalid user data returned for officerId=" + officerId
-                );
-            }
+			if (user == null || user.getRole() == null) {
+				throw new ComplianceRequestException("Invalid user data returned for officerId=" + officerId);
+			}
 
-            if (!Role.COMPLIANCE.equals(user.getRole())) {
-                throw new ComplianceRequestException(
-                        "User with ID=" + user.getUserId() +
-                        " (" + user.getName() + ") is not a Compliance Officer"
-                );
-            }
+			if (!Role.COMPLIANCE.equals(user.getRole())) {
+				throw new ComplianceRequestException(
+						"User with ID=" + user.getUserId() + " (" + user.getName() + ") is not a Compliance Officer");
+			}
 
-            return user;
+			return user;
 
-        } catch (FeignException.NotFound e) {
-            throw new ComplianceRequestException(
-                    "Officer not found with ID=" + officerId
-            );
-        } catch (FeignException e) {
-            throw new ComplianceRequestException(
-                    "Unable to validate compliance officer. User service unavailable."
-            );
-        }
-    }
+		} catch (FeignException.NotFound e) {
+			throw new ComplianceRequestException("Officer not found with ID=" + officerId);
+		} catch (FeignException e) {
+			throw new ComplianceRequestException("Unable to validate compliance officer. User service unavailable.");
+		}
+	}
 
 	public ComplianceEntityDTO fetchEntityDetails(ComplianceType type, Long entityId) {
 
@@ -121,21 +117,21 @@ public class ComplianceUtil {
 
 			case PROGRAM -> {
 				log.info("[PROGRAM-CLIENT] Calling getProgramById with id={}", entityId);
-				ComplianceEntityDTO program = programClient.getProgramById(entityId);
+				ComplianceEntityDTO program = programServiceClient.getProgramById(entityId);
 				log.info("[PROGRAM-CLIENT] Response received: {}", program);
 				yield program;
 			}
 
 			case PROJECT -> {
 				log.info("[PROJECT-CLIENT] Calling getProjectById with id={}", entityId);
-				ComplianceEntityDTO project = projectClient.getProjectById(entityId);
+				ComplianceEntityDTO project = projectServiceClient.getProjectById(entityId);
 				log.info("[PROJECT-CLIENT] Response received: {}", project);
 				yield project;
 			}
 
 			case GRANT -> {
 				log.info("[GRANT-CLIENT] Calling getGrantById with id={}", entityId);
-				ComplianceEntityDTO grant = projectClient.getGrantById(entityId);
+				ComplianceEntityDTO grant = projectServiceClient.getGrantById(entityId);
 				log.info("[GRANT-CLIENT] Response received: {}", grant);
 				yield grant;
 			}
@@ -143,7 +139,16 @@ public class ComplianceUtil {
 
 		} catch (Exception e) {
 			log.error("[ENTITY-FETCH-FAILED] type={} entityId={}", type, entityId, e);
-			return null;
+
+			log.warn("[ENTITY-DEGRADED] type={} entityId={} reason={}", type, entityId, e.getMessage());
+
+			ComplianceEntityFallbackDTO fallback = new ComplianceEntityFallbackDTO();
+			fallback.setId(entityId);
+			fallback.setTitle("DATA UNAVAILABLE");
+			fallback.setStatus("DOWNSTREAM_SERVICE_DOWN");
+
+			return fallback;
+
 		}
 	}
 }

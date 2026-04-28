@@ -5,6 +5,7 @@ import com.healthgov.dtos.ComplianceResponseDTO;
 import com.healthgov.dtos.UniversalNotificationRequest;
 import com.healthgov.enums.ComplianceResult;
 import com.healthgov.enums.NotificationCategory;
+import com.healthgov.fallbacks.NotificationServiceClient;
 import com.healthgov.feignclients.NotificationClient;
 import com.healthgov.models.ComplianceRecord;
 
@@ -16,7 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class NotificationUtil {
 
-	private final NotificationClient notificationClient;
+	private final NotificationServiceClient notificationClient;
 
 	//Called after compliance is CREATED
 	public void notifyOnCreate(ComplianceResponseDTO record) {

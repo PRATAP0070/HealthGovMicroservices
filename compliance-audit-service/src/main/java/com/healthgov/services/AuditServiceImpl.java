@@ -17,6 +17,7 @@ import com.healthgov.enums.AuditStatus;
 import com.healthgov.enums.Role;
 import com.healthgov.exceptions.AuditRequestException;
 import com.healthgov.exceptions.ResourceNotFoundException;
+import com.healthgov.fallbacks.UserServiceClient;
 import com.healthgov.feignclients.UserClient;
 import com.healthgov.models.Audit;
 import com.healthgov.repository.AuditRepository;
@@ -33,7 +34,7 @@ public class AuditServiceImpl implements AuditService {
 
 	private final AuditRepository auditRepo;
 	private final AuditUtil auditUtil;
-	private final UserClient userClient;
+	private final UserServiceClient userClient;
 
 
 	@Override

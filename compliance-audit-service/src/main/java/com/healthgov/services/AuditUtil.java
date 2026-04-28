@@ -6,8 +6,8 @@ import org.springframework.stereotype.Service;
 
 import com.healthgov.exceptions.AuditRequestException;
 import com.healthgov.exceptions.ResourceNotFoundException;
-import com.healthgov.feignclients.ProgramClient;
-import com.healthgov.feignclients.ProjectClient;
+import com.healthgov.fallbacks.ProgramServiceClient;
+import com.healthgov.fallbacks.ProjectServiceClient;
 
 import feign.FeignException.FeignClientException;
 import lombok.RequiredArgsConstructor;
@@ -19,9 +19,9 @@ import lombok.extern.slf4j.Slf4j;
 public class AuditUtil {
 	private static final Set<String> ALLOWED_SCOPE_TYPES = Set.of("PROGRAM", "PROJECT", "GRANT");
 
-	private final ProgramClient programClient;
-	private final ProjectClient projectClient;
-	
+	private final ProgramServiceClient programClient;
+	private final ProjectServiceClient projectClient;
+
 	public void validateAndEnsureScopeTargetExists(String scope) {
 
 		String[] parts = scope.split(":", 2);
@@ -62,7 +62,7 @@ public class AuditUtil {
 
 			case "GRANT" -> {
 				log.debug("Calling ProjectClient.grantExists(id={})", id);
-				exists = projectClient.grantExists(id);
+				exists = projectClient.garntExists(id);
 				log.debug("Grant existence response for id {}: {}", id, exists);
 			}
 

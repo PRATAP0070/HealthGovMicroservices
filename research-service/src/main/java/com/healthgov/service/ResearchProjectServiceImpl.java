@@ -262,17 +262,25 @@ public class ResearchProjectServiceImpl implements ResearchProjectService {
 
 	// DTO mapping
 	private ResearchProjectResponse toResponse(ResearchProject p) {
-		ResearchProjectResponse r = new ResearchProjectResponse();
-		r.setProjectId(p.getProjectId());
-		r.setTitle(p.getTitle());
-		r.setDescription(p.getDescription());
-		r.setStartDate(p.getStartDate());
-		r.setEndDate(p.getEndDate());
-		r.setStatus(p.getStatus().name());
-		r.setReason(p.getReason());
-		r.setResearcherId(p.getResearcherId());
-		return r;
+
+	    // ✅ Fetch researcher
+	    UserReqDTO researcher = userClient.getUserById(p.getResearcherId());
+
+	    ResearchProjectResponse r = new ResearchProjectResponse();
+	    r.setProjectId(p.getProjectId());
+	    r.setTitle(p.getTitle());
+	    r.setDescription(p.getDescription());
+	    r.setStartDate(p.getStartDate());
+	    r.setEndDate(p.getEndDate());
+	    r.setStatus(p.getStatus().name());
+	    r.setReason(p.getReason());
+
+	    r.setResearcherId(p.getResearcherId());
+	    r.setResearcherName(researcher.getName()); // ✅ FIX
+
+	    return r;
 	}
+
 
 	private List<ResearchProjectResponse> toResponseList(List<ResearchProject> list) {
 		List<ResearchProjectResponse> out = new ArrayList<>();

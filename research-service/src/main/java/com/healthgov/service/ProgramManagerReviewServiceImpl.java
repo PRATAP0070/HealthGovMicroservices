@@ -217,6 +217,10 @@ public class ProgramManagerReviewServiceImpl implements ProgramManagerReviewServ
 	}
 
 	private ResearchProjectResponse toResponse(ResearchProject p) {
+
+		// ✅ Fetch researcher details
+		UserReqDTO researcher = userClient.getUserById(p.getResearcherId());
+
 		ResearchProjectResponse r = new ResearchProjectResponse();
 		r.setProjectId(p.getProjectId());
 		r.setTitle(p.getTitle());
@@ -225,7 +229,11 @@ public class ProgramManagerReviewServiceImpl implements ProgramManagerReviewServ
 		r.setEndDate(p.getEndDate());
 		r.setStatus(p.getStatus().name());
 		r.setReason(p.getReason());
-		r.setResearcherId(p.getResearcherId()); // MICROservice change
+
+		r.setResearcherId(p.getResearcherId());
+		r.setResearcherName(researcher.getName()); // ✅ FIX
+
 		return r;
 	}
+
 }

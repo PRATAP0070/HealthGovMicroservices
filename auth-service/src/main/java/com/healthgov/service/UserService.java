@@ -73,4 +73,18 @@ public class UserService {
 	}
 
 
+	public List<UserReqDTO> getAllUsers() {
+
+	    List<User> users = repo.findByRoleNot(Role.ADMIN);
+
+	    return users.stream().map(user -> {
+	        UserReqDTO dto = new UserReqDTO();
+	        dto.setUserId(user.getUserId());
+	        dto.setName(user.getName());
+	        dto.setEmail(user.getEmail());
+	        dto.setRole(user.getRole());
+	        dto.setPhone(user.getPhone());
+	        return dto;
+	    }).collect(Collectors.toList());
+	}
 }

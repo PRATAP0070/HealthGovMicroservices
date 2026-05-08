@@ -59,7 +59,7 @@ public class WebSecurityConfig {
  
                 // ✅ ROLE check (NOT authority)
                 .pathMatchers("/healthGov/userRegisterByAdmin","/healthGov/deleteUserByAdmin/**").hasRole("ADMIN")
-                .pathMatchers("/audit_log/**").hasRole("ADMIN")
+                .pathMatchers("/audit_log/**","/healthGov/getAllUsers").hasRole("ADMIN")
                 .pathMatchers("/health-profile/**").hasRole("PROVIDER")
                 .pathMatchers("/document/**").hasAnyRole("CITIZEN","PROVIDER")
                 .pathMatchers("/research/**").hasRole("RESEARCHER")

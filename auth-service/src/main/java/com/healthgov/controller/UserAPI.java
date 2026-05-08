@@ -63,8 +63,8 @@ public class UserAPI {
 
 	@PostMapping("/citizenRegister")
 	public ResponseEntity<UserDTO> addCitizen(@RequestBody UserDTO userDTO) {
-		UserDTO savedDto = registrationService.registerUser(userDTO);
 		userDTO.setRole(Role.CITIZEN);
+		UserDTO savedDto = registrationService.registerUser(userDTO);
 		return new ResponseEntity<>(savedDto, HttpStatus.CREATED);
 	}
 
@@ -108,6 +108,12 @@ public class UserAPI {
 		UserReqDTO userDto = service.getUserDetailsById(userId);
 		return userDto;
 	}
+	
+	@GetMapping("/getAllUsers")
+	public List<UserReqDTO> getAllUsersExceptAdmin() {
+	    return service.getAllUsers();
+	}
+
 
 	@PostMapping("/forgotPassword/otp")
 	public ResponseEntity<String> generateOtp(@RequestParam String email) {

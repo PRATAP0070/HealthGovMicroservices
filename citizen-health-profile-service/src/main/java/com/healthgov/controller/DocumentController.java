@@ -14,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/document")
+@CrossOrigin(origins = "http://localhost:3000")
 public class DocumentController {
 
     private final DocumentService service;

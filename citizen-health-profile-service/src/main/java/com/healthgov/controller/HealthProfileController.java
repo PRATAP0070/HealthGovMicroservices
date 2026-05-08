@@ -13,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 @RestController
 @RequestMapping("/health-profile")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:3000")
 public class HealthProfileController {
 
     private final HealthProfileService service;

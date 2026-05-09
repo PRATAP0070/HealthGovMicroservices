@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.healthgov.model.OtpToken;
 import com.healthgov.repo.OtpTokenRepo;
@@ -38,18 +39,22 @@ public class OtpService {
     }
 
     /**
-     * Validate OTP
+     * ✅ Validate OTP and DELETE after use
      */
+    @Transactional
     public void validateOtp(String email, String otp) {
 
-        OtpToken token = otpRepo.findByEmailAndOtpAndUsedFalse(email, otp)
+        OtpToken token = otpRepo
+                .findByEmailAndOtpAndUsedFalse(email, otp)
                 .orElseThrow(() -> new RuntimeException("Invalid OTP"));
 
+        // ✅ Check expiry
         if (token.getExpiryTime().isBefore(LocalDateTime.now())) {
+            otpRepo.delete(token);   // cleanup expired OTP
             throw new RuntimeException("OTP expired");
         }
 
-        token.setUsed(true);
-        otpRepo.save(token);
+        // ✅ OTP is valid → DELETE it
+        otpRepo.delete(token);
     }
 }

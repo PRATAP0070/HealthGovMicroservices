@@ -29,7 +29,7 @@ public class User {
 	private Long userId;
 
 	@NotBlank(message = "Name is mandatory")
-	@Column(nullable = false, length = 100, unique = true)
+	@Column(nullable = false, length = 100)
 	private String name;
 
 	@Enumerated(EnumType.STRING)

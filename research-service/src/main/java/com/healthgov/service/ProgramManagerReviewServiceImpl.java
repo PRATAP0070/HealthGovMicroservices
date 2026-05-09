@@ -42,6 +42,18 @@ public class ProgramManagerReviewServiceImpl implements ProgramManagerReviewServ
 	private final UserClient userClient;
 	private final NotificationClient notificationClient;
 
+	@Override
+	@Transactional(readOnly = true)
+	public List<ResearchProjectResponse> listAll() {
+
+		log.info("Fetching ALL projects for manager dashboard");
+
+		List<ResearchProject> list =
+		        projectRepo.findAllByOrderByProjectIdDesc();
+
+		return toResponseList(list);
+	}
+
 	// Get project by id
 	@Override
 	@Transactional(readOnly = true)
@@ -65,7 +77,8 @@ public class ProgramManagerReviewServiceImpl implements ProgramManagerReviewServ
 
 		log.info("Fetching ALL PENDING projects for PM dashboard.");
 
-		List<ResearchProject> pending = projectRepo.findByStatus(ProjectStatus.PENDING);
+		List<ResearchProject> pending =
+		        projectRepo.findByStatusOrderByProjectIdDesc(ProjectStatus.PENDING);
 
 		log.info("Total pending projects found: {}", pending.size());
 		return toResponseList(pending);
@@ -86,7 +99,8 @@ public class ProgramManagerReviewServiceImpl implements ProgramManagerReviewServ
 			throw new MedicalResearchException(HttpStatus.BAD_REQUEST, "Allowed: PENDING, APPROVED, REJECTED");
 		}
 
-		List<ResearchProject> list = projectRepo.findByStatus(s);
+		List<ResearchProject> list =
+		        projectRepo.findByStatusOrderByProjectIdDesc(s);
 		log.info("Projects found with status {}: {}", status, list.size());
 
 		return toResponseList(list);
@@ -218,10 +232,8 @@ public class ProgramManagerReviewServiceImpl implements ProgramManagerReviewServ
 
 	private ResearchProjectResponse toResponse(ResearchProject p) {
 
-		// ✅ Fetch researcher details
-		UserReqDTO researcher = userClient.getUserById(p.getResearcherId());
-
 		ResearchProjectResponse r = new ResearchProjectResponse();
+
 		r.setProjectId(p.getProjectId());
 		r.setTitle(p.getTitle());
 		r.setDescription(p.getDescription());
@@ -231,7 +243,25 @@ public class ProgramManagerReviewServiceImpl implements ProgramManagerReviewServ
 		r.setReason(p.getReason());
 
 		r.setResearcherId(p.getResearcherId());
-		r.setResearcherName(researcher.getName()); // ✅ FIX
+
+		// ✅ ✅ ✅ FIXED NAME FETCH
+		try {
+			UserReqDTO user = userClient.getUserById(p.getResearcherId());
+			r.setResearcherName(user != null ? user.getName() : "Unknown");
+		} catch (Exception e) {
+			log.warn("Error fetching user for ID {}", p.getResearcherId());
+			r.setResearcherName("Unknown");
+		}
+
+		// ✅ GRANT
+		if (p.getStatus() == ProjectStatus.APPROVED) {
+
+			Grants g = grantRepo.findTopByProject_ProjectIdOrderByGrantIdDesc(p.getProjectId());
+
+			if (g != null) {
+				r.setAmount(g.getAmount());
+			}
+		}
 
 		return r;
 	}

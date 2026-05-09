@@ -38,9 +38,14 @@ public class ProgramManagerReviewController {
 	@GetMapping("/projects")
 	public List<ResearchProjectResponse> list(@RequestParam(required = false) String status) {
 
-		log.info("Fetching projects by status={}", status);
+	    log.info("Fetching projects by status={}", status);
 
-		return (status == null || status.isBlank()) ? service.listByStatus("PENDING") : service.listByStatus(status);
+	    // ✅ SHOW ALL PROJECTS
+	    if (status == null || status.isBlank()) {
+	        return service.listAll();   // ✅ CHANGE HERE
+	    }
+
+	    return service.listByStatus(status);
 	}
 
 	// Get project by ID

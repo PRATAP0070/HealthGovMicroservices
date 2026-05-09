@@ -208,23 +208,29 @@ public class ResearchProjectServiceImpl implements ResearchProjectService {
 	@Transactional(readOnly = true)
 	public List<ResearchProjectResponse> list(String status) {
 
-		List<ResearchProject> projects;
+	    List<ResearchProject> projects;
 
-		if (status != null && !status.isBlank()) {
-			try {
-				ProjectStatus s = ProjectStatus.valueOf(status.toUpperCase());
-				projects = projectRepo.findByStatus(s);
-			} catch (IllegalArgumentException e) {
-				throw new MedicalResearchException(HttpStatus.BAD_REQUEST,
-						"Invalid status. Allowed: PENDING, APPROVED, REJECTED");
-			}
-		} else {
-			projects = projectRepo.findAll();
-		}
+	    if (status != null && !status.isBlank()) {
+	        try {
+	            ProjectStatus s = ProjectStatus.valueOf(status.toUpperCase());
 
-		return toResponseList(projects);
+	            // ✅ SORTED (latest first)
+	            projects = projectRepo.findByStatusOrderByProjectIdDesc(s);
+
+	        } catch (IllegalArgumentException e) {
+	            throw new MedicalResearchException(
+	                HttpStatus.BAD_REQUEST,
+	                "Invalid status. Allowed: PENDING, APPROVED, REJECTED"
+	            );
+	        }
+	    } else {
+
+	        // ✅ SORTED (latest first)
+	        projects = projectRepo.findAllByOrderByProjectIdDesc();
+	    }
+
+	    return toResponseList(projects);
 	}
-
 	// Get project by id
 	@Override
 	@Transactional(readOnly = true)
@@ -263,10 +269,8 @@ public class ResearchProjectServiceImpl implements ResearchProjectService {
 	// DTO mapping
 	private ResearchProjectResponse toResponse(ResearchProject p) {
 
-	    // ✅ Fetch researcher
-	    UserReqDTO researcher = userClient.getUserById(p.getResearcherId());
-
 	    ResearchProjectResponse r = new ResearchProjectResponse();
+
 	    r.setProjectId(p.getProjectId());
 	    r.setTitle(p.getTitle());
 	    r.setDescription(p.getDescription());
@@ -276,7 +280,25 @@ public class ResearchProjectServiceImpl implements ResearchProjectService {
 	    r.setReason(p.getReason());
 
 	    r.setResearcherId(p.getResearcherId());
-	    r.setResearcherName(researcher.getName()); // ✅ FIX
+
+	    // ✅ ✅ ✅ REAL NAME (FIXED)
+	    try {
+	        UserReqDTO user = userClient.getUserById(p.getResearcherId());
+	        r.setResearcherName(user != null ? user.getName() : "Unknown");
+	    } catch (Exception e) {
+	        log.warn("Failed to fetch researcher name for ID={}", p.getResearcherId());
+	        r.setResearcherName("Unknown");
+	    }
+
+	    // ✅ GRANT
+	    if (p.getStatus() == ProjectStatus.APPROVED) {
+
+	        var g = grantRepo.findTopByProject_ProjectIdOrderByGrantIdDesc(p.getProjectId());
+
+	        if (g != null) {
+	            r.setAmount(g.getAmount());
+	        }
+	    }
 
 	    return r;
 	}

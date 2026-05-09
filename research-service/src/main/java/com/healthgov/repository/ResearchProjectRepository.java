@@ -9,9 +9,12 @@ import com.healthgov.model.ResearchProject;
 
 public interface ResearchProjectRepository extends JpaRepository<ResearchProject, Long> {
 
-	List<ResearchProject> findByStatus(ProjectStatus status);
-	
-	boolean existsByProjectId(Long projectId);
-	
+    // ✅ SORTED: latest first
+    List<ResearchProject> findAllByOrderByProjectIdDesc();
+
+    // ✅ SORTED: by status + latest first
+    List<ResearchProject> findByStatusOrderByProjectIdDesc(ProjectStatus status);
+
+    boolean existsByProjectId(Long projectId);
 
 }

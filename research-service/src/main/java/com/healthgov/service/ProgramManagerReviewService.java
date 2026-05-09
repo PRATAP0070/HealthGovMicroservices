@@ -5,7 +5,8 @@ import java.util.List;
 import com.healthgov.dto.ResearchProjectResponse;
 
 public interface ProgramManagerReviewService {
-
+	List<ResearchProjectResponse> listAll();
+	
     List<ResearchProjectResponse> listPending();
 
     List<ResearchProjectResponse> listByStatus(String status);

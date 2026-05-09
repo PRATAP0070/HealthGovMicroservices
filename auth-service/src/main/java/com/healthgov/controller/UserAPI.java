@@ -26,6 +26,7 @@ import com.healthgov.dto.LoginDTO;
 import com.healthgov.dto.UserDTO;
 import com.healthgov.dto.UserReqDTO;
 import com.healthgov.enums.Role;
+import com.healthgov.enums.UserStatus;
 import com.healthgov.exception.AuthenticationFailedException;
 import com.healthgov.service.AuditLogService;
 import com.healthgov.service.ForgetPasswordService;
@@ -108,12 +109,11 @@ public class UserAPI {
 		UserReqDTO userDto = service.getUserDetailsById(userId);
 		return userDto;
 	}
-	
+
 	@GetMapping("/getAllUsers")
 	public List<UserReqDTO> getAllUsersExceptAdmin() {
-	    return service.getAllUsers();
+		return service.getAllUsers();
 	}
-
 
 	@PostMapping("/forgotPassword/otp")
 	public ResponseEntity<String> generateOtp(@RequestParam String email) {
@@ -125,9 +125,21 @@ public class UserAPI {
 		return new ResponseEntity<>(forgetPasswordService.resetPassword(dto), HttpStatus.CREATED);
 	}
 
+	@PutMapping("/admin/update-status/{userId}")
+	public UserReqDTO changeUserStatus(@PathVariable Long userId, @RequestParam UserStatus status) {
+
+		return service.updateUserStatus(userId, status);
+	}
+
 	@GetMapping("/getAllCitizens")
 	public List<UserReqDTO> getAllCitizens() {
 		return service.listOfCitizen();
+	}
+
+	@PutMapping("/updateUserByAdmin")
+	public UserReqDTO updateUser(@RequestBody UserReqDTO userReqDTO) {
+
+		return service.updateNameOrPhone(userReqDTO);
 	}
 
 	@DeleteMapping("/deleteUserByAdmin/{userId}")
@@ -135,9 +147,9 @@ public class UserAPI {
 		String deletedUser = registrationService.deleteUserByAdmin(userId);
 		return new ResponseEntity<>(deletedUser, HttpStatus.NO_CONTENT);
 	}
-	
+
 	@GetMapping("/getUserByRole/{role}")
 	public List<UserReqDTO> getUserByRole(@PathVariable Role role) {
-	    return service.getUsersByRole(role);
+		return service.getUsersByRole(role);
 	}
 }

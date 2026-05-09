@@ -21,8 +21,11 @@ public class OtpService {
     /**
      * Generate 6‑digit OTP
      */
+    @Transactional
     public String generateOtp(String email) {
 
+    	otpRepo.deleteByEmail(email);
+    	
         String otp = String.valueOf(
                 100000 + new SecureRandom().nextInt(900000)
         );

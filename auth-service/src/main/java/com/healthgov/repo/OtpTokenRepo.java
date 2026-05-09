@@ -9,4 +9,6 @@ import com.healthgov.model.OtpToken;
 public interface OtpTokenRepo extends JpaRepository<OtpToken, Long> {
 
     Optional<OtpToken> findByEmailAndOtpAndUsedFalse(String email, String otp);
+    
+    void deleteByEmail(String email);
 }

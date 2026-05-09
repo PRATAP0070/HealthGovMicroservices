@@ -1,12 +1,14 @@
 package com.healthgov.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.healthgov.dto.AuditLogDto;
+import com.healthgov.enums.UserStatus;
 import com.healthgov.model.User;
 import com.healthgov.repo.RegistrationLoginRepo;
 
@@ -20,6 +22,10 @@ public class LoginServiceImpl implements UserDetailsService {
 	public UserDetails loadUserByUsername(String email) {
 
 		User user = loginRepo.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("User not found"));
+
+		if (user.getStatus() != UserStatus.ACTIVE) {
+			throw new DisabledException("User account is INACTIVE");
+		}
 
 		return org.springframework.security.core.userdetails.User.withUsername(user.getEmail())
 				.password(user.getPassword()).authorities("ROLE_" + user.getRole().name()).build();

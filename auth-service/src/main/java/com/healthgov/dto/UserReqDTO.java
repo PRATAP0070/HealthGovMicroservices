@@ -1,6 +1,7 @@
 package com.healthgov.dto;
 
 import com.healthgov.enums.Role;
+import com.healthgov.enums.UserStatus;
 
 import lombok.Data;
 
@@ -12,5 +13,6 @@ public class UserReqDTO {
 	private Role role;
 	private String email;
 	private String phone;
+	private UserStatus status;
 	
 }

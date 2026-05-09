@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.healthgov.dto.UserReqDTO;
 import com.healthgov.enums.Role;
+import com.healthgov.enums.UserStatus;
 import com.healthgov.model.User;
 import com.healthgov.repo.RegistrationLoginRepo;
 import com.healthgov.repo.UserRepo;
@@ -22,18 +23,23 @@ public class UserService {
 	@Autowired
 	private RegistrationLoginRepo loginRepo;
 
-	public UserReqDTO getUserDetailsById(Long userId) throws UsernameNotFoundException {
-		User user = loginRepo.findById(userId)
-				.orElseThrow(() -> new UsernameNotFoundException("User not Found with id " + userId));
+	public UserReqDTO getUserDetailsById(Long userId) {
 
-		UserReqDTO reqDTO = new UserReqDTO();
-		reqDTO.setUserId(user.getUserId());
-		reqDTO.setName(user.getName());
-		reqDTO.setEmail(user.getEmail());
-		reqDTO.setRole(user.getRole());
-		reqDTO.setPhone(user.getPhone());
+	    User user = loginRepo.findById(userId)
+	        .orElseThrow(() ->
+	            new UsernameNotFoundException("User not found"));
 
-		return reqDTO;
+	    if (user.getStatus() != UserStatus.ACTIVE) {
+	        throw new RuntimeException("User account is INACTIVE");
+	    }
+
+	    UserReqDTO dto = new UserReqDTO();
+	    dto.setUserId(user.getUserId());
+	    dto.setName(user.getName());
+	    dto.setEmail(user.getEmail());
+	    dto.setRole(user.getRole());
+	    dto.setPhone(user.getPhone());
+	    return dto;
 	}
 
 	public List<UserReqDTO> listOfCitizen() {
@@ -50,32 +56,61 @@ public class UserService {
 			return dto;
 		}).collect(Collectors.toList());
 	}
-	
-	public Long getUserIdByEmail(String email)
-	{
-		User user=repo.findByEmail(email);
+
+	public Long getUserIdByEmail(String email) {
+		User user = repo.findByEmail(email);
 		return user.getUserId();
 	}
-	
+
 	public List<UserReqDTO> getUsersByRole(Role role) {
 
-	    List<User> users = repo.findByRole(role);
+		List<User> users = repo.findByRole(role);
 
-	    return users.stream().map(user -> {
-	        UserReqDTO dto = new UserReqDTO();
-	        dto.setUserId(user.getUserId());
-	        dto.setName(user.getName());
-	        dto.setEmail(user.getEmail());
-	        dto.setRole(user.getRole());
-	        dto.setPhone(user.getPhone());
-	        return dto;
-	    }).toList();
+		return users.stream().map(user -> {
+			UserReqDTO dto = new UserReqDTO();
+			dto.setUserId(user.getUserId());
+			dto.setName(user.getName());
+			dto.setEmail(user.getEmail());
+			dto.setRole(user.getRole());
+			dto.setPhone(user.getPhone());
+			dto.setStatus(user.getStatus());
+			return dto;
+		}).toList();
 	}
 
+	public UserReqDTO updateNameOrPhone(UserReqDTO userReqDTO) {
+
+		User user = repo.findById(userReqDTO.getUserId())
+				.orElseThrow(() -> new UsernameNotFoundException("User not found with id " + userReqDTO.getUserId()));
+
+		if (userReqDTO.getName() != null && !userReqDTO.getName().isEmpty()) {
+			user.setName(userReqDTO.getName());
+		}
+
+		if (userReqDTO.getPhone() != null && !userReqDTO.getPhone().isEmpty()) {
+			user.setPhone(userReqDTO.getPhone());
+		}
+		
+		User updatedUser = repo.save(user);
+
+		// ✅ Return DTO
+		UserReqDTO responseDTO = new UserReqDTO();
+		responseDTO.setUserId(updatedUser.getUserId());
+		responseDTO.setName(updatedUser.getName());
+		responseDTO.setEmail(updatedUser.getEmail());
+		responseDTO.setRole(updatedUser.getRole());
+		responseDTO.setPhone(updatedUser.getPhone());
+		responseDTO.setStatus(updatedUser.getStatus());
+
+		return responseDTO;
+	}
 
 	public List<UserReqDTO> getAllUsers() {
 
-	    List<User> users = repo.findByRoleNot(Role.ADMIN);
+	    List<User> users = repo.findByRoleNot(Role.ADMIN)
+	                           .stream()
+	                           .filter(user -> user.getStatus() == UserStatus.ACTIVE)
+	                           .toList();
 
 	    return users.stream().map(user -> {
 	        UserReqDTO dto = new UserReqDTO();
@@ -84,7 +119,28 @@ public class UserService {
 	        dto.setEmail(user.getEmail());
 	        dto.setRole(user.getRole());
 	        dto.setPhone(user.getPhone());
+	        dto.setStatus(user.getStatus());
 	        return dto;
-	    }).collect(Collectors.toList());
+	    }).toList();
 	}
+	
+	public UserReqDTO updateUserStatus(Long userId, UserStatus status) {
+
+	    User user = repo.findById(userId)
+	        .orElseThrow(() ->
+	            new UsernameNotFoundException("User not found"));
+
+	    user.setStatus(status);
+	    repo.save(user);
+
+	    UserReqDTO dto = new UserReqDTO();
+	    dto.setUserId(user.getUserId());
+	    dto.setName(user.getName());
+	    dto.setEmail(user.getEmail());
+	    dto.setRole(user.getRole());
+	    dto.setPhone(user.getPhone());
+	    dto.setStatus(user.getStatus());
+	    return dto;
+	}
+
 }

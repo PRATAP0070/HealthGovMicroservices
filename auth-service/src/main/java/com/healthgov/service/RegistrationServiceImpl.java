@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.healthgov.client.NotificationClient;
 import com.healthgov.dto.UserDTO;
 import com.healthgov.enums.Role;
+import com.healthgov.enums.UserStatus;
 import com.healthgov.model.User;
 import com.healthgov.repo.RegistrationLoginRepo;
 
@@ -34,7 +35,7 @@ public class RegistrationServiceImpl implements RegistrationService {
 		user.setEmail(userDto.getEmail());
 		user.setRole(userDto.getRole());
 		user.setPhone(userDto.getPhone());
-		user.setStatus("ACTIVE");
+		user.setStatus(UserStatus.ACTIVE);
 		user.setPassword(bcryptEncoder.encode(userDto.getPassword()));
 		
 		registrationRepo.save(user);

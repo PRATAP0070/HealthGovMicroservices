@@ -198,9 +198,16 @@ public class ResourceServiceImpl implements ResourceService {
 	@Transactional(readOnly = true)
 	public List<ResourceResponse> getResourcesByTypeAndStatus(ResourceType type, ResourceStatus status) {
 		log.info("Searching resources with type={} and status={}", type, status);
-		return resourceRepo.findByTypeAndStatus(type, status).stream().map(this::toResponse).toList();
+		return resourceRepo.searchResource(type, status).stream().map(this::toResponse).toList();
 	}
 
+	@Override
+	@Transactional(readOnly = true)
+	public List<ResourceResponse> getResourcesByProgramTypeAndStatus(Long programId, ResourceType type, ResourceStatus status) {
+		log.info("Searching resources with program Id={}, type={} and status={}", programId, type, status);
+		return resourceRepo.searchResourceByProgram(programId, type, status).stream().map(this::toResponse).toList();
+	}
+	
 	// Common helper to fetch Resource or throw exception if missing
 	private Resource getResourceOrThrow(Long resourceId) {
 

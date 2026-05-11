@@ -147,7 +147,19 @@ public class InfrastructureServiceImpl implements InfrastructureService {
 
 		log.info("Searching infrastructures with type={}, location={}, status={}", type, location, status);
 
-		return infraRepo.findByTypeAndLocationAndStatus(type, location, status).stream().map(this::toResponse).toList();
+//		return infraRepo.findByTypeAndLocationAndStatus(type, location, status).stream().map(this::toResponse).toList();
+		return infraRepo.searchInfra(type, location, status).stream().map(this::toResponse).toList();
+	}
+	
+	@Override
+	@Transactional(readOnly = true)
+	public List<InfrastructureResponse> getInfrastructuresByProgramTypeLocationAndStatus(Long programId,InfrastructureType type,
+			String location, InfrastructureStatus status) {
+
+		log.info("Searching infrastructures with program id ={}, type={}, location={}, status={}", programId, type, location, status);
+
+//		return infraRepo.findByTypeAndLocationAndStatus(type, location, status).stream().map(this::toResponse).toList();
+		return infraRepo.searchInfraByProgram(programId, type, location, status).stream().map(this::toResponse).toList();
 	}
 
 	// Common method to load Infrastructure or throw exception

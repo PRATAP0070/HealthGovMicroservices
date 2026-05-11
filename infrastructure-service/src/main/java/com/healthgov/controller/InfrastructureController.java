@@ -24,7 +24,6 @@ import com.healthgov.service.InfrastructureService;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 
-@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 //Base URL for all infrastructure-related REST end-points
 @RequestMapping("/infrastructures")

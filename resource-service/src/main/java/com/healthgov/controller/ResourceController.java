@@ -23,7 +23,7 @@ import com.healthgov.service.ResourceService;
 
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
-@CrossOrigin(origins = "http://localhost:3000")
+
 @RestController
 @RequestMapping("/resources")
 @Slf4j

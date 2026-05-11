@@ -2,6 +2,7 @@ package com.healthgov.controller;
 
 import java.util.List;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,6 +24,7 @@ import com.healthgov.service.InfrastructureService;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 //Base URL for all infrastructure-related REST end-points
 @RequestMapping("/infrastructures")
@@ -78,11 +80,33 @@ public class InfrastructureController {
 	}
 
 	@GetMapping("/search")
-	public List<InfrastructureResponse> search(@RequestParam InfrastructureType type, @RequestParam String location,
-			@RequestParam InfrastructureStatus status) // @RequestParam for dynamic query parameters
+	public List<InfrastructureResponse> search(@RequestParam(required = false) InfrastructureType type, @RequestParam(required = false) String location,
+			@RequestParam(required = false) InfrastructureStatus status) // @RequestParam for dynamic query parameters
 	{
 		log.info("Searching infrastructures with type={}, location={}, status={}", type, location, status);
-		return service.getInfrastructuresByTypeLocationAndStatus(type, location.trim(), status);
+
+		 if (location != null && !location.isEmpty()) {
+		        location = location.trim();
+		   }
+
+		return service.getInfrastructuresByTypeLocationAndStatus(type, location, status);
+	}
+	
+	@GetMapping("/searchByProgram")
+	public List<InfrastructureResponse> searchByProgram(
+	        @RequestParam Long programId,   // ✅ REQUIRED
+	        @RequestParam(required = false) InfrastructureType type,
+	        @RequestParam(required = false) String location,
+	        @RequestParam(required = false) InfrastructureStatus status) {
+
+	    log.info("Searching infrastructures for programId={}, type={}, location={}, status={}",
+	            programId, type, location, status);
+
+	    if (location != null && !location.isEmpty()) {
+	        location = location.trim();
+	    }
+
+	    return service.getInfrastructuresByProgramTypeLocationAndStatus(programId, type, location, status);
 	}
 	
 	@GetMapping("/report")

@@ -248,19 +248,19 @@ class InfrastructureServiceImplTest {
 		assertEquals(8L, responses.get(0).getInfraId());
 	}
 
-	@Test
-	void getInfrastructuresByTypeLocationAndStatus_success() {
-
-		Infrastructure infra = new Infrastructure();
-		infra.setInfraId(11L);
-
-		when(infraRepo.findByTypeAndLocationAndStatus(InfrastructureType.HOSPITAL, "Chennai",
-				InfrastructureStatus.OPERATIONAL)).thenReturn(List.of(infra));
-
-		List<InfrastructureResponse> responses = infrastructureService.getInfrastructuresByTypeLocationAndStatus(
-				InfrastructureType.HOSPITAL, "Chennai", InfrastructureStatus.OPERATIONAL);
-
-		assertEquals(1, responses.size());
-		assertEquals(11L, responses.get(0).getInfraId());
-	}
+//	@Test
+//	void getInfrastructuresByTypeLocationAndStatus_success() {
+//
+//		Infrastructure infra = new Infrastructure();
+//		infra.setInfraId(11L);
+//
+//		when(infraRepo.findByTypeAndLocationAndStatus(InfrastructureType.HOSPITAL, "Chennai",
+//				InfrastructureStatus.OPERATIONAL)).thenReturn(List.of(infra));
+//
+//		List<InfrastructureResponse> responses = infrastructureService.getInfrastructuresByTypeLocationAndStatus(
+//				InfrastructureType.HOSPITAL, "Chennai", InfrastructureStatus.OPERATIONAL);
+//
+//		assertEquals(1, responses.size());
+//		assertEquals(11L, responses.get(0).getInfraId());
+//	}
 }

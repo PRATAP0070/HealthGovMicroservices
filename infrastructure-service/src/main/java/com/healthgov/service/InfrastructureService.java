@@ -26,5 +26,8 @@ public interface InfrastructureService {
 	List<InfrastructureResponse> getInfrastructuresByTypeLocationAndStatus(InfrastructureType type, String location,
 			InfrastructureStatus status);
 	
+	List<InfrastructureResponse> getInfrastructuresByProgramTypeLocationAndStatus(Long programId, InfrastructureType type, String location,
+			InfrastructureStatus status);
+	
 	InfrastructureReportResponseDTO getInfrastructureReport();
 }

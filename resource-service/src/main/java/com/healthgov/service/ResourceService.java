@@ -25,5 +25,7 @@ public interface ResourceService {
 
 	List<ResourceResponse> getResourcesByTypeAndStatus(ResourceType type, ResourceStatus status);
 	
+	List<ResourceResponse> getResourcesByProgramTypeAndStatus(Long programId, ResourceType type, ResourceStatus status);
+	
 	ResourceReportResponseDTO generateResourceReport();
 }

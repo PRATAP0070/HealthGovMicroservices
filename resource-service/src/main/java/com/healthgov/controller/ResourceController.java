@@ -2,6 +2,7 @@ package com.healthgov.controller;
 
 import java.util.List;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,7 +23,7 @@ import com.healthgov.service.ResourceService;
 
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
-
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/resources")
 @Slf4j
@@ -72,9 +73,15 @@ public class ResourceController {
 	}
 
 	@GetMapping("/search")
-	public List<ResourceResponse> search(@RequestParam ResourceType type, @RequestParam ResourceStatus status) {
+	public List<ResourceResponse> search(@RequestParam(required = false) ResourceType type, @RequestParam(required = false) ResourceStatus status) {
 		log.info("Searching resources with type={} and status={}", type, status);
 		return service.getResourcesByTypeAndStatus(type, status);
+	}
+	
+	@GetMapping("/searchByProgram")
+	public List<ResourceResponse> searchByProgram(@RequestParam Long programId,@RequestParam(required = false) ResourceType type, @RequestParam(required = false) ResourceStatus status) {
+		log.info("Searching resources with program ID={}, type={} and status={}", programId, type, status);
+		return service.getResourcesByProgramTypeAndStatus(programId, type, status);
 	}
 
 	@GetMapping("/report")

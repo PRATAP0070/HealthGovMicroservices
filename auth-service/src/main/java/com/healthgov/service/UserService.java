@@ -39,6 +39,7 @@ public class UserService {
 	    dto.setEmail(user.getEmail());
 	    dto.setRole(user.getRole());
 	    dto.setPhone(user.getPhone());
+	    dto.setStatus(user.getStatus());
 	    return dto;
 	}
 
@@ -109,7 +110,6 @@ public class UserService {
 
 	    List<User> users = repo.findByRoleNot(Role.ADMIN)
 	                           .stream()
-	                           .filter(user -> user.getStatus() == UserStatus.ACTIVE)
 	                           .toList();
 
 	    return users.stream().map(user -> {

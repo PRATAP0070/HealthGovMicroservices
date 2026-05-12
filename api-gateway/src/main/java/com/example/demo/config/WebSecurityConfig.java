@@ -66,10 +66,13 @@ public class WebSecurityConfig {
                 .pathMatchers("/manager/**").hasRole("MANAGER")
                 .pathMatchers("/api/v1/compliance-records/**").hasAnyRole("COMPLIANCE","AUDITOR")
                 .pathMatchers("/api/v1/audits/**").hasRole("AUDITOR")
+                
+                .pathMatchers(HttpMethod.GET,"/api/programs/**").hasAnyRole("PROVIDER", "MANAGER")
                 .pathMatchers("/api/programs/**").hasRole("MANAGER")
-                .pathMatchers("/resources/**").hasRole("MANAGER")
-                .pathMatchers("/infrastructures/**").hasRole("MANAGER")
+                .pathMatchers("/resources/**").hasRole("PROVIDER")
+                .pathMatchers("/infrastructures/**").hasRole("PROVIDER")
  
+                
                 .pathMatchers("/api/enrollments/**").hasRole("CITIZEN")
                 .pathMatchers(HttpMethod.GET,"/api/notifications/**").permitAll()
 

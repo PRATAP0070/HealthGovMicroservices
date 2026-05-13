@@ -107,7 +107,7 @@ public class CitizenServiceImpl implements CitizenService {
         String statusStr = (c.getStatus() != null) ? c.getStatus().name() : "PENDING";
 
         return new CitizenResponseDTO(
-            c.getUserId(),     
+            c.getUserId(),      
             c.getCitizenId(),   
             c.getName(),        
             c.getDob(),         
@@ -121,23 +121,31 @@ public class CitizenServiceImpl implements CitizenService {
     public CitizenResponseDTO updateCitizen(Long id, CitizenRequestDTO request) {
         Citizen citizen = repository.findById(id).orElseThrow(() -> new CitizenNotFoundException("ID not found"));
         
-        // NOW SAVING ALL FIELDS
+        // 1. Update Safe Fields (Including DOB now)
         citizen.setName(request.getName());
-        citizen.setDob(request.getDob());
         citizen.setAddress(request.getAddress());
         citizen.setContactInfo(request.getContactInfo());
         
-        if (request.getGender() != null) {
-            try {
-                citizen.setGender(Gender.valueOf(request.getGender().trim().toUpperCase()));
-            } catch (Exception e) {
-                citizen.setGender(Gender.OTHER); 
+        // ✅ Allow DOB to be updated
+        if (request.getDob() != null) {
+            citizen.setDob(request.getDob());
+        }
+
+        // 2. THE LOCK: Only update Gender if it hasn't been set yet
+        if (citizen.getGender() == null) {
+            if (request.getGender() != null) {
+                try {
+                    citizen.setGender(Gender.valueOf(request.getGender().trim().toUpperCase()));
+                } catch (Exception e) {
+                    citizen.setGender(Gender.OTHER); 
+                }
             }
+        } else if (request.getGender() != null && !citizen.getGender().name().equalsIgnoreCase(request.getGender().trim())) {
+             log.warn("Security Alert: Attempted to modify locked Gender for citizen ID {}", id);
         }
         
         return mapToResponse(repository.save(citizen));
     }
-
     @Override
     public void deleteCitizen(Long id) {
         if (!repository.existsById(id)) throw new CitizenNotFoundException("ID not found");
@@ -151,8 +159,8 @@ public class CitizenServiceImpl implements CitizenService {
         return mapToResponse(repository.save(citizen));
     }
 
-	@Override
-	public EnrollmentDTO enrollInProgram(EnrollmentDTO enrollment) {
-		return programClient.create(enrollment);
-	}
+    @Override
+    public EnrollmentDTO enrollInProgram(EnrollmentDTO enrollment) {
+        return programClient.create(enrollment);
+    }
 }

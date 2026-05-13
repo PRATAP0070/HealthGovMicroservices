@@ -14,4 +14,5 @@ public interface HealthProfileRepository extends JpaRepository<HealthProfile, Lo
     List<HealthProfile> findAll();
 
     Optional<HealthProfile> findByCitizen_CitizenId(Long citizenId);
+    boolean existsByCitizen_CitizenId(Long citizenId);
 }

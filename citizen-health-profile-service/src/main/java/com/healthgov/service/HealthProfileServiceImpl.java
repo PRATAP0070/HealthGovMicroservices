@@ -1,6 +1,7 @@
 package com.healthgov.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,12 +29,30 @@ public class HealthProfileServiceImpl implements HealthProfileService {
     private final CitizenRepository citizenRepo; 
 
     @Override
-    @Transactional(readOnly = true)
     public List<HealthProfileResponseDTO> getAllProfiles() {
-        log.info("Fetching all health profiles from database");
+        log.info("Syncing Health Profiles with Citizen database...");
+
+        // 1. Fetch every registered citizen
+        List<Citizen> allCitizens = citizenRepo.findAll();
         
-        // Uses standard JPA. Assumes @EntityGraph is used in the repository 
-        // to prevent the LazyInitializationException (500 Error).
+        // 2. Ensure every citizen has a medical record row
+        for (Citizen citizen : allCitizens) {
+            // Check if a health profile exists for this citizen ID
+            boolean exists = profileRepo.existsByCitizen_CitizenId(citizen.getCitizenId());
+            
+            if (!exists) {
+                log.info("Auto-creating missing health profile for Citizen ID: {}", citizen.getCitizenId());
+                HealthProfile newProfile = new HealthProfile();
+                newProfile.setCitizen(citizen);
+                newProfile.setAllergies("None Reported");
+                newProfile.setStatus(HealthProfileStatus.INACTIVE);
+                // Initialize empty JSON to prevent frontend crashes
+                newProfile.setMedicalHistoryJson(Map.of("history", ""));
+                profileRepo.save(newProfile);
+            }
+        }
+
+        // 3. Now return the full, synced list
         return profileRepo.findAll()
                 .stream()
                 .map(this::mapToDTO)
@@ -57,7 +76,7 @@ public class HealthProfileServiceImpl implements HealthProfileService {
         profile.setMedicalHistoryJson(input.getMedicalHistoryJson());
         profile.setAllergies(input.getAllergies());
         
-        // Default status upon creation/update
+        // Keep as INACTIVE or set as desired upon update
         profile.setStatus(HealthProfileStatus.INACTIVE); 
 
         HealthProfile saved = profileRepo.save(profile);
@@ -97,19 +116,12 @@ public class HealthProfileServiceImpl implements HealthProfileService {
         profileRepo.delete(profile);
     }
 
-    // --- NULL-SAFE DTO MAPPER ---
     private HealthProfileResponseDTO mapToDTO(HealthProfile hp) {
         HealthProfileResponseDTO dto = new HealthProfileResponseDTO();
         dto.setProfileId(hp.getProfileId());
         
-        // Critical Fix: Null-safe check to prevent 500 errors on orphaned records
         if (hp.getCitizen() != null) {
-            try {
-                dto.setCitizenId(hp.getCitizen().getCitizenId());
-            } catch (Exception e) {
-                log.error("Could not fetch citizen ID for profile {}: {}", hp.getProfileId(), e.getMessage());
-                dto.setCitizenId(null);
-            }
+            dto.setCitizenId(hp.getCitizen().getCitizenId());
         }
         
         dto.setMedicalHistoryJson(hp.getMedicalHistoryJson());

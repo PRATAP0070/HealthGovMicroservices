@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import com.healthgov.enums.DocumentType;
 import com.healthgov.enums.VerificationStatus;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -32,7 +33,9 @@ public class CitizenDocument {
     @Enumerated(EnumType.STRING)
     private DocumentType docType;
 
-    private String fileURI;
+    // FIXED: Renamed to fileUrl to match frontend and database column
+    @Column(name = "file_url", nullable = false, columnDefinition = "LONGTEXT")
+    private String fileUrl;
     
     private LocalDateTime uploadedDate;
 

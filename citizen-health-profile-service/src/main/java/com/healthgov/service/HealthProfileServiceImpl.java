@@ -1,5 +1,7 @@
 package com.healthgov.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,6 +28,19 @@ public class HealthProfileServiceImpl implements HealthProfileService {
     private final CitizenRepository citizenRepo; 
 
     @Override
+    @Transactional(readOnly = true)
+    public List<HealthProfileResponseDTO> getAllProfiles() {
+        log.info("Fetching all health profiles from database");
+        
+        // Uses standard JPA. Assumes @EntityGraph is used in the repository 
+        // to prevent the LazyInitializationException (500 Error).
+        return profileRepo.findAll()
+                .stream()
+                .map(this::mapToDTO)
+                .toList();
+    }
+
+    @Override
     public HealthProfileResponseDTO saveOrUpdateProfile(Long citizenId, HealthProfileRequestDTO input) {
         log.info("Request to save/update Health Profile for Citizen ID: {}", citizenId);
         
@@ -42,6 +57,7 @@ public class HealthProfileServiceImpl implements HealthProfileService {
         profile.setMedicalHistoryJson(input.getMedicalHistoryJson());
         profile.setAllergies(input.getAllergies());
         
+        // Default status upon creation/update
         profile.setStatus(HealthProfileStatus.INACTIVE); 
 
         HealthProfile saved = profileRepo.save(profile);
@@ -66,6 +82,7 @@ public class HealthProfileServiceImpl implements HealthProfileService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public HealthProfileResponseDTO getProfile(Long citizenId) {
         return profileRepo.findByCitizen_CitizenId(citizenId)
                 .map(this::mapToDTO)
@@ -80,12 +97,19 @@ public class HealthProfileServiceImpl implements HealthProfileService {
         profileRepo.delete(profile);
     }
 
+    // --- NULL-SAFE DTO MAPPER ---
     private HealthProfileResponseDTO mapToDTO(HealthProfile hp) {
         HealthProfileResponseDTO dto = new HealthProfileResponseDTO();
         dto.setProfileId(hp.getProfileId());
         
+        // Critical Fix: Null-safe check to prevent 500 errors on orphaned records
         if (hp.getCitizen() != null) {
-            dto.setCitizenId(hp.getCitizen().getCitizenId()); 
+            try {
+                dto.setCitizenId(hp.getCitizen().getCitizenId());
+            } catch (Exception e) {
+                log.error("Could not fetch citizen ID for profile {}: {}", hp.getProfileId(), e.getMessage());
+                dto.setCitizenId(null);
+            }
         }
         
         dto.setMedicalHistoryJson(hp.getMedicalHistoryJson());

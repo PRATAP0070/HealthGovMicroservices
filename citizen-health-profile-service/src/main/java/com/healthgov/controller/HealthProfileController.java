@@ -8,15 +8,22 @@ import com.healthgov.service.HealthProfileService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import java.util.List;
 
 @Slf4j
 @RestController
 @RequestMapping("/health-profile")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "http://localhost:3000")
 public class HealthProfileController {
 
     private final HealthProfileService service;
+
+    // --- NEW ENDPOINT ---
+    @GetMapping("/all")
+    public ResponseEntity<List<HealthProfileResponseDTO>> getAll() {
+        log.info("GET Request: Fetching all health profiles");
+        return ResponseEntity.ok(service.getAllProfiles());
+    }
 
     @PostMapping("/{citizenId}")
     public ResponseEntity<HealthProfileResponseDTO> create(@PathVariable Long citizenId, @Valid @RequestBody HealthProfileRequestDTO request) {

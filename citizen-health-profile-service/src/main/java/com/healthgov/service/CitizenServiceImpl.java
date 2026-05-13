@@ -6,8 +6,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.healthgov.client.CitizenClient;
+import com.healthgov.client.ProgramClient;
 import com.healthgov.dto.CitizenRequestDTO;
 import com.healthgov.dto.CitizenResponseDTO;
+import com.healthgov.dto.EnrollmentDTO;
 import com.healthgov.dto.UserReqDTO;
 import com.healthgov.enums.Gender;
 import com.healthgov.enums.RegistrationStatus;
@@ -27,13 +29,13 @@ public class CitizenServiceImpl implements CitizenService {
 
     private final CitizenRepository repository;
     private final CitizenClient citizenClient;
+    private final ProgramClient programClient;
 
     @Override
     @CircuitBreaker(name = "authService", fallbackMethod = "registerCitizenFallback")
     public CitizenResponseDTO registerCitizen(CitizenRequestDTO request) {
         log.info("Attempting to register citizen: {}", request.getName());
 
-        // The Circuit Breaker handles the failure, so we don't need the try-catch block hiding the exception anymore.
         List<UserReqDTO> allAuthUsers = citizenClient.getAllCitizens();
 
         boolean userExists = allAuthUsers != null && allAuthUsers.stream()
@@ -66,15 +68,12 @@ public class CitizenServiceImpl implements CitizenService {
         return mapToResponse(saved);
     }
 
-    // --- FALLBACK METHOD ---
-    // Must have the exact same return type and parameters as the original method, plus a Throwable.
     public CitizenResponseDTO registerCitizenFallback(CitizenRequestDTO request, Throwable throwable) {
         log.error("Auth-Service communication failed. Fallback triggered for {}. Reason: {}", request.getName(), throwable.getMessage());
         
-        // Return a safe response indicating the service is temporarily down, preventing a 500 error crash.
         return new CitizenResponseDTO(
             request.getUserId(),
-            null, // No Citizen ID generated yet
+            null, 
             request.getName(),
             request.getDob(),
             request.getGender(),
@@ -88,6 +87,16 @@ public class CitizenServiceImpl implements CitizenService {
         log.info("Fetching citizen by ID: {}", id);
         Citizen citizen = repository.findById(id)
                 .orElseThrow(() -> new CitizenNotFoundException("Citizen with ID " + id + " not found"));
+        return mapToResponse(citizen);
+    }
+
+    @Override
+    public CitizenResponseDTO getCitizenByUserId(Long userId) {
+        log.info("Fetching citizen by User ID: {}", userId);
+        Citizen citizen = repository.findByUserId(userId);
+        if (citizen == null) {
+            throw new CitizenNotFoundException("Citizen with User ID " + userId + " not found");
+        }
         return mapToResponse(citizen);
     }
 
@@ -111,9 +120,21 @@ public class CitizenServiceImpl implements CitizenService {
     @Override
     public CitizenResponseDTO updateCitizen(Long id, CitizenRequestDTO request) {
         Citizen citizen = repository.findById(id).orElseThrow(() -> new CitizenNotFoundException("ID not found"));
+        
+        // NOW SAVING ALL FIELDS
         citizen.setName(request.getName());
+        citizen.setDob(request.getDob());
         citizen.setAddress(request.getAddress());
         citizen.setContactInfo(request.getContactInfo());
+        
+        if (request.getGender() != null) {
+            try {
+                citizen.setGender(Gender.valueOf(request.getGender().trim().toUpperCase()));
+            } catch (Exception e) {
+                citizen.setGender(Gender.OTHER); 
+            }
+        }
+        
         return mapToResponse(repository.save(citizen));
     }
 
@@ -129,4 +150,9 @@ public class CitizenServiceImpl implements CitizenService {
         citizen.setStatus(RegistrationStatus.valueOf(status.trim().toUpperCase()));
         return mapToResponse(repository.save(citizen));
     }
+
+	@Override
+	public EnrollmentDTO enrollInProgram(EnrollmentDTO enrollment) {
+		return programClient.create(enrollment);
+	}
 }

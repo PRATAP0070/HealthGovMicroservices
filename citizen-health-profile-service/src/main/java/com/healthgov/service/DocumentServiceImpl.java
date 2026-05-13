@@ -39,7 +39,9 @@ public class DocumentServiceImpl implements DocumentService {
         CitizenDocument doc = new CitizenDocument();
         doc.setCitizen(citizen);
         doc.setDocumentName(request.getDocumentName());
-        doc.setFileURI(request.getFileUrl());
+        
+        doc.setFileUrl(request.getFileUrl());
+        
         doc.setUploadedDate(LocalDateTime.now());
         doc.setVerificationStatus(VerificationStatus.PENDING);
 
@@ -73,7 +75,9 @@ public class DocumentServiceImpl implements DocumentService {
         }
 
         doc.setDocumentName(request.getDocumentName());
-        doc.setFileURI(request.getFileUrl());
+        
+        doc.setFileUrl(request.getFileUrl());
+        
         doc.setUploadedDate(LocalDateTime.now());
         doc.setVerificationStatus(VerificationStatus.PENDING);
 
@@ -102,16 +106,41 @@ public class DocumentServiceImpl implements DocumentService {
         return "Document verification status updated to " + status;
     }
 
+    // --- NEW: DELETE DOCUMENT METHOD ADDED HERE ---
+    @Override
+    public void deleteDocument(Long documentId) {
+        log.info("Deleting document with ID: {}", documentId);
+        if (!documentRepo.existsById(documentId)) {
+            throw new RuntimeException("Document not found.");
+        }
+        documentRepo.deleteById(documentId);
+    }
+    // ----------------------------------------------
+
     private DocumentResponseDTO mapToDTO(CitizenDocument d) {
-        // Null-safe mapping to prevent 500 errors during GET requests
         return new DocumentResponseDTO(
                 d.getDocumentId(),
                 d.getDocumentName(),
                 (d.getDocType() != null) ? d.getDocType().name() : null,
-                d.getFileURI(),
+                d.getFileUrl(),
                 d.getUploadedDate(),
                 (d.getCitizen() != null) ? d.getCitizen().getCitizenId() : null,
                 (d.getVerificationStatus() != null) ? d.getVerificationStatus().name() : "PENDING"
         );
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<DocumentResponseDTO> getAllDocumentsForVerification() {
+        log.info("Fetching all documents in the system for provider verification");
+        
+        // 1. Fetch all documents from the repository
+        List<CitizenDocument> allDocs = documentRepo.findAll();
+        
+        // 2. Stream through the list and map each entity to a DTO
+        // We reuse your existing mapToDTO helper method for consistency
+        return allDocs.stream()
+                .map(this::mapToDTO)
+                .collect(Collectors.toList());
     }
 }

@@ -95,11 +95,11 @@ public class ResourceServiceImpl implements ResourceService {
 		// Validate program
 		ProgramStatusResponse program = programFeignClient.getProgramStatus(entity.getProgramId());
 
-		// Program must be ACTIVE
 		if (program.getStatus() != ProgramStatus.ACTIVE) {
 			throw new IllegalStateException("Cannot update resource for program with status: " + program.getStatus());
 		}
-		// Completed resources are immutable
+
+		// Completed resources cannot be modified
 		if (entity.getStatus() == ResourceStatus.COMPLETED) {
 			throw new IllegalStateException("Completed resource cannot be modified");
 		}
@@ -109,36 +109,46 @@ public class ResourceServiceImpl implements ResourceService {
 			throw new IllegalStateException("Only ACTIVE resources can be completed");
 		}
 
-		validateResourceRequest(request.getQuantity(), request.getType(), request.getStatus());
+		// Final values
+		ResourceType finalType = entity.getType(); // TYPE NEVER CHANGES
+		int finalQuantity = request.getQuantity() != null ? request.getQuantity() : entity.getQuantity();
 
-		ResourceType newType = request.getType();
+		ResourceStatus finalStatus = request.getStatus() != null ? request.getStatus() : entity.getStatus();
 
-		/* ---------- FUNDS BUDGET VALIDATION ---------- */
-		if (newType == ResourceType.FUNDS) {
+		// Common validation
+		validateResourceRequest(finalQuantity, finalType, finalStatus);
 
-			double budget = program.getBudget();
-			double allocated = getTotalAllocatedFunds(entity.getProgramId());
+		// FUNDS BUSINESS LOGIC
 
-			// Remove old allocation only if existing type was FUNDS
-			double oldQuantity = entity.getType() == ResourceType.FUNDS ? entity.getQuantity() : 0;
+		if (finalType == ResourceType.FUNDS) {
 
-			double newQuantity = request.getQuantity();
 
-			double effectiveAllocated = allocated - oldQuantity + newQuantity;
+			long budget = (long) program.getBudget();
+			long allocated = getTotalAllocatedFunds(entity.getProgramId());
 
-			if (effectiveAllocated > budget) {
+			int oldQuantity = entity.getStatus() != ResourceStatus.PENDING ? entity.getQuantity() : 0;
+			int newQuantity = finalQuantity;
+
+			long remaining = budget - (allocated - oldQuantity);
+
+			boolean budgetAvailable = newQuantity <= remaining;
+
+			if ((finalStatus == ResourceStatus.ALLOCATED || finalStatus == ResourceStatus.ACTIVE) && !budgetAvailable) {
+
 				throw new IllegalStateException(
-						"Insufficient budget. Remaining: " + (budget - (allocated - oldQuantity)));
+						"Insufficient budget. Cannot allocate or activate resource\n Available budget: " + remaining);
 			}
 		}
 
-		log.info("Updating resourceId={}, oldStatus={}, newStatus={}", resourceId, entity.getStatus(),
-				request.getStatus());
+		log.info("Updating resourceId={}, oldStatus={}, newStatus={}", resourceId, entity.getStatus(), finalStatus);
 
-		// Apply update after all validations
-		entity.setType(request.getType());
-		entity.setQuantity(request.getQuantity());
-		entity.setStatus(request.getStatus());
+		if (request.getQuantity() != null && !request.getQuantity().equals(entity.getQuantity())) {
+			entity.setQuantity(request.getQuantity());
+		}
+
+		if (!finalStatus.equals(entity.getStatus())) {
+		    entity.setStatus(finalStatus);
+		}
 
 		resourceRepo.save(entity);
 
@@ -203,11 +213,12 @@ public class ResourceServiceImpl implements ResourceService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public List<ResourceResponse> getResourcesByProgramTypeAndStatus(Long programId, ResourceType type, ResourceStatus status) {
+	public List<ResourceResponse> getResourcesByProgramTypeAndStatus(Long programId, ResourceType type,
+			ResourceStatus status) {
 		log.info("Searching resources with program Id={}, type={} and status={}", programId, type, status);
 		return resourceRepo.searchResourceByProgram(programId, type, status).stream().map(this::toResponse).toList();
 	}
-	
+
 	// Common helper to fetch Resource or throw exception if missing
 	private Resource getResourceOrThrow(Long resourceId) {
 
@@ -230,9 +241,18 @@ public class ResourceServiceImpl implements ResourceService {
 		return dto;
 	}
 
-	private double getTotalAllocatedFunds(Long programId) {
-		return resourceRepo.findByProgramIdAndTypeAndStatus(programId, ResourceType.FUNDS, ResourceStatus.ALLOCATED)
-				.stream().mapToDouble(Resource::getQuantity).sum();
+	private long getTotalAllocatedFunds(Long programId) {
+	    return resourceRepo
+	        .findByProgramIdAndTypeAndStatusIn(
+	            programId,
+	            ResourceType.FUNDS,
+	            List.of(ResourceStatus.ALLOCATED,
+	                    ResourceStatus.ACTIVE,
+	                    ResourceStatus.COMPLETED)
+	        )
+	        .stream()
+	        .mapToLong(Resource::getQuantity)
+	        .sum();
 	}
 
 	private void validateResourceRequest(int quantity, ResourceType type, ResourceStatus status) {
@@ -277,4 +297,5 @@ public class ResourceServiceImpl implements ResourceService {
 				resourceRepo.countByTypeAndStatus(type, ResourceStatus.INACTIVE),
 				resourceRepo.countByTypeAndStatus(type, ResourceStatus.COMPLETED), resourceRepo.countByType(type));
 	}
+
 }

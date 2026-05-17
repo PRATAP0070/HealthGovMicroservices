@@ -12,8 +12,8 @@ import lombok.Setter;
 @Getter
 public class ResourceUpdateRequest {
 
-	@NotNull
-	private ResourceType type;
+//	@NotNull
+//	private ResourceType type;
 
 	@PositiveOrZero
 	private Integer quantity;

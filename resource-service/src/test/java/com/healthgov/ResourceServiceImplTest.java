@@ -149,7 +149,7 @@ class ResourceServiceImplTest {
     void updateResource_nonFundsSuccess() {
 
         ResourceUpdateRequest request = new ResourceUpdateRequest();
-        request.setType(ResourceType.EQUIPMENT);
+//        request.setType(ResourceType.EQUIPMENT);
         request.setQuantity(50);
         request.setStatus(ResourceStatus.INACTIVE);
 
@@ -174,7 +174,7 @@ class ResourceServiceImplTest {
     void updateResource_fundsWithinBudget() {
 
         ResourceUpdateRequest request = new ResourceUpdateRequest();
-        request.setType(ResourceType.FUNDS);
+//        request.setType(ResourceType.FUNDS);
         request.setQuantity(300);
         request.setStatus(ResourceStatus.ALLOCATED);
 
@@ -202,7 +202,7 @@ class ResourceServiceImplTest {
     void updateResource_fundsBudgetExceeded() {
 
         ResourceUpdateRequest request = new ResourceUpdateRequest();
-        request.setType(ResourceType.FUNDS);
+//        request.setType(ResourceType.FUNDS);
         request.setQuantity(1200); // ✅ increased
         request.setStatus(ResourceStatus.ALLOCATED);
 
@@ -247,7 +247,7 @@ class ResourceServiceImplTest {
     void updateResource_completedFromNonActiveRejected() {
 
         ResourceUpdateRequest request = new ResourceUpdateRequest();
-        request.setType(ResourceType.LAB);
+//        request.setType(ResourceType.LAB);
         request.setQuantity(10);
         request.setStatus(ResourceStatus.COMPLETED);
 
@@ -268,7 +268,7 @@ class ResourceServiceImplTest {
     void updateResource_nonFundsPendingRejected() {
 
         ResourceUpdateRequest request = new ResourceUpdateRequest();
-        request.setType(ResourceType.LAB);
+//        request.setType(ResourceType.LAB);
         request.setQuantity(5);
         request.setStatus(ResourceStatus.PENDING);
 

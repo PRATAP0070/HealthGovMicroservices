@@ -90,10 +90,13 @@ public class InfrastructureServiceImpl implements InfrastructureService {
 			throw new IllegalArgumentException("Infrastructure capacity cannot be negative");
 		}
 
-		entity.setType(request.getType());
-		entity.setLocation(request.getLocation());
-		entity.setCapacity(request.getCapacity());
-		entity.setStatus(request.getStatus());
+		if ( request.getCapacity() != entity.getCapacity()) {
+			entity.setCapacity(request.getCapacity());
+		}
+		
+		if (request.getStatus() != null && !request.getStatus().equals(entity.getStatus())) {
+			entity.setStatus(request.getStatus());
+		}
 
 		infraRepo.save(entity);
 		log.info("Infrastructure updated successfully with infraId={}", infraId);

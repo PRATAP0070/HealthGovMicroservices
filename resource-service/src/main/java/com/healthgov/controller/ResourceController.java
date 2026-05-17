@@ -4,9 +4,9 @@ import java.util.List;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -40,7 +40,7 @@ public class ResourceController {
 		return service.createResource(request);
 	}
 
-	@PutMapping("/update/{resourceId}")
+	@PatchMapping("/update/{resourceId}")
 	public ResourceResponse update(@PathVariable Long resourceId, @Valid @RequestBody ResourceUpdateRequest request) {
 		log.info("Updating resource with id={}", resourceId);
 		return service.updateResource(resourceId, request);

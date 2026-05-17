@@ -44,6 +44,7 @@ public interface ResourceRepository extends JpaRepository<Resource, Long> {
 	@Query("SELECT COALESCE(CAST(SUM(r.quantity) AS long), 0L) FROM Resource r WHERE r.type = :type and r.status = :status")
 	Long sumAmountByTypeAndStatus(ResourceType type,  ResourceStatus status);
 	
+	List<Resource> findByProgramIdAndTypeAndStatusIn(Long programId, ResourceType type, List<ResourceStatus> statuses);
 
 
 }

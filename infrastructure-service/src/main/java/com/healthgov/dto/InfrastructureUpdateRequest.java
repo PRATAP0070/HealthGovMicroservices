@@ -13,11 +13,11 @@ import lombok.Setter;
 @Setter
 public class InfrastructureUpdateRequest {
 
-	@NotNull
-	private InfrastructureType type;
+//	@NotNull
+//	private InfrastructureType type;
 
-	@NotBlank
-	private String location;
+//	@NotBlank
+//	private String location;
 
 	@PositiveOrZero
 	private int capacity;

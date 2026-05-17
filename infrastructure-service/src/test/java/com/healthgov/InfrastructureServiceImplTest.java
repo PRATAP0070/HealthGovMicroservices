@@ -107,8 +107,8 @@ class InfrastructureServiceImplTest {
 	void updateInfrastructure_success() {
 
 		InfrastructureUpdateRequest request = new InfrastructureUpdateRequest();
-		request.setType(InfrastructureType.LAB);
-		request.setLocation("Bangalore");
+//		request.setType(InfrastructureType.LAB);
+//		request.setLocation("Bangalore");
 		request.setCapacity(150);
 		request.setStatus(InfrastructureStatus.UNDER_MAINTENANCE);
 
